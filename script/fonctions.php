@@ -3,15 +3,15 @@ include_once ("mysqlclass.php");
 
 function connectdb() {
 //Remote database settings
-    $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
-    $databasename = "dbosfacdmt";
-    $username = "dbosfacdmt";
-    $password = "Osf@cL@b01";
-//    Local database settings
-//    $hostname = "localhost";
+//    $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
 //    $databasename = "dbosfacdmt";
-//    $username = "root";
-//    $password = "";
+//    $username = "dbosfacdmt";
+//    $password = "Osf@cL@b01";
+//    Local database settings
+    $hostname = "localhost";
+    $databasename = "dbosfacdmt";
+    $username = "root";
+    $password = "";
 
     @mysql_pconnect($hostname, $username, $password) or die("Connection failed:" . mysql_error()); // connexion persistante au serveur
     @mysql_select_db($databasename) or die("Database selection failed:" . mysql_error());
