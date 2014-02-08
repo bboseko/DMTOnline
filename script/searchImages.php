@@ -134,10 +134,10 @@ function loadRecord($Connex, $host) {
                             <script type="text/javascript">
                          var idEntity = '<?php echo $id; ?>';
                          var resultRow = $('#resultRow_' + idEntity);
-                         if (hash[idEntity] == undefined) {
+                         if (hash[idEntity] === undefined) {
                              hash[idEntity] = true;
                          }
-                         if (hash[idEntity] == true) {
+                         if (hash[idEntity] === true) {
                              $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" checked />');
                              resultRow.removeClass('excludedResultRow');
                          }
@@ -145,7 +145,7 @@ function loadRecord($Connex, $host) {
                              $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" />');
                              resultRow.addClass('excludedResultRow');
                          }
-                         if (arrayColorfp[idEntity] == undefined) {
+                         if (arrayColorfp[idEntity] === undefined) {
                              arrayColorfp[idEntity] = 'transparent';
                          }
                          $('#fp_' + idEntity).css('background-color', arrayColorfp[idEntity]);
@@ -181,7 +181,7 @@ function loadRecord($Connex, $host) {
                              }
                              var t = 0;
                              for (var id in hash) {
-                                 if (hash[id] == true) {
+                                 if (hash[id] === true) {
                                      t++;
                                  }
                              }
