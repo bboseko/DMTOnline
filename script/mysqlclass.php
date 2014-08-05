@@ -10,7 +10,7 @@ class db {
     var $hostname = "localhost";
     var $databasename = "dbosfacdmt";
     var $username = "root";
-    var $password = "";
+    var $password = "ustopudie";
     //
     var $query_id = 0; // identifiant de resultat
     var $link_id = 0; // identifiant de connexion

@@ -11,7 +11,7 @@ function connectdb() {
     $hostname = "localhost";
     $databasename = "dbosfacdmt";
     $username = "root";
-    $password = "";
+    $password = "ustopudie";
 
     @mysql_pconnect($hostname, $username, $password) or die("Connection failed:" . mysql_error()); // connexion persistante au serveur
     @mysql_select_db($databasename) or die("Database selection failed:" . mysql_error());
