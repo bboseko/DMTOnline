@@ -2,15 +2,15 @@
 
 class db {
 //Remote database settings
-    var $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
-    var $databasename = "dbosfacdmt";
-    var $username = "dbosfacdmt";
-    var $password = "Osf@cL@b01";
-//    Local database settings
-//    var $hostname = "localhost";
+//    var $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
 //    var $databasename = "dbosfacdmt";
-//    var $username = "root";
-//    var $password = "";
+//    var $username = "dbosfacdmt";
+//    var $password = "Osf@cL@b01";
+//    Local database settings
+    var $hostname = "localhost";
+    var $databasename = "dbosfacdmt";
+    var $username = "root";
+    var $password = "ustopudie";
     //
     var $query_id = 0; // identifiant de resultat
     var $link_id = 0; // identifiant de connexion
