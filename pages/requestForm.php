@@ -26,7 +26,7 @@
             $(document).ready(function() {
                 var idss = window.location.search.substring(1);
                 $('#firstname').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#firstnameLabel').addClass('errorMessageInFrom');
                     } else {
@@ -35,7 +35,7 @@
                     }
                 });
                 $('#familyname').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#familynameLabel').addClass('errorMessageInFrom');
                     } else {
@@ -44,7 +44,7 @@
                     }
                 });
                 $('#sex').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#sexLabel').addClass('errorMessageInFrom');
                     } else {
@@ -53,7 +53,7 @@
                     }
                 });
                 $('#email').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#emailLabel').addClass('errorMessageInFrom');
                     } else if (!isValidEmailAddress($(this).val())) {
@@ -65,7 +65,7 @@
                     }
                 });
                 $('#nationality').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#nationalityLabel').addClass('errorMessageInFrom');
                     } else {
@@ -74,7 +74,7 @@
                     }
                 });
                 $('#phone').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#phoneLabel').addClass('errorMessageInFrom');
                     } else {
@@ -83,7 +83,7 @@
                     }
                 });
                 $('#address').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#addressLabel').addClass('errorMessageInFrom');
                     } else {
@@ -92,7 +92,7 @@
                     }
                 });
                 $('#profession').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#professionLabel').addClass('errorMessageInFrom');
                     } else {
@@ -101,7 +101,7 @@
                     }
                 });
                 $('#institution').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#institutionLabel').addClass('errorMessageInFrom');
                     } else {
@@ -110,7 +110,7 @@
                     }
                 });
                 $('#applications').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#applicationsLabel').addClass('errorMessageInFrom');
                     } else {
@@ -119,7 +119,7 @@
                     }
                 });
                 $('#description').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#descriptionLabel').addClass('errorMessageInFrom');
                     } else {
@@ -128,7 +128,7 @@
                     }
                 });
                 $('#interest').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#interestLabel').addClass('errorMessageInFrom');
                     } else {
@@ -137,7 +137,7 @@
                     }
                 });
                 $('#comment').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#commentLabel').addClass('errorMessageInFrom');
                     } else {
@@ -162,9 +162,9 @@
                     var interest = $('#interest').val();
                     var comment = $('#comment').val();
 
-                    if (firstname != '' && familyname != '' && sex != '' && isValidEmailAddress(email) && nationality != ''
-                            && phone != '' && address != '' && profession != '' && institution != '' && applications != ''
-                            && description != '' && interest != '' && comment != '' &&
+                    if (firstname !== '' && familyname !== '' && sex !== '' && isValidEmailAddress(email) && nationality !== ''
+                            && phone !== '' && address !== '' && profession !== '' && institution !== '' && applications !== ''
+                            && description !== '' && interest !== '' && comment !== '' &&
                             !$('#firstname').hasClass('errorInForm') &&
                             !$('#familyname').hasClass('errorInForm') &&
                             !$('#sex').hasClass('errorInForm') &&
@@ -196,28 +196,28 @@
                         });
                     }
                     else {
-                        if ($('#firstname').val() == '') {
+                        if ($('#firstname').val() === '') {
                             $('#firstname').addClass('errorInForm');
                             $('#firstnameLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#firstname').removeClass('errorInForm');
                             $('#firstnameLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#familyname').val() == '') {
+                        if ($('#familyname').val() === '') {
                             $('#familyname').addClass('errorInForm');
                             $('#familynameLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#familyname').removeClass('errorInForm');
                             $('#familynameLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#sex').val() == '') {
+                        if ($('#sex').val() === '') {
                             $('#sex').addClass('errorInForm');
                             $('#sexLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#sex').removeClass('errorInForm');
                             $('#sexLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#email').val() == '') {
+                        if ($('#email').val() === '') {
                             $('#email').addClass('errorInForm');
                             $('#emailLabel').addClass('errorMessageInFrom');
                         } else if (!isValidEmailAddress($('#email').val())) {
@@ -227,63 +227,63 @@
                             $('#email').removeClass('errorInForm');
                             $('#emailLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#nationality').val() == '') {
+                        if ($('#nationality').val() === '') {
                             $('#nationality').addClass('errorInForm');
                             $('#nationalityLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#nationality').removeClass('errorInForm');
                             $('#nationalityLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#phone').val() == '') {
+                        if ($('#phone').val() === '') {
                             $('#phone').addClass('errorInForm');
                             $('#phoneLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#phone').removeClass('errorInForm');
                             $('#phoneLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#address').val() == '') {
+                        if ($('#address').val() === '') {
                             $('#address').addClass('errorInForm');
                             $('#addressLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#address').removeClass('errorInForm');
                             $('#addressLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#profession').val() == '') {
+                        if ($('#profession').val() === '') {
                             $('#profession').addClass('errorInForm');
                             $('#professionLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#profession').removeClass('errorInForm');
                             $('#professionLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#institution').val() == '') {
+                        if ($('#institution').val() === '') {
                             $('#institution').addClass('errorInForm');
                             $('#institutionLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#institution').removeClass('errorInForm');
                             $('#institutionLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#applications').val() == '') {
+                        if ($('#applications').val() === '') {
                             $('#applications').addClass('errorInForm');
                             $('#applicationsLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#applications').removeClass('errorInForm');
                             $('#applicationsLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#description').val() == '') {
+                        if ($('#description').val() === '') {
                             $('#description').addClass('errorInForm');
                             $('#descriptionLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#description').removeClass('errorInForm');
                             $('#descriptionLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#interest').val() == '') {
+                        if ($('#interest').val() === '') {
                             $('#interest').addClass('errorInForm');
                             $('#interestLabel').addClass('errorMessageInFrom');
                         } else {
                             $('#interest').removeClass('errorInForm');
                             $('#interestLabel').removeClass('errorMessageInFrom');
                         }
-                        if ($('#comment').val() == '') {
+                        if ($('#comment').val() === '') {
                             $('#comment').addClass('errorInForm');
                             $('#commentLabel').addClass('errorMessageInFrom');
                         } else {

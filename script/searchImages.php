@@ -116,7 +116,7 @@ function loadRecord($Connex, $host) {
         ?>
         <tr id="resultRow_<?php echo $id; ?>">
             <td class="resultRowNum <?php echo $evenOdd; ?>">
-                <span class="include"><?php echo++$GLOBALS['num']; ?><br></span>
+                <span class="include"><?php echo ++$GLOBALS['num']; ?><br></span>
             </td>
             <td class="resultRowContent <?php echo $evenOdd; ?>">
                 <img title="Show Browse" id="preview_<?php echo $id; ?>" style="cursor: pointer;padding-left:4px;padding-right:4px;" alt="No Browse" src="<?php echo $host . $preview; ?>" 
@@ -132,23 +132,23 @@ function loadRecord($Connex, $host) {
                         <div class="iconContainer">
 
                             <script type="text/javascript">
-                         var idEntity = '<?php echo $id; ?>';
-                         var resultRow = $('#resultRow_' + idEntity);
-                         if (hash[idEntity] === undefined) {
-                             hash[idEntity] = true;
-                         }
-                         if (hash[idEntity] === true) {
-                             $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" checked />');
-                             resultRow.removeClass('excludedResultRow');
-                         }
-                         else {
-                             $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" />');
-                             resultRow.addClass('excludedResultRow');
-                         }
-                         if (arrayColorfp[idEntity] === undefined) {
-                             arrayColorfp[idEntity] = 'transparent';
-                         }
-                         $('#fp_' + idEntity).css('background-color', arrayColorfp[idEntity]);
+                                var idEntity = '<?php echo $id; ?>';
+                                var resultRow = $('#resultRow_' + idEntity);
+                                if (hash[idEntity] === undefined) {
+                                    hash[idEntity] = true;
+                                }
+                                if (hash[idEntity] === true) {
+                                    $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" checked />');
+                                    resultRow.removeClass('excludedResultRow');
+                                }
+                                else {
+                                    $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" />');
+                                    resultRow.addClass('excludedResultRow');
+                                }
+                                if (arrayColorfp[idEntity] === undefined) {
+                                    arrayColorfp[idEntity] = 'transparent';
+                                }
+                                $('#fp_' + idEntity).css('background-color', arrayColorfp[idEntity]);
                             </script>
                             <span id="entity_<?php echo $id; ?>"></span>
                             <a id="fp_<?php echo $id; ?>" title="Show Footprint" class="footprint">
@@ -169,35 +169,35 @@ function loadRecord($Connex, $host) {
 }
 ?>
 <script type="text/javascript">
-                         $('input.resultCheckBox').change(function() {
-                             var idIMG = $(this).attr('id');
-                             var resultRow = $('#resultRow_' + idIMG);
-                             hash[idIMG] = $(this).is(':checked');
-                             if (!$(this).is(':checked')) {
-                                 resultRow.addClass('excludedResultRow');
-                             }
-                             else {
-                                 resultRow.removeClass('excludedResultRow');
-                             }
-                             var t = 0;
-                             for (var id in hash) {
-                                 if (hash[id] === true) {
-                                     t++;
-                                 }
-                             }
+    $('input.resultCheckBox').change(function () {
+        var idIMG = $(this).attr('id');
+        var resultRow = $('#resultRow_' + idIMG);
+        hash[idIMG] = $(this).is(':checked');
+        if (!$(this).is(':checked')) {
+            resultRow.addClass('excludedResultRow');
+        }
+        else {
+            resultRow.removeClass('excludedResultRow');
+        }
+        var t = 0;
+        for (var id in hash) {
+            if (hash[id] === true) {
+                t++;
+            }
+        }
 //                             if (nRowResult >= 2) {
 //                                 t = t - 2;
 //                             }
 //                             else {
 //                                 t = t - 1;
 //                             }
-                             if (t > 0) {
-                                 $('#submitButton').removeClass('disabled');
-                             }
-                             else {
-                                 $('#submitButton').addClass('disabled');
-                             }
-                         });
+        if (t > 0) {
+            $('#submitButton').removeClass('disabled');
+        }
+        else {
+            $('#submitButton').addClass('disabled');
+        }
+    });
 </script>
 <?php
 

@@ -39,7 +39,7 @@ function convertDMSToDec(coordinate) {
     var seconds = parseFloat(coordinate[2]);
     var direction = coordinate[3];
     coordinate = degrees + minutes / 60 + seconds / 3600;
-    coordinate = (direction == 'W' || direction == 'S') ? coordinate * -1.0 : coordinate;
+    coordinate = (direction === 'W' || direction === 'S') ? coordinate * -1.0 : coordinate;
     return coordinate.toFixed(DMT.coordinatePrecision);
 }
 // Add leading zeros to numbers
@@ -92,7 +92,7 @@ DMT.gmaps = {
             geodesic: false
         },
         format: null,
-        getFormat: function() {
+        getFormat: function () {
 //return ($('#latlonfmtdeg').is(':checked'))? 'dms' : 'dd';
             if (DMT.gmaps.settings.format === null) {
                 DMT.gmaps.settings.format = ($('#latlonfmtdeg').prop('checked')) ? 'dms' : 'dd';
@@ -106,7 +106,7 @@ DMT.gmaps = {
         latPan: 200,
         lngPan: 450,
         maxPoints: 20,
-        getMaxPoints: function() {
+        getMaxPoints: function () {
             if (DMT.gmaps.settings.maxPoints === null)
                 DMT.gmaps.settings.maxPoints = parseInt($('#maxPoints').val(), 10);
             return DMT.gmaps.settings.maxPoints;
@@ -114,7 +114,7 @@ DMT.gmaps = {
         resultsPerPage: 10
     },
     polygonTool: {
-        changeTabs: function(polygonType) {
+        changeTabs: function (polygonType) {
             var polygonType = DMT.gmaps.overlays.polygon.type;
 // Deselect all geoTabs and areaTabs
             $('#geoTabs div.tab').removeClass('selected');
@@ -122,7 +122,7 @@ DMT.gmaps = {
 // Hide the visible geoForm and areaForm
             $('#tab1data div.control-container div.geoForm:visible').hide();
             $('#tab1data div.control-container div.areaForm:visible').hide();
-            if (polygonType == "polygon") {
+            if (polygonType === "polygon") {
 // Select the Address/Place and Coordinate tabs
                 $('#tabAddress').addClass('selected');
                 $('#tabCoordinates').addClass('selected');
@@ -132,7 +132,7 @@ DMT.gmaps = {
 // Disable the Circle tab
                 $('#tabCircle').addClass('disabled');
             }
-            else if (polygonType == "circle") {
+            else if (polygonType === "circle") {
 // Enable the Circle tag
                 $('#tabCircle').removeClass('disabled');
 // Select the Circle and Coordinate tabs
@@ -143,7 +143,7 @@ DMT.gmaps = {
                 $('#tabCoordinatesForm').show();
             }
         },
-        toggle: function() {
+        toggle: function () {
 // Clear the previous coordinates
             DMT.gmaps.coordinates.clear();
             DMT.gmaps.polygonTool.disableKeyBounds();
@@ -190,20 +190,20 @@ DMT.gmaps = {
                 DMT.gmaps.overlays.polygon.type = 'circle';
             }
             DMT.gmaps.polygonTool.enableKeyBounds();
-            if (getBrowserName() == 'IE')
+            if (getBrowserName() === 'IE')
             {
                 window.scrollBy(0, 1);
             }
         },
-        enableKeyBounds: function() {
-            if (DMT.gmaps.overlays.polygon.type == 'circle') {
+        enableKeyBounds: function () {
+            if (DMT.gmaps.overlays.polygon.type === 'circle') {
                 DMT.gmaps.map.enableKeyCircleBounds();
             } else {
                 DMT.gmaps.map.enableKeyDragBounds();
             }
         },
-        disableKeyBounds: function() {
-            if (DMT.gmaps.overlays.polygon.type == 'circle')
+        disableKeyBounds: function () {
+            if (DMT.gmaps.overlays.polygon.type === 'circle')
             {
                 DMT.gmaps.map.disableKeyCircleBounds();
             }
@@ -212,19 +212,19 @@ DMT.gmaps = {
                 DMT.gmaps.map.disableKeyDragBounds();
             }
         },
-        disableAllKeyBounds: function() {
+        disableAllKeyBounds: function () {
             DMT.gmaps.map.disableKeyCircleBounds();
             DMT.gmaps.map.disableKeyDragBounds();
         }
     },
     // TODO: Rewrite
 // Centers the map on the current polygon
-    centerMap: function() {
+    centerMap: function () {
         if (DMT.gmaps.coordinateList.length < 1) {
             return;
         }
         var bounds = new google.maps.LatLngBounds();
-        if (DMT.gmaps.overlays.polygon.type == 'polygon') {
+        if (DMT.gmaps.overlays.polygon.type === 'polygon') {
             for (var i = 0; i < DMT.gmaps.coordinateList.length; i++) {
                 bounds.extend(DMT.gmaps.coordinateList[i]);
             }
@@ -236,11 +236,11 @@ DMT.gmaps = {
 // Center the map according to the bounds
         DMT.gmaps.map.setCenter(bounds.getCenter());
 //If we are using a map that uses imagery check the zoom level
-        if ((google.maps.MapTypeId.HYBRID == DMT.gmaps.map.getMapTypeId()
-                || google.maps.MapTypeId.SATELLITE == DMT.gmaps.map.getMapTypeId()) && !bounds.isEmpty()) {
+        if ((google.maps.MapTypeId.HYBRID === DMT.gmaps.map.getMapTypeId()
+                || google.maps.MapTypeId.SATELLITE === DMT.gmaps.map.getMapTypeId()) && !bounds.isEmpty()) {
             var maxZoomService = new google.maps.MaxZoomService();
-            maxZoomService.getMaxZoomAtLatLng(bounds.getCenter(), function(response) {
-                if (response.status == google.maps.MaxZoomStatus.OK) {
+            maxZoomService.getMaxZoomAtLatLng(bounds.getCenter(), function (response) {
+                if (response.status === google.maps.MaxZoomStatus.OK) {
                     if (DMT.gmaps.map.getZoom() > response.zoom) {
 //We are zoomed in too far
                         DMT.gmaps.map.setZoom(response.zoom);
@@ -249,15 +249,15 @@ DMT.gmaps = {
             });
         }
     },
-    isDarkMapType: function() {
+    isDarkMapType: function () {
         var mapType = DMT.gmaps.map.getMapTypeId();
-        if (mapType == google.maps.MapTypeId.SATELLITE || mapType == google.maps.MapTypeId.HYBRID) {
+        if (mapType === google.maps.MapTypeId.SATELLITE || mapType === google.maps.MapTypeId.HYBRID) {
             return true;
         } else {
             return false;
         }
     },
-    loadMap: function() {
+    loadMap: function () {
 // Default location over the DRC
 //        if ($(document).height() > 241) {
 //            $("#map").css("height", $(document).height() - 222);
@@ -289,7 +289,7 @@ DMT.gmaps = {
         };
         DMT.gmaps.map = new google.maps.Map(document.getElementById('map'), myOptions);
 // Add map listener for clicks
-        google.maps.event.addListener(DMT.gmaps.map, 'click', function(event) {
+        google.maps.event.addListener(DMT.gmaps.map, 'click', function (event) {
             // Check if the user is on tab 1
 //            if (DMT.tabs.tabInfo.getCurrent() == 1) {
             // Check if the user is on the coordinates tab
@@ -306,8 +306,8 @@ DMT.gmaps = {
                 });
                 return;
             }
-            if (DMT.gmaps.overlays.polygon.type == 'circle') {
-                if (DMT.gmaps.coordinateList.length == 2) {
+            if (DMT.gmaps.overlays.polygon.type === 'circle') {
+                if (DMT.gmaps.coordinateList.length === 2) {
                     draw = false;
                     $.blockUI({
                         theme: true,
@@ -324,37 +324,37 @@ DMT.gmaps = {
 //            }
         });
         // Add the mousemove listener
-        google.maps.event.addListener(DMT.gmaps.map, 'mousemove', function(event) {
+        google.maps.event.addListener(DMT.gmaps.map, 'mousemove', function (event) {
             DMT.gmaps.updateMouseLocation(event.latLng);
         });
         // TODO: Check if this needs rewriting
 // Add the grid overlay listeners
         DMT.gmaps.overlays.grid = new LatLngOverlay();
-        google.maps.event.addListener(DMT.gmaps.map, 'drag', function(event) {
+        google.maps.event.addListener(DMT.gmaps.map, 'drag', function (event) {
             DMT.gmaps.overlays.grid.redraw();
         });
         // To handle the changing of grid lines on the map
-        google.maps.event.addListener(DMT.gmaps.map, 'maptypeid_changed', function(event) {
+        google.maps.event.addListener(DMT.gmaps.map, 'maptypeid_changed', function (event) {
             if (!DMT.gmaps.overlays.grid.hidden)
             {
                 DMT.gmaps.overlays.grid.redraw();
             }
         });
         // Listen for the map to load, add the map features, then remove the listener
-        var idleLoad = google.maps.event.addListener(DMT.gmaps.map, 'idle', function(event) {
+        var idleLoad = google.maps.event.addListener(DMT.gmaps.map, 'idle', function (event) {
             // Show the coordinates, options, and overlays controls
             $('#mouseLatLng').show();
             $('#optionsControl').show();
             $('#overlaysControl').show();
             var coordinates = [];
 // Load the coordinates from the coordEntryArea
-            $('#coordEntryArea li.coordinate').not('#coordinateElementEmpty').each(function()
+            $('#coordEntryArea li.coordinate').not('#coordinateElementEmpty').each(function ()
             {
                 coordinates.push(
                         new google.maps.LatLng($(this).children('div.format_dd ').children('span.latitude').html(),
-                        $(this).children('div.format_dd').children('span.longitude').html()));
+                                $(this).children('div.format_dd').children('span.longitude').html()));
             });
-            if ($('#polygonType').val() == 'circle')
+            if ($('#polygonType').val() === 'circle')
             {
                 //var center = coordinates[0];
 //var outer = coordinates[1];
@@ -412,7 +412,7 @@ DMT.gmaps = {
         });
     },
     coordinates: {
-        add: function(latLng) {
+        add: function (latLng) {
 //            if ($('#tabCoordinates').hasClass('selected') === true) {
             // Add the coordinate to the coordinateList
             DMT.gmaps.coordinateList.push(latLng);
@@ -425,7 +425,7 @@ DMT.gmaps = {
             DMT.gmaps.markers.create(index);
 //            }
         },
-        clear: function() {
+        clear: function () {
 // Clear the coordinateList
             DMT.gmaps.coordinateList.length = 0;
 // Clear the coordinate elements
@@ -435,7 +435,7 @@ DMT.gmaps = {
 // Clear the markers
             DMT.gmaps.markers.clear();
         },
-        remove: function(index) {
+        remove: function (index) {
 // Delete the coordinate from the coordinateList
             DMT.gmaps.coordinateList.splice(index, 1);
 // Remove the coordinate element
@@ -445,7 +445,7 @@ DMT.gmaps = {
 // Remove the marker from the map
             DMT.gmaps.markers.remove(index);
         },
-        update: function(index, latLng) {
+        update: function (index, latLng) {
 // Update the coordinate in the coordinateList
             DMT.gmaps.coordinateList[index] = latLng;
 // Update the coordinate element
@@ -457,12 +457,12 @@ DMT.gmaps = {
         }
     },
     coordinateElements: {
-        add: function(index) {
+        add: function (index) {
 // Hide the "no coordinates" element
             $('#coordinateElementEmpty').hide();
             var template = $('#coordEntryTemplate').html();
             var showFormat = DMT.gmaps.settings.getFormat();
-            var hideFormat = (showFormat == 'dms') ? 'dd' : 'dms';
+            var hideFormat = (showFormat === 'dms') ? 'dd' : 'dms';
             var latitude = DMT.gmaps.coordinateList[index].lat().toFixed(DMT.coordinatePrecision);
             var longitude = DMT.gmaps.coordinateList[index].lng().toFixed(DMT.coordinatePrecision);
             var dmsLatitude = convertDecToDMS(latitude, 'lat', true);
@@ -474,20 +474,20 @@ DMT.gmaps = {
                 "dmsLat": dmsLatitude,
                 "dmsLng": dmsLongitude,
                 "format": showFormat,
-                "oddEven": (((index % 2) == 0) ? 'even' : 'odd'),
+                "oddEven": (((index % 2) === 0) ? 'even' : 'odd'),
                 "index": index
             };
-            var content = template.replace(/!%([^%]*)%!/mg, function($1, $2) {
+            var content = template.replace(/!%([^%]*)%!/mg, function ($1, $2) {
                 return fillValues[$2];
             });
             $('#coordEntryArea').append(content);
             $('#coordinate_' + index).children('div.format_' + hideFormat).hide();
         },
-        clear: function() {
+        clear: function () {
             $('#coordEntryArea li').not('#coordinateElementEmpty').remove();
             $('#coordinateElementEmpty').show();
         },
-        remove: function(index) {
+        remove: function (index) {
 // Remove the HTML element
             $('#coordinate_' + index).remove();
 // If this wasn't the last element, have to do some redrawing
@@ -496,7 +496,7 @@ DMT.gmaps = {
                 for (var i = index + 1; i < DMT.gmaps.coordinateList.length + 1; i++) {
                     var $coordinateElement = $('#coordinate_' + i);
                     index = (i - 1);
-                    if ((index % 2) == 0) {
+                    if ((index % 2) === 0) {
                         $coordinateElement.removeClass('odd').addClass('even');
                     } else {
                         $coordinateElement.removeClass('even').addClass('odd');
@@ -508,14 +508,14 @@ DMT.gmaps = {
                 }
             }
         },
-        splice: function(index, length)
+        splice: function (index, length)
         {
             for (var i = 0; i < length; i++, index++)
             {
                 $('#coordinate_' + index).remove();
             }
         },
-        update: function(index) {
+        update: function (index) {
             var latitude = DMT.gmaps.coordinateList[index].lat().toFixed(DMT.coordinatePrecision);
             var longitude = DMT.gmaps.coordinateList[index].lng().toFixed(DMT.coordinatePrecision);
             var dmsLatitude = convertDecToDMS(latitude, 'lat', true);
@@ -528,28 +528,28 @@ DMT.gmaps = {
         }
     },
     footprints: {
-        allChecked: function() {
+        allChecked: function () {
         },
-        attachFootprintClickEvent: function(footprint, entityId, resultNum)
+        attachFootprintClickEvent: function (footprint, entityId, resultNum)
         {
-            google.maps.event.addListener(footprint, 'click', function(event) {
-                if (DMT.tabs.tabInfo.getCurrent() == 4 && footprint.getVisible() === true)
+            google.maps.event.addListener(footprint, 'click', function (event) {
+                if (DMT.tabs.tabInfo.getCurrent() === 4 && footprint.getVisible() === true)
                 {
 // Putting the info window where the user clicks, not the center any more
-                    if (DMT.gmaps.overlays.infoWindows[entityId].getContent() == "")
+                    if (DMT.gmaps.overlays.infoWindows[entityId].getContent() === "")
                     {
                         var collectionID = ($("#show_search_data").val()).split("_")[2];
                         DMT.gmaps.overlays.infoWindows[entityId].setContent(
                                 $.ajax({
-                            type: 'GET',
-                            url: DMT.defaultUrl + 'form/infowindowmetadata',
-                            data: {
-                                entity_id: entityId,
-                                row: resultNum,
-                                collection_id: collectionID
-                            },
-                            async: false
-                        }).responseText
+                                    type: 'GET',
+                                    url: DMT.defaultUrl + 'form/infowindowmetadata',
+                                    data: {
+                                        entity_id: entityId,
+                                        row: resultNum,
+                                        collection_id: collectionID
+                                    },
+                                    async: false
+                                }).responseText
                                 );
                     }
                     DMT.gmaps.overlays.infoWindows[entityId].setPosition(event.latLng);
@@ -557,12 +557,12 @@ DMT.gmaps = {
                 }
             });
         },
-        clearAll: function() {
+        clearAll: function () {
             DMT.gmaps.footprints.hideAll();
             DMT.gmaps.overlays.footprints.length = 0;
             DMT.gmaps.overlays.footprints = [];
         },
-        create: function(entityId, cornerPoints, resultNum, color, luma, fpType) {
+        create: function (entityId, cornerPoints, resultNum, color, luma, fpType) {
             if (color === null) {
                 color = '#526e87';
             }
@@ -574,7 +574,7 @@ DMT.gmaps = {
             }
             //For point types we make a diamond polygon
 //Per Ryan - he didn't like the diamond so it has been converted to points
-            if (fpType == 'point') {
+            if (fpType === 'point') {
                 var markerTextColor = (luma < 100) ? 'FFFFFF' : '000000';
                 var image = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=|' + color.substr(1) + '|' + markerTextColor, new google.maps.Size(20, 32), new google.maps.Point(0, 0), new google.maps.Point(10, 32));
                 var shape = {
@@ -605,14 +605,14 @@ DMT.gmaps = {
                     geodesic: polygonSettings.geodesic
                 });
 // Highlight effect for the footprints
-                google.maps.event.addListener(DMT.gmaps.overlays.footprints[entityId], 'mouseover', function(event) {
+                google.maps.event.addListener(DMT.gmaps.overlays.footprints[entityId], 'mouseover', function (event) {
 // Increase the opacity and brighten the color
                     DMT.gmaps.overlays.footprints[entityId].setOptions({
                         fillOpacity: DMT.gmaps.settings.footprintDisplayDefaults.fillOpacity + 0.3,
                         fillColor: brightenColor(DMT.gmaps.overlays.footprints[entityId].color)
                     });
                 });
-                google.maps.event.addListener(DMT.gmaps.overlays.footprints[entityId], 'mouseout', function(event) {
+                google.maps.event.addListener(DMT.gmaps.overlays.footprints[entityId], 'mouseout', function (event) {
 // Reset the opacity and color to default
                     DMT.gmaps.overlays.footprints[entityId].setOptions({
                         fillOpacity: DMT.gmaps.settings.footprintDisplayDefaults.fillOpacity,
@@ -631,7 +631,7 @@ DMT.gmaps = {
             });
             DMT.gmaps.footprints.attachFootprintClickEvent(DMT.gmaps.overlays.footprints[entityId], entityId, resultNum);
         },
-        hide: function(entityId) {
+        hide: function (entityId) {
             // Remove the icon background color
             var $footCell = $('#fp_' + entityId);
             $footCell.css('background-color', 'transparent'); // Switch back to the black footprint if luma is below threshold
@@ -655,13 +655,13 @@ DMT.gmaps = {
                 }
             }
         },
-        hideAll: function() {
+        hideAll: function () {
             for (var entityId in DMT.gmaps.overlays.footprints) {
                 DMT.gmaps.footprints.hide(entityId);
             }
             $('#showAllFootprints').prop('checked', false);
         },
-        show: function(entityId)
+        show: function (entityId)
         {
             // Check if it is excluded first
             if ($('#resultRow_' + entityId).hasClass('excludedResultRow'))
@@ -690,13 +690,13 @@ DMT.gmaps = {
                 }
             }
         },
-        showAll: function(isChecked)
+        showAll: function (isChecked)
         {
             if (isChecked === true)
             {
                 $('#showAllFootprints').addClass('showAll');
             }
-            $('#search-results-container a.footprint:visible').each(function()
+            $('#search-results-container a.footprint:visible').each(function ()
             {
                 var entityId = $(this).attr("id").substring(3);
                 if (isChecked)
@@ -720,7 +720,7 @@ DMT.gmaps = {
 // Center the map on the footprints
             DMT.gmaps.centerOnFootprintAndBrowse();
         },
-        toggle: function(entityId, cornerPoints, resultNum, color, luma, type) {
+        toggle: function (entityId, cornerPoints, resultNum, color, luma, type) {
             if (DMT.gmaps.overlays.footprints[entityId] === undefined) {
                 DMT.gmaps.footprints.create(entityId, cornerPoints, resultNum, color, luma, type);
             }
@@ -733,13 +733,13 @@ DMT.gmaps = {
         }
     },
     infoWindows: {
-        clearAll: function()
+        clearAll: function ()
         {
             DMT.gmaps.infoWindows.hideAll();
             DMT.gmaps.overlays.infoWindows.length = 0;
             DMT.gmaps.overlays.infoWindows = [];
         },
-        hideAll: function()
+        hideAll: function ()
         {
             for (var entityId in DMT.gmaps.overlays.infoWindows)
             {
@@ -748,31 +748,31 @@ DMT.gmaps = {
         }
     },
     mapOverlays: {
-        addOverlay: function(url, wmsLayer, projection)
+        addOverlay: function (url, wmsLayer, projection)
         {
             var index = DMT.gmaps.map.overlayMapTypes.getLength();
             DMT.gmaps.map.overlayMapTypes.insertAt(index, new WMSMapType(url, wmsLayer, projection));
             return index;
         },
-        removeOverlay: function(index) {
+        removeOverlay: function (index) {
             DMT.gmaps.map.overlayMapTypes.removeAt(index);
         }
     },
     mapTypes: {
         availableMapTypes: [],
-        addMapType: function(mapTypeKey, url, wmsLayer, projection)
+        addMapType: function (mapTypeKey, url, wmsLayer, projection)
         {
             //Only add the layer if it doesn't already exist
-            if (DMT.gmaps.mapTypes.availableMapTypes.indexOf(mapTypeKey) == -1)
+            if (DMT.gmaps.mapTypes.availableMapTypes.indexOf(mapTypeKey) === -1)
             {
                 DMT.gmaps.mapTypes.availableMapTypes.push(mapTypeKey);
                 DMT.gmaps.map.mapTypes.set(mapTypeKey, new WMSMapType(url, wmsLayer, projection));
             }
         },
-        selectMapType: function(mapTypeKey)
+        selectMapType: function (mapTypeKey)
         {
             //Make sure it exists before we try selecting it
-            if (DMT.gmaps.mapTypes.availableMapTypes.indexOf(mapTypeKey) != -1)
+            if (DMT.gmaps.mapTypes.availableMapTypes.indexOf(mapTypeKey) !== -1)
             {
                 DMT.gmaps.map.setMapTypeId(mapTypeKey);
                 return true;
@@ -784,8 +784,8 @@ DMT.gmaps = {
         }
     },
     markers: {
-        attachDragEndListener: function(marker, index) {
-            DMT.gmaps.overlays.markers[index].dragEndListener = google.maps.event.addListener(marker, 'dragend', function() {
+        attachDragEndListener: function (marker, index) {
+            DMT.gmaps.overlays.markers[index].dragEndListener = google.maps.event.addListener(marker, 'dragend', function () {
                 var mouseLocation = this.getPosition();
                 DMT.gmaps.coordinateList[index] = mouseLocation;
                 DMT.gmaps.polygon.redraw();
@@ -802,7 +802,7 @@ DMT.gmaps = {
                 DMT.gmaps.settings.dragLock = false;
             });
         },
-        clear: function() {
+        clear: function () {
             var markers = DMT.gmaps.overlays.markers;
             for (var i = 0; i < markers.length; i++)
             {
@@ -810,7 +810,7 @@ DMT.gmaps = {
             }
             DMT.gmaps.overlays.markers.length = 0;
         },
-        create: function(index) {
+        create: function (index) {
             // Create the numbered marker
             var image = new google.maps.MarkerImage('http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=' + (index + 1) + '|FF3333|000000', new google.maps.Size(20, 32), new google.maps.Point(0, 0), new google.maps.Point(10, 32));
             var shape = {
@@ -828,17 +828,17 @@ DMT.gmaps = {
                 raiseOnDrag: false
             });
             // Attach the dragstart event
-            google.maps.event.addListener(marker, 'dragstart', function()
+            google.maps.event.addListener(marker, 'dragstart', function ()
             {
                 DMT.gmaps.settings.dragLock = true;
             });
             DMT.gmaps.overlays.markers.push(marker);
             DMT.gmaps.markers.attachDragEndListener(marker, index);
         },
-        detachDragEndListener: function(index) {
+        detachDragEndListener: function (index) {
             google.maps.event.removeListener(DMT.gmaps.overlays.markers[index].dragEndListener);
         },
-        hide: function() {
+        hide: function () {
             for (var i in DMT.gmaps.overlays.markers)
             {
                 DMT.gmaps.overlays.markers[i].setOptions({
@@ -846,14 +846,14 @@ DMT.gmaps = {
                 });
             }
         },
-        redraw: function() {
+        redraw: function () {
             var currentTab = DMT.tabs.tabInfo.getCurrent();
             var markerLength = DMT.gmaps.overlays.markers.length;
-            if (markerLength == 1)
+            if (markerLength === 1)
             {
                 DMT.gmaps.overlays.markers[0].setOptions({
-                    draggable: (currentTab == 1),
-                    title: (currentTab == 1) ? '1' : 'Area of Interest',
+                    draggable: (currentTab === 1),
+                    title: (currentTab === 1) ? '1' : 'Area of Interest',
                     visible: true
                 });
             }
@@ -861,11 +861,11 @@ DMT.gmaps = {
             {
                 for (var index = 0; index < markerLength; index++)
                 {
-                    DMT.gmaps.overlays.markers[index].setVisible(currentTab == 1);
+                    DMT.gmaps.overlays.markers[index].setVisible(currentTab === 1);
                 }
             }
         },
-        remove: function(index) {
+        remove: function (index) {
             DMT.gmaps.overlays.markers[index].setMap(null);
             DMT.gmaps.overlays.markers.splice(index, 1);
             var length = DMT.gmaps.overlays.markers.length;
@@ -896,7 +896,7 @@ DMT.gmaps = {
                  }*/
             }
         },
-        show: function() {
+        show: function () {
             for (var i in DMT.gmaps.overlays.markers)
             {
                 DMT.gmaps.overlays.markers[i].setOptions({
@@ -904,14 +904,14 @@ DMT.gmaps = {
                 });
             }
         },
-        update: function(index) {
+        update: function (index) {
             DMT.gmaps.overlays.markers[index].setPosition(DMT.gmaps.coordinateList[index]);
         }
     },
     polygon: {
-        clear: function() {
+        clear: function () {
             var type = DMT.gmaps.overlays.polygon.type;
-            if (type == 'shape' && DMT.gmaps.overlays.polygon.spatialId !== undefined)
+            if (type === 'shape' && DMT.gmaps.overlays.polygon.spatialId !== undefined)
             {
                 DMT.gmaps.overlays.polygon.setMap(null);
                 DMT.gmaps.overlays.polygon.spatialId = undefined;
@@ -920,39 +920,39 @@ DMT.gmaps = {
                 $('#areaShapeSectionItem').hide();
                 $('#areaShapeSectionEmpty').show();
             }
-            else if (type == 'circle')
+            else if (type === 'circle')
             {
                 DMT.gmaps.overlays.polygon.setRadius(0);
             }
-            else if (type == 'polygon')
+            else if (type === 'polygon')
             {
                 // Reset the path for the polygon
                 DMT.gmaps.overlays.polygon.setPath([]);
             }
         },
-        decreaseOpacity: function() {
+        decreaseOpacity: function () {
             if (DMT.gmaps.overlays.polygon !== null && DMT.gmaps.overlays.polygon.map !== undefined)
             {
                 DMT.gmaps.overlays.polygon.setOptions({fillOpacity: 0.2, strokeOpacity: 0.5});
             }
         },
-        hide: function() {
+        hide: function () {
         },
-        increaseOpacity: function() {
+        increaseOpacity: function () {
             if (DMT.gmaps.overlays.polygon !== null && DMT.gmaps.overlays.polygon.map !== undefined)
             {
                 DMT.gmaps.overlays.polygon.setOptions({fillOpacity: 0.35, strokeOpacity: 0.8});
             }
         },
-        redraw: function() {
-            if (DMT.gmaps.overlays.polygon.type == 'circle')
+        redraw: function () {
+            if (DMT.gmaps.overlays.polygon.type === 'circle')
             {
                 if (DMT.gmaps.coordinateList.length >= 1)
                 {
                     var center = DMT.gmaps.coordinateList[0];
                     DMT.gmaps.overlays.polygon.setCenter(center);
                 }
-                if (DMT.gmaps.coordinateList.length == 2)
+                if (DMT.gmaps.coordinateList.length === 2)
                 {
                     var outer = DMT.gmaps.coordinateList[1];
                     DMT.gmaps.overlays.polygon.setRadius(distance(center, outer));
@@ -968,18 +968,18 @@ DMT.gmaps = {
                 DMT.gmaps.overlays.polygon.setPath(DMT.gmaps.coordinateList);
             }
         },
-        show: function() {
+        show: function () {
         }
     },
     // TODO: See if you can improve this!!
-    updateMouseLocation: function(latLng) {
+    updateMouseLocation: function (latLng) {
         // To increase performance, do not update mouse location while dragging
         if (DMT.gmaps.settings.dragLock === true) {
             return;
         }
         var latitude = latLng.lat().toFixed(DMT.coordinatePrecision);
         var longitude = latLng.lng().toFixed(DMT.coordinatePrecision);
-        if (DMT.gmaps.settings.getFormat() == 'dms') {
+        if (DMT.gmaps.settings.getFormat() === 'dms') {
             var dmsLatitude = convertDecToDMS(latitude, 'lat', true);
             var dmsLongitude = convertDecToDMS(longitude, 'lng', true);
             latitude = dmsLatitude;
@@ -988,16 +988,16 @@ DMT.gmaps = {
         $('#mouseLatLng').html("(" + latitude + ", " + longitude + ")");
     },
     googleCoder: {
-        clear: function() {
+        clear: function () {
             $('#addressLoader').hide();
             $('#addressInfo').hide();
             $('#googleAddress').val('');
             $('#googleResults').stop(true, true).hide();
             $('#geoErrorMessageAddress').stop(true, true).hide();
         },
-        codeAddress: function() {
+        codeAddress: function () {
             var address = $("#googleAddress").val();
-            if (address == '') {
+            if (address === '') {
                 $.blockUI({
                     theme: true,
                     title: 'Empty Address or Place',
@@ -1014,8 +1014,8 @@ DMT.gmaps = {
                 $('#googleResults').stop(true, true).hide();
                 if (DMT.gmaps.geocoder) {
                     DMT.gmaps.geocoder.geocode({'address': address},
-                    function(results, status) {
-                        if (status == google.maps.GeocoderStatus.OK) {
+                    function (results, status) {
+                        if (status === google.maps.GeocoderStatus.OK) {
                             $('#googleRow').hide().html('');
                             $('#geoErrorMessageAddress').stop(true, true).hide();
                             var place, html = '';
@@ -1036,7 +1036,7 @@ DMT.gmaps = {
                         else {
                             $('#addressLoader').hide();//Hide loader
                             $('#addressInfo').hide();
-                            if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
+                            if (status === google.maps.GeocoderStatus.ZERO_RESULTS) {
                                 $('#geoErrorMessageAddress').html('There were no results for your search query.');
                             }
                             else {
@@ -1050,16 +1050,16 @@ DMT.gmaps = {
         }
     },
     pathrowCoder: {
-        clear: function() {
+        clear: function () {
             $('#pathrowLoader').hide();
             $('#pathAddress').val('');
             $('#rowAddress').val('');
             $('#geoErrorMessagePathRow').stop(true, true).hide();
         },
-        showLocation: function() {
+        showLocation: function () {
             var path = $('#pathAddress').val();
             var row = $('#rowAddress').val();
-            if (path == null || row == null) {
+            if (path === null || row === null) {
                 $.blockUI({
                     theme: true,
                     title: 'Empty Path and/or Row',
@@ -1075,7 +1075,7 @@ DMT.gmaps = {
                     type: 'POST',
                     url: 'script/coordPathRow.php',
                     data: '&pathrow=' + path + row,
-                    success: function(response) {
+                    success: function (response) {
                         $('#pathrowLoader').hide();
                         if (response.length > 5) {
                             var Coord = response.split(";");
@@ -1097,7 +1097,7 @@ DMT.gmaps = {
         }
     },
     featureCoder: {
-        clear: function() {
+        clear: function () {
             $('#province').val('');
             $('#district').val('');
             $('#territory').val('');
@@ -1111,7 +1111,7 @@ DMT.gmaps = {
             $('#featureResults').stop(true, true).hide();
             $('#geoErrorMessageFeature').stop(true, true).hide();
         },
-        codeAddress: function() {
+        codeAddress: function () {
             var dbTable = '';
             var dbID = '';
             var province = $("#province").val();
@@ -1119,7 +1119,7 @@ DMT.gmaps = {
             var territory = $("#territory").val();
             var sector = $("#sector").val();
             var locality = $("#locality").val();
-            if (province == null && district == null && territory == null && sector == null && locality == null) {
+            if (province === null && district === null && territory === null && sector === null && locality === null) {
                 $.blockUI({
                     theme: true,
                     title: 'Empty Predefined Area',
@@ -1128,23 +1128,23 @@ DMT.gmaps = {
                 });
             }
             else {
-                if (province != null) {
+                if (province !== null) {
                     dbTable = 'province';
                     dbID = province;
                 }
-                if (district != null) {
+                if (district !== null) {
                     dbTable = 'district';
                     dbID = district;
                 }
-                if (territory != null) {
+                if (territory !== null) {
                     dbTable = 'territory';
                     dbID = territory;
                 }
-                if (sector != null) {
+                if (sector !== null) {
                     dbTable = 'sector';
                     dbID = sector;
                 }
-                if (locality != null) {
+                if (locality !== null) {
                     dbTable = 'locality';
                     dbID = locality;
                 }
@@ -1154,7 +1154,7 @@ DMT.gmaps = {
                     type: "POST",
                     url: "script/getCoordinates.php",
                     data: 'query=' + query,
-                    success: function(response) {
+                    success: function (response) {
                         var tabCoord = response.split(" ");
                         DMT.gmaps.coordinates.add(new google.maps.LatLng(parseFloat(tabCoord[0]), parseFloat(tabCoord[1])));
                     }
@@ -1162,7 +1162,7 @@ DMT.gmaps = {
             }
         }
     },
-    displayCoderResult: function(Coord) {
+    displayCoderResult: function (Coord) {
         DMT.gmaps.coordinates.clear();
         $('#googleResults').slideUp(DMT.resultsSlideSpeed);
         $('#geoErrorMessagePathRow').slideUp();
@@ -1172,7 +1172,7 @@ DMT.gmaps = {
         }
         DMT.gmaps.centerMap();
     },
-    getWMSTile: function(baseUrl, tile, zoom) {
+    getWMSTile: function (baseUrl, tile, zoom) {
         var tsize = 256;
         var proj = DMT.gmaps.map.getProjection();
 //Get the world coordinates
@@ -1188,12 +1188,12 @@ DMT.gmaps = {
                 urpoint.lng() + ',' + urpoint.lat() + "&WIDTH=256&HEIGHT=256";
         return url;
     },
-    centerOnFootprintAndBrowse: function() {
+    centerOnFootprintAndBrowse: function () {
         if ($('#optionAutoCenter').prop('checked')) {
             var bounds = new google.maps.LatLngBounds();
             for (var index in DMT.gmaps.overlays.footprints) {
                 if (DMT.gmaps.overlays.footprints[index].getVisible() === true) {
-                    if (DMT.gmaps.overlays.footprints[index].fpType == 'point') {
+                    if (DMT.gmaps.overlays.footprints[index].fpType === 'point') {
                         bounds.extend(DMT.gmaps.overlays.footprints[index].getPosition());
                     } else {
                         var path = DMT.gmaps.overlays.footprints[index].getPath();

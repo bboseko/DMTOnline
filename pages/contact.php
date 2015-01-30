@@ -25,7 +25,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#full_nameContact').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#full_nameContactError').html('Full name is required').slideDown(500);
                     } else {
@@ -34,7 +34,7 @@
                     }
                 });
                 $('#emailContact').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#emailContactError').html('Email address is required').slideDown(500);
                     } else if (!isValidEmailAddress($(this).val())) {
@@ -46,7 +46,7 @@
                     }
                 });
                 $('#messageContact').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#messageContactError').html('Your message is required').slideDown(500);
                     } else {
@@ -58,7 +58,7 @@
                     var full_name = $('#full_nameContact').val();
                     var email = $('#emailContact').val();
                     var message = $('#messageContact').val();
-                    if (full_name != '' && isValidEmailAddress(email) && message != '' &&
+                    if (full_name !== '' && isValidEmailAddress(email) && message !== '' &&
                             !$('#full_nameContact').hasClass('errorInForm') &&
                             !$('#emailContact').hasClass('errorInForm') &&
                             !$('#messageContact').hasClass('errorInForm')) {

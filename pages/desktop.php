@@ -24,7 +24,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $('#emailDownload').blur(function() {
-                    if ($(this).val() == '') {
+                    if ($(this).val() === '') {
                         $(this).addClass('errorInForm');
                         $('#emailDownloadLabel').addClass('errorMessageInFrom');
                         $('#DownloadNow').addClass('disabled');
@@ -41,7 +41,7 @@
                 $('#DownloadNow').click(function() {
                     var emailD = $('#emailDownload').val();
                     if ($(this).hasClass('disabled')) {
-                        if (emailD == '') {
+                        if (emailD === '') {
                             $('#emailDownload').addClass('errorInForm');
                             $('#emailDownloadLabel').addClass('errorMessageInFrom');
                         } else if (!isValidEmailAddress(emailD)) {

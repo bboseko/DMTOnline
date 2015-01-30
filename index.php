@@ -57,7 +57,7 @@
                 });
             });
             function quickLook(name, preview) {
-                if (preview == '/preview/nobrowse_small.png') {
+                if (preview === '/preview/nobrowse_small.png') {
                     preview = '/preview/nobrowse.png';
                 }
                 $('#quickLookDialogArea').dialog({
@@ -98,11 +98,11 @@
                 var sub2 = pn - 2;
                 var add1 = pn + 1;
                 var add2 = pn + 2;
-                if (pn == 1) {
+                if (pn === 1) {
                     centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
                     centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
                 }
-                else if (pn == lastPage) {
+                else if (pn === lastPage) {
                     centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')>' + sub1 + '</span> &nbsp;';
                     centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
                 }
@@ -121,19 +121,19 @@
                 var limit = ' LIMIT ' + (pn - 1) * itemsPerPage + ', ' + itemsPerPage;
                 var start = (pn - 1) * itemsPerPage;
                 var paginationDisplay = "";
-                if (lastPage != "1") {
+                if (lastPage !== "1") {
                     paginationDisplay += 'Page <strong>' + pn + '</strong> of ' + lastPage + ' ';
-                    if (pn != 1) {
+                    if (pn !== 1) {
                         var previous = pn - 1;
                         paginationDisplay += '&nbsp; <span class="resultOther" onClick="pagination(' + nr + ',' + previous + ')"> Back</span> ';
                     }
                     paginationDisplay += '<span class="paginationNumbers">' + centerPages + '</span>';
-                    if (pn != lastPage) {
+                    if (pn !== lastPage) {
                         var nextPage = pn + 1;
                         paginationDisplay += '&nbsp; <span class="resultOther" onclick="pagination(' + nr + ',' + nextPage + ')"> Next</span> ';
                     }
                 }
-                if (nr == 0) {
+                if (nr === 0) {
                     $('#catResult').hide();
                     $('#pagingResultHeader, #pagingResultFooter').html('');
                 } else {
@@ -148,7 +148,7 @@
                         $('#search-results-container').html(response);
                         var t = 0;
                         for (var id in hash) {
-                            if (hash[id] == true) {
+                            if (hash[id] === true) {
                                 t++;
                             }
                         }

@@ -1,6 +1,7 @@
 <?php
 
 class db {
+
 //Remote database settings
 //    var $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
 //    var $databasename = "dbosfacdmt";
@@ -46,8 +47,9 @@ class db {
     // pour liberer la memoire de la derniere requete
 
     function free() {
-        if (@mysql_free_result($this->query_id) == false)
+        if (@mysql_free_result($this->query_id) == false) {
             $this->error = "Erreur lors de la tentative de libération de memoire";
+        }
         $this->query_id = 0;
     }
 
@@ -59,19 +61,20 @@ class db {
         if ($this->link_id != 0) {
             // test si on doit liberer la memoire
             if ($this->query_id != 0) {
-                if ($this->auto_free == 1)
+                if ($this->auto_free == 1) {
                     $this->free();
+                }
             }
-            if (($this->query_id = mysql_query($query, $this->link_id)) == false)
+            if (($this->query_id = mysql_query($query, $this->link_id)) == false) {
                 $this->error = "Impossible to launch the query";
-            else {
+            } else {
                 @ $this->lastinsertedid = mysql_insert_id();
                 $rtval = $this->query_id;
                 $this->row = 0;
             }
-        }
-        else
+        } else {
             $this->error = "Impossible de lancer une requête, il n'existe pas de connexion !";
+        }
         return($rtval);
     }
 
@@ -83,13 +86,15 @@ class db {
             $this->row = $this->row + 1;
             // test validite
             $stat = is_array($this->record);
-            if (!$stat && $this->auto_free)
+            if (!$stat && $this->auto_free) {
                 $this->free();
-            if ($stat)
+            }
+            if ($stat) {
                 $rtval = 1;
-        }
-        else
+            }
+        } else {
             $this->error = "Impossible d'avancer le résultat, pas d'id de res !";
+        }
 
         return($rtval);
     }

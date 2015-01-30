@@ -1,6 +1,6 @@
 DMT.tabs = {
     criteria: {
-        clear: function() {
+        clear: function () {
 // Clear the geocoders
             DMT.gmaps.googleCoder.clear();
             DMT.gmaps.pathrowCoder.clear();
@@ -26,7 +26,7 @@ DMT.tabs = {
                 type: 'POST',
                 url: 'script/loadYears.php',
                 data: '&categories=(all)',
-                success: function(response) {
+                success: function (response) {
                     if (response.length > 5) {
                         $('#yearFrom').find('option').remove().end().append(response);
                         $('#yearTo').find('option').remove().end().append(response);
@@ -41,7 +41,7 @@ DMT.tabs = {
         }
     },
     additionalCriteria: {
-        clear: function() {
+        clear: function () {
             $('#dateYear').click();
             $('#dateSection').buttonset('refresh');
             $('#missionLandsat').val('all');
@@ -55,7 +55,7 @@ DMT.tabs = {
         }
     },
     results: {
-        clear: function() {
+        clear: function () {
             $('#submitButton').addClass('disabled');
             $('#categoryResult').find('option').remove().end();
             $('#pagingResultHeader, #pagingResultFooter').html('');
@@ -63,7 +63,7 @@ DMT.tabs = {
             DMT.gmaps.footprints.clearAll();
         }
     },
-    clearAll: function() {
+    clearAll: function () {
         DMT.tabs.criteria.clear();
         DMT.tabs.additionalCriteria.clear();
         DMT.tabs.results.clear();
