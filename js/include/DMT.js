@@ -49,9 +49,9 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
     }, w: function () {
         return this.getDay();
     }, z: function () {
-        return"Not Yet Supported";
+        return lang.not_yet_supported;
     }, W: function () {
-        return"Not Yet Supported";
+        return lang.not_yet_supported;
     }, F: function () {
         return Date.replaceChars.longMonths[this.getMonth()];
     }, m: function () {
@@ -61,11 +61,11 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
     }, n: function () {
         return this.getMonth() + 1;
     }, t: function () {
-        return"Not Yet Supported";
+        return lang.not_yet_supported;
     }, L: function () {
         return(((this.getFullYear() % 4 === 0) && (this.getFullYear() % 100 !== 0)) || (this.getFullYear() % 400 === 0)) ? '1' : '0';
     }, o: function () {
-        return"Not Supported";
+        return "Not Supported";
     }, Y: function () {
         return this.getFullYear();
     }, y: function () {
@@ -75,7 +75,7 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
     }, A: function () {
         return this.getHours() < 12 ? 'AM' : 'PM';
     }, B: function () {
-        return"Not Yet Supported";
+        return lang.not_yet_supported;
     }, g: function () {
         return this.getHours() % 12 || 12;
     }, G: function () {
@@ -89,9 +89,9 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
     }, s: function () {
         return(this.getSeconds() < 10 ? '0' : '') + this.getSeconds();
     }, e: function () {
-        return"Not Yet Supported";
+        return lang.not_yet_supported;
     }, I: function () {
-        return"Not Supported";
+        return "Not Supported";
     }, O: function () {
         return(-this.getTimezoneOffset() < 0 ? '-' : '+') + (Math.abs(this.getTimezoneOffset() / 60) < 10 ? '0' : '') + (Math.abs(this.getTimezoneOffset() / 60)) + '00';
     }, P: function () {

@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
-        <title>OSFAC-DMT Online 2.0.1 Beta</title>
+        <title>OSFAC-DMT Online 2.1 Bêta</title>
         <meta content="Request satellite images and products through OSFAC" name="description"></meta>
         <meta content="Observatoire Satellital des Forêts d'Afrique Centrale,OSFAC,satellite images,congo basin,DMT,osfacdmt,OSFAC-DMT,satellite data,
               central africa,comifac,cartographic,cartography,geographic,geography,geospatial data,geographic information system,GIS,mapping,maps,
@@ -26,8 +26,8 @@
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx0xuNg12W0_nx2QjT1MlZgpP18pgOlQA&sensor=false"></script>
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>
 
-        <script type="text/javascript" src="js/library/jquery-1.10.2.min.js"></script>
-        <script type="text/javascript" src="js/library/jquery-ui-1.10.3.custom.js"></script>
+        <script type="text/javascript" src="js/library/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="js/library/jquery-ui.js"></script>
         <script type="text/javascript" src="js/library/jquery.blockui.js"></script>
 
         <script type="text/javascript" src="js/include/DMT.js"></script>
@@ -36,26 +36,16 @@
         <script type="text/javascript" src="js/include/controls.js"></script>
 
         <script type="text/javascript" src="js/include/mapOverlays.js"></script>
-        <script type="text/javascript" src="js/include/tabs.js"></script>
-
+        <script type="text/javascript" src="js/include/tabs.js"></script>     
+        <script type="text/javascript" src="js/include/custom.js"></script> 
+        <?php
+        include("./languages/langConfig.php");
+        ?>
+        <script type="text/javascript" src="languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
         <script type="text/javascript">
             var hash = new Array();
             var arrayColorfp = new Array();
             var nRowResult = 0;
-            $(function() {
-                $("#tabs").tabs();
-                $("#accordion").accordion({
-                    heightStyle: "content",
-                    collapsible: true
-                });
-                $("#datepickerFrom, #datepickerTo").datepicker({
-                    showOn: "button",
-                    buttonImage: "css/images/calendar.gif",
-                    buttonImageOnly: true,
-                    changeMonth: true,
-                    changeYear: true
-                });
-            });
             function quickLook(name, preview) {
                 if (preview === '/preview/nobrowse_small.png') {
                     preview = '/preview/nobrowse.png';
@@ -68,23 +58,23 @@
                     width: 600,
                     modal: true,
                     buttons: {
-                        'Close': function() {
+                        'Close': function () {
                             $(this).dialog('destroy');
                         }
                     },
-                    title: 'Thumbnail for ' + name,
-                    open: function() {
+                    title: 'Thumbnail of ' + name,
+                    open: function () {
                         var $dialogContent = $('#quickLookDialogArea');
                         $dialogContent.html('<img alt="No Browse" src = http://www.osfac.net' + preview + ' width="574px" height="485px" />');
                     },
-                    close: function() {
+                    close: function () {
                         $(this).dialog('destroy');
                     }
                 });
                 $('#quickLookDialogArea').dialog('open');
             }
             function pagination(nr, pn) {
-                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="loading" src="images/loader.gif" /><span> Searching available images for your area of interest ...</span>');
+                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
                 var itemsPerPage = 10;
                 var lastPage = Math.ceil(nr / itemsPerPage);
                 if (pn < 1) {
@@ -122,15 +112,15 @@
                 var start = (pn - 1) * itemsPerPage;
                 var paginationDisplay = "";
                 if (lastPage !== "1") {
-                    paginationDisplay += 'Page <strong>' + pn + '</strong> of ' + lastPage + ' ';
+                    paginationDisplay += '' + lang.page + ' <strong>' + pn + '</strong> ' + lang.of + ' ' + lastPage + ' ';
                     if (pn !== 1) {
                         var previous = pn - 1;
-                        paginationDisplay += '&nbsp; <span class="resultOther" onClick="pagination(' + nr + ',' + previous + ')"> Back</span> ';
+                        paginationDisplay += '&nbsp; <span class="resultOther" onClick="pagination(' + nr + ',' + previous + ')"> ' + lang.back + '</span> ';
                     }
                     paginationDisplay += '<span class="paginationNumbers">' + centerPages + '</span>';
                     if (pn !== lastPage) {
                         var nextPage = pn + 1;
-                        paginationDisplay += '&nbsp; <span class="resultOther" onclick="pagination(' + nr + ',' + nextPage + ')"> Next</span> ';
+                        paginationDisplay += '&nbsp; <span class="resultOther" onclick="pagination(' + nr + ',' + nextPage + ')"> ' + lang.next + '</span> ';
                     }
                 }
                 if (nr === 0) {
@@ -144,7 +134,7 @@
                     type: 'POST',
                     url: 'script/searchImages.php',
                     data: '&limit=' + limit + '&start=' + start + items,
-                    success: function(response) {
+                    success: function (response) {
                         $('#search-results-container').html(response);
                         var t = 0;
                         for (var id in hash) {
@@ -168,7 +158,7 @@
             }
         </script>
     </head>
-    <body>
+    <body>        
         <?php
         include("./script/fonctions.php");
         ?>
@@ -176,9 +166,9 @@
             <div id="header">
                 <div id="header-left">
                     <map name="Map">
-                        <area shape="rect" coords="1,1,76,90" href="http://www.osfac.net/" alt="OSFAC" target="_self" />
+                        <area shape="rect" coords="1,1,76,90" href="http://www.osfac.net/" alt="OSFAC" target="_blank" />
                         <area shape="rect" coords="85,3,335,60" href="index.php" alt="OSFAC-DMT" target="_self" />
-                        <area shape="rect" coords="85,65,480,85" href="http://www.osfac.net/" alt="OSFAC" target="_self" />
+                        <area shape="rect" coords="85,65,480,85" href="http://www.osfac.net/" alt="OSFAC" target="_blank" />
                     </map>
                     <img src="images/template/header_left.png" alt="logo" usemap="#Map" />
                 </div>
@@ -187,27 +177,41 @@
             </div>
             <div id="top-menu">
                 <ul>
-                    <li><a href="index.php">Home</a></li>
-                    <li><a href="pages/about.php">About</a></li>                    
-                    <li><a href="pages/desktop.php">OSFAC-DMT Desktop</a></li>
-                    <li><a href="pages/tutorial.php">Tutorial</a></li>
-                    <li><a href="pages/whatnew.php">What's New?</a></li>
-                    <li><a href="pages/faq.php">FAQ</a></li>
-                    <li><a href="pages/help.php">Help</a></li>
+                    <li><a href="index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['home']; ?></a></li>
+                    <li><a href="pages/about.php"><?php echo $lang['about']; ?></a></li>                    
+                    <li><a href="pages/desktop.php"><?php echo $lang['desktop']; ?></a></li>
+                    <li><a href="pages/tutorial.php"><?php echo $lang['tutorial']; ?></a></li>
+                    <li><a href="pages/whatnew.php"><?php echo $lang['whatsnew']; ?></a></li>
+                    <li><a href="pages/faq.php"><?php echo $lang['faq']; ?></a></li>
+                    <li><a href="pages/help.php"><?php echo $lang['help-text']; ?></a></li>
+
+                    <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
+                        <a href="index.php?lang=fr"><img src="images/fr.gif" /> <?php echo $lang['french']; ?></a>
+                    </li>
+                    <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
+                        <a href="index.php?lang=en"><img src="images/en.gif" /> <?php echo $lang['english']; ?></a>
+                    </li>
+
+                    <li style="float:right !important; font-weight: bold; 
+                        text-transform: uppercase; margin-right: 50px; background: none; ">
+                        <button id="registerCommand" style="margin-top: -5px;"><?php echo $lang['register']; ?></button></li>
+                    <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
+                        <button id="logInCommand" style="margin-top: -5px;"><?php echo $lang['login']; ?></button>
+                    </li>
                 </ul>
             </div>
             <div id="left-col">
                 <div id="tabs">
                     <ul>
-                        <li><a href="#tabs-1">Search criteria</a></li>
-                        <li><a href="#tabs-2">Additional Criteria</a></li>
-                        <li><a href="#tabs-3">Results</a></li>
+                        <li><a href="#tabs-1"><?php echo $lang['search-criteria']; ?></a></li>
+                        <li><a href="#tabs-2"><?php echo $lang['additional-criteria']; ?></a></li>
+                        <li><a href="#tabs-3"><?php echo $lang['result']; ?></a></li>
                     </ul>
                     <div id="tabs-1">
                         <div class="control-container">
                             <div id="categorySelectorBox" class="clearfix" style="margin: 6px 0 6px 0;">
                                 <div style="float:left;font-weight: bold;margin-bottom:2px;">
-                                    Category of images &nbsp;
+                                    <?php echo $lang['category-of-images']; ?> &nbsp;
                                 </div>
                                 <div style="float:left;">
                                     <a id="categorySelector">
@@ -226,14 +230,14 @@
                         <div id="coordEntryDialogTemplate">
                             <span class="dd">
                                 <div class="label">
-                                    <label for="latitude">Latitude:</label>
+                                    <label for="latitude"><?php echo $lang['latitude']; ?>:</label>
                                 </div>
                                 <div class="inputs">
                                     <input class="latitude txtbox decimalBox" name="latitude" type="text" value="" />
                                 </div>
                                 <div style="clear:both;"></div>
                                 <div class="label">
-                                    <label for="longitude">Longitude:</label>
+                                    <label for="longitude"><?php echo $lang['longitude']; ?>:</label>
                                 </div>
                                 <div class="inputs">
                                     <input class="longitude txtbox decimalBox" name="longitude" type="text" value="" />
@@ -242,28 +246,28 @@
                             </span>
                             <span class="dms">
                                 <div class="label">
-                                    <label for="latitude">Latitude:</label>
+                                    <label for="latitude"><?php echo $lang['latitude']; ?>:</label>
                                 </div>
                                 <div class="inputs">
                                     <input class="degreesLat txtbox degreeBox" name="degreesLat" type="text" /> <label for="degreesLat">&deg;</label>
                                     <input class="minutesLat txtbox degreeBox" name="minutesLat" type="text" /> <label for="minutesLat">&#39;</label>
                                     <input class="secondsLat txtbox degreeBox" name="secondsLat" type="text" /> <label for="secondsLat">&quot;</label>
                                     <select class="directionLat" style="width:70px;" name="directionLat">
-                                        <option value="N">North</option>
-                                        <option value="S">South</option>
+                                        <option value="N"><?php echo $lang['north']; ?></option>
+                                        <option value="S"><?php echo $lang['south']; ?></option>
                                     </select>
                                 </div>
                                 <div style="clear:both;"></div>
                                 <div class="label">
-                                    <label for="longitude">Longitude:</label>
+                                    <label for="longitude"><?php echo $lang['longitude']; ?>:</label>
                                 </div>
                                 <div class="inputs">
                                     <input class="degreesLng txtbox degreeBox" name="degreesLng" type="text" /> <label for="degreesLng">&deg;</label>
                                     <input class="minutesLng txtbox degreeBox" name="minutesLng" type="text" /> <label for="minutesLng">&#39;</label>
                                     <input class="secondsLng txtbox degreeBox" name="secondsLng" type="text" /> <label for="secondsLng">&quot;</label>
                                     <select class="directionLng" style="width:70px;" name="directionLng">
-                                        <option value="W">West</option>
-                                        <option value="E">East</option>
+                                        <option value="W"><?php echo $lang['west']; ?></option>
+                                        <option value="E"><?php echo $lang['east']; ?></option>
                                     </select>
                                 </div>
                                 <div style="clear:both;"></div>
@@ -272,30 +276,29 @@
                         <div id="coordEntryDialogArea">
                         </div>
                         <div id="accordion">
-                            <h3 id="accordion1">Search by Address or Place name</h3>
+                            <h3 id="accordion1"><?php echo $lang['search-address']; ?></h3>
                             <div class="tabAccordion">
-                                <span>Type in an Address or Place name</span>
+                                <span><?php echo $lang['type-in-address']; ?></span>
                                 <input type="textbox" id="googleAddress" name="googleAddress" alt="Google Address" style="width:314px;margin-top: 3px;" />
                                 <div class="buttons">
-                                    <input id="geoShowAddress" type="button" class="button" value="Show" />
-                                    <input id="geoClearAddress" type="button" class="button" value="Clear" />
+                                    <input id="geoShowAddress" type="button" class="button" value="<?php echo $lang['button-show']; ?>" />
+                                    <input id="geoClearAddress" type="button" class="button" value="<?php echo $lang['button-clear']; ?>" />
                                 </div> 
                                 <span id="addressLoader" style="display: none;">
                                     <img align="top" alt="loading" src="images/loader.gif">
-                                        <span>Loading results ...</span>
+                                        <span><?php echo $lang['loading-results']; ?> ...</span>
                                 </span>
                                 <div id="addressInfo">
-                                    Click on an Address/Place to show the
-                                    location on the map.
+                                    <?php echo $lang['search-address-text']; ?>
                                 </div>
                                 <div class="geoRow" id="googleResults">
                                     <table cellspacing="0" summary="">
                                         <thead>
                                             <tr>
-                                                <th>Num</th>
-                                                <th>Address/Place</th>
-                                                <th>Latitude</th>
-                                                <th>Longitude</th>
+                                                <th><?php echo $lang['number']; ?></th>
+                                                <th><?php echo $lang['address-place']; ?></th>
+                                                <th><?php echo $lang['latitude']; ?></th>
+                                                <th><?php echo $lang['longitude']; ?></th>
                                             </tr>
                                         </thead>
                                         <tbody id="googleRow"></tbody>
@@ -303,34 +306,34 @@
                                 </div>
                                 <div id="geoErrorMessageAddress" class="geoErrorMessage"></div>
                             </div>                                  
-                            <h3 id="accordion2">Search by Path and Row</h3>
+                            <h3 id="accordion2"><?php echo $lang['search-pathrow']; ?></h3>
                             <div class="tabAccordion">
                                 <div id="wrsInputs">
-                                    <label for="pathAddress">Path:</label>
+                                    <label for="pathAddress"><?php echo $lang['path']; ?>:</label>
                                     <select id="pathAddress" name="pathAddress" style = "width:100px">
                                         <?php loadComboboxPath(); ?>
                                     </select>&nbsp;&nbsp;&nbsp;
-                                    <label for="rowAddress">Row:</label>
+                                    <label for="rowAddress"><?php echo $lang['row']; ?>:</label>
                                     <select id="rowAddress" name="rowAddress" style = "width:100px">
                                         <?php loadComboboxRow(); ?>
                                     </select>
                                 </div>
                                 <div class="buttons">
-                                    <input id="geoShowPathRow" type="button" class="button" value="Show" />
-                                    <input id="geoClearPathRow" type="button" class="button" value="Clear" />
+                                    <input id="geoShowPathRow" type="button" class="button" value="<?php echo $lang['button-show']; ?>" />
+                                    <input id="geoClearPathRow" type="button" class="button" value="<?php echo $lang['button-clear']; ?>" />
                                 </div>
                                 <span id="pathrowLoader" style="display: none;">
-                                    <img align="top" alt="loading" src="images/loader.gif" /> Loading results ...
+                                    <img align="top" alt="loading" src="images/loader.gif" /> <?php echo $lang['loading-results']; ?> ...
                                 </span>
                                 <div id="geoErrorMessagePathRow" class="geoErrorMessage"></div>
                             </div>
-                            <h3 id="accordion3">Search by Predefined Area (DR CONGO only)</h3>
+                            <h3 id="accordion3"><?php echo $lang['search-predefined-area']; ?></h3>
                             <div class="tabAccordion">
                                 <div id="wrsInputs">
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td><label for="province">Province</label></td>
+                                                <td><label for="province"><?php echo $lang['province']; ?></label></td>
                                                 <td>
                                                     <span style="margin-left: 10px">
                                                         <select id="province" name="province" style = "margin-bottom: 3px;width:225px">
@@ -340,7 +343,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label for="district">District</label></td>
+                                                <td><label for="district"><?php echo $lang['district']; ?></label></td>
                                                 <td>
                                                     <span style="margin-left: 10px">
                                                         <select id="district" name="district" style = "margin-bottom: 3px;width:225px" disabled>
@@ -349,7 +352,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label for="territory">Territory</label></td>
+                                                <td><label for="territory"><?php echo $lang['territory']; ?></label></td>
                                                 <td>
                                                     <span style="margin-left: 10px">
                                                         <select id="territory" name="territory" style = "margin-bottom: 3px;width:225px" disabled>
@@ -358,7 +361,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label for="sector">Sector</label></td>
+                                                <td><label for="sector"><?php echo $lang['sector']; ?></label></td>
                                                 <td>
                                                     <span style="margin-left: 10px">
                                                         <select id="sector" name="sector" style = "margin-bottom: 3px;width:225px" disabled>
@@ -367,7 +370,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><label for="locality">Locality</label></td>
+                                                <td><label for="locality"><?php echo $lang['locality']; ?></label></td>
                                                 <td>
                                                     <span style="margin-left: 10px">
                                                         <select id="locality" name="locality" style = "margin-bottom: 3px;width:225px" disabled>
@@ -379,16 +382,16 @@
                                     </table>
                                 </div>
                                 <div class="buttons">
-                                    <input id="geoShowFeature" type="button" class="button" value="Show" />
-                                    <input id="geoClearFeature" type="button" class="button" value="Clear" />
+                                    <input id="geoShowFeature" type="button" class="button" value="<?php echo $lang['button-show']; ?>" />
+                                    <input id="geoClearFeature" type="button" class="button" value="<?php echo $lang['button-clear']; ?>" />
                                 </div>
                                 <span id="featureLoader" style="display: none;">
                                     <img align="top" alt="loading" src="images/loader.gif">
-                                        <span>Loading results ...</span>
+                                        <span><?php echo $lang['loading-results']; ?> ...</span>
                                 </span>
                                 <div id="geoErrorMessageFeature" class="geoErrorMessage"></div>
                             </div>
-                            <h3 id="accordion4">Search by Shapefile</h3>
+                            <h3 id="accordion4"><?php echo $lang['search-shapefile']; ?></h3>
                             <div class="tabAccordion">
                                 <form id="shapefileUploadForm" action="#" method="">
 <!--                                    <span style="font-size: 12px;margin-bottom: 3px;">
@@ -415,18 +418,18 @@
                                         </div>                                        
                                     </div>
                                     <div class="buttons">
-                                        <input id="shapefileSubmit" class="button" type="button" name="action" value="Upload" />
-                                        <input id="shapefileClear" class="button" type="reset" value="Clear" />
+                                        <input id="shapefileSubmit" class="button" type="button" name="action" value="<?php echo $lang['button-upload']; ?>" />
+                                        <input id="shapefileClear" class="button" type="reset" value="<?php echo $lang['button-clear']; ?>" />
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="control-container">
-                            <div class="labelText">Coordinates</div>
+                            <div class="labelText"><?php echo $lang['coordinates']; ?></div>
                             <div id="lat_lon_section">
-                                <label for="latlonfmtdeg">Degree/Minute/Second</label>
+                                <label for="latlonfmtdeg"><?php echo $lang['latlonformatdeg']; ?></label>
                                 <input id="latlonfmtdeg" type="radio" value="dms" name="latlonfmt" checked="checked" />
-                                <label for="latlonfmtdec">Decimal Degree</label>
+                                <label for="latlonfmtdec"><?php echo $lang['latlonformatdec']; ?></label>
                                 <input id="latlonfmtdec" type="radio" value="dd" name="latlonfmt"/>
                             </div>                            
                             <div id="coordEntryTemplate">
@@ -442,10 +445,10 @@
                                     </div>
                                     <div style="float:right;">
                                         <span class="coordinateElementOperations">
-                                            <a id="edit_!%index%!" class="iconLink edit" title="Edit this coordinate">
+                                            <a id="edit_!%index%!" class="iconLink edit" title="<?php echo $lang['edit-coordinate']; ?>">
                                                 <div class="ee-icon ee-icon-notepad"></div>
                                             </a>
-                                            <a id="delete_!%index%!" class="iconLink delete" title="Delete this coordinate">
+                                            <a id="delete_!%index%!" class="iconLink delete" title="<?php echo $lang['delete-coordinate']; ?>">
                                                 <div class="ee-icon ee-icon-delete"></div>
                                             </a>
                                         </span>
@@ -459,38 +462,38 @@
                                         <div class="ee-icon ee-icon-info"></div>
                                     </div>
                                     <div style="float:left;">
-                                        &nbsp;&nbsp;No coordinates selected.
+                                        &nbsp;&nbsp;<?php echo $lang['no-coordinate']; ?>
                                     </div>
                                     <div style="clear:both;"></div>
                                 </li>
                             </ul>                                    
                             <div class="buttons">
                                 <!--<input id="coordUseMap" type="button" class="button" value="Use Map" />-->
-                                <input id="coordEntryAdd" type="button" class="button" value="Add Coordinate" />
-                                <input id="coordEntryClear" type="button" class="button" value="Clear Coordinates" />
+                                <input id="coordEntryAdd" type="button" class="button" value="<?php echo $lang['add-coordinate']; ?>" />
+                                <input id="coordEntryClear" type="button" class="button" value="<?php echo $lang['clear-coordinate']; ?>" />
                             </div>
                         </div>
                     </div>
                     <div id="tabs-2">
                         <div class="control-container">
                             <div id="dateSection" style="margin-bottom: 6px;">
-                                <label for="dateDate">Date</label>
+                                <label for="dateDate"><?php echo $lang['date-text']; ?></label>
                                 <input id="dateDate" type="radio" value="Date" name="dateType" />
-                                <label for="dateYear">Year</label>
+                                <label for="dateYear"><?php echo $lang['year-text']; ?></label>
                                 <input id="dateYear" type="radio" value="Year" name="dateType" checked="checked" />
                             </div>
                             <div id="periodDate" class="additionalCriteriaBox">
-                                <label for="datepickerFrom">Search from: </label>
+                                <label for="datepickerFrom"><?php echo $lang['search-form-text']; ?> </label>
                                 <input size="10" type="text" id="datepickerFrom" name="datepickerFrom" value="07/27/1972" />
-                                <label for="datepickerTo">&nbsp;&nbsp;&nbsp;to: </label>
+                                <label for="datepickerTo">&nbsp;&nbsp;&nbsp;<?php echo $lang['search-to-text']; ?> </label>
                                 <input size="10" type="text" id="datepickerTo" name="datepickerTo" value="06/11/2012" />
                             </div>
                             <div id="periodYear" class="additionalCriteriaBox">
-                                <label for="start_year">Search from: </label>
+                                <label for="start_year"><?php echo $lang['search-form-text']; ?> </label>
                                 <select id="yearFrom" name="yearFrom" style = "width:110px">
                                     <?php loadComboboxYear(); ?>
                                 </select>
-                                <label for="end_year">&nbsp;&nbsp;&nbsp;to: </label>
+                                <label for="end_year">&nbsp;&nbsp;&nbsp;<?php echo $lang['search-to-text']; ?> </label>
                                 <select id="yearTo" name="yearTo" style = "width:110px">
                                     <?php loadComboboxYearTo(); ?>
                                 </select>
@@ -498,14 +501,14 @@
                             <div id="MLandsat">
                                 <div class="labelText">LANDSAT</div>
                                 <div class="additionalCriteriaBox">
-                                    <div class="acleft"><label for="missionLandsat">Mission/Version</label></div>
+                                    <div class="acleft"><label for="missionLandsat"><?php echo $lang['mission-version']; ?></label></div>
                                     <div class="acright">
                                         <select id="missionLandsat" name="missionLandsat">
                                             <option value="all">(all)</option>
                                             <?php loadComboboxMissionLandsat(); ?>
                                         </select> 
                                     </div>                              
-                                    <div class="acleft"><label for="slc">Scan Line Corrector (SLC)</label>                                        
+                                    <div class="acleft"><label for="slc"><?php echo $lang['slc-text']; ?></label>                                        
                                     </div>
                                     <div class="acright">
                                         <select id="slc" name="slc" style = "width:120px">
@@ -513,11 +516,12 @@
                                             <?php loadComboboxSLC(); ?>
                                         </select> 
                                         <a href="http://landsat.usgs.gov/products_slcoffbackground.php" target="_blank" 
-                                           title="Scan Line Corrector" style="font-size:10px;"><em>(What's this?)</em></a>
+                                           title="<?php echo $lang['slc-text']; ?>" style="font-size:10px;">
+                                            <em><?php echo $lang['whats-this-slc-text']; ?></em></a>
                                     </div>
                                     <div id="SLCInfo"></div>
                                     <div class="acleft">
-                                        <label for="orthorectified">Ortho Rectified</label>
+                                        <label for="orthorectified"><?php echo $lang['ortho-rectified']; ?></label>
                                     </div>                                
                                     <div class="acright">
                                         <select id="orthorectified" name="orthorectified">
@@ -525,7 +529,7 @@
                                             <?php loadComboboxOrtho(); ?>
                                         </select>
                                     </div>
-                                    <div class="acleft"><label for="stack">Pre-Stack (3 Bands RGB)</label> 
+                                    <div class="acleft"><label for="stack"><?php echo $lang['pre-statck-text']; ?></label> 
                                     </div>
                                     <div class="acright">
                                         <select id="stack" name="stack">
@@ -537,19 +541,19 @@
                             <div id="MSRTM">
                                 <div class="labelText">SRTM</div>
                                 <div class="additionalCriteriaBox">
-                                    <div class="acleft"><label for="missionSRTM">SRTM Version</label></div>
+                                    <div class="acleft"><label for="missionSRTM"><?php echo $lang['srtm-version-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="missionSRTM" name="missionSRTM">
                                             <option value="all">(all)</option>
                                             <?php loadComboboxMissionSRTM(); ?>
                                         </select> 
                                     </div>
-                                    <div class="acleft"><label for="resolutionSRTM">Spatial Resolution</label></div>
+                                    <div class="acleft"><label for="resolutionSRTM"><?php echo $lang['spatial-resolution-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="resolutionSRTM" name="resolutionSRTM">
                                             <option value="all">(all)</option>
-                                            <option value="30">30 Meters</option>
-                                            <option value="90">90 Meters</option>
+                                            <option value="30">30 <?php echo $lang['meters-text']; ?></option>
+                                            <option value="90">90 <?php echo $lang['meters-text']; ?></option>
                                         </select> 
                                     </div>
                                 </div>
@@ -557,7 +561,7 @@
                             <div id="MSPOT">
                                 <div class="labelText">SPOT</div>
                                 <div class="additionalCriteriaBox">
-                                    <div class="acleft"><label for="verionSPOT">SPOT Version</label></div>
+                                    <div class="acleft"><label for="verionSPOT"><?php echo $lang['spot-version-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="verionSPOT" name="verionSPOT">
                                             <option value="all">(all)</option>
@@ -567,9 +571,9 @@
                                 </div> 
                             </div>
                             <div id="MCloudCover">
-                                <div class="labelText">Cloud cover</div>
+                                <div class="labelText"><?php echo $lang['cloud-cover']; ?></div>
                                 <div class="additionalCriteriaBox">
-                                    <div class="acleft"><label for="cloudCover">Cloud cover</label></div>
+                                    <div class="acleft"><label for="cloudCover"><?php echo $lang['cloud-cover']; ?></label></div>
                                     <div class="acright">
                                         <select id="cloudCover" name="cloudCover" disabled>
                                             <option value="all">(all)</option>
@@ -581,18 +585,18 @@
                     </div>
                     <div id="tabs-3">
                         <span style="font-size: 12px;">
-                            <em>Use the dropdown to see the search results for each specific category.
+                            <em><?php echo $lang['use-dropdown-text']; ?>
                             </em>
                         </span>
                         <div id="catResult" style="font-size: 12px;clear: both;">
                             <label for="categoryResult">
-                                <strong><em>Category: </em></strong> 
+                                <strong><em><?php echo $lang['category-text']; ?>: </em></strong> 
                             </label> 
                             <select id="categoryResult" name="categoryResult">
                             </select>
                             <div style="float: right;margin-top: 2px;">
                                 <input type="checkbox" id="checkAllResult" checked />
-                                <label for="checkAllResult">Check/Uncheck All</label>
+                                <label for="checkAllResult"><?php echo $lang['check-uncheck-text']; ?></label>
                             </div> 
                         </div>
 
@@ -603,32 +607,56 @@
                     </div>
                 </div>
                 <div>
-                    <input id="submitButton" class="pageButton disabled" type="button" value="Submit Request" title="Submit my data request to OSFAC" />
-                    <input id="resetButton" class="pageButton" type="button" value="Reset All" title="Reset All" />
-                    <input id="seachButton" class="pageButton" type="button" value="Search" title="Search" />
+                    <input id="submitButton" class="pageButton disabled" type="button" value="<?php echo $lang['button-submit-text']; ?>" title="<?php echo $lang['button-submit-title']; ?>" />
+                    <input id="resetButton" class="pageButton" type="button" value="<?php echo $lang['button-reset-all']; ?>" title="<?php echo $lang['button-reset-all']; ?>" />
+                    <input id="seachButton" class="pageButton" type="button" value="<?php echo $lang['button-search']; ?>" title="<?php echo $lang['button-search']; ?>" />
                 </div>
             </div>
             <div id="right-col">
                 <div id="mapWrapper">
                     <div id="map"></div>
                     <div id="mapOverlays">
-                        <div id="mouseLatLng">(Coordinates)</div>
+                        <div id="mouseLatLng">(<?php echo $lang['coordinates']; ?>)</div>
                     </div>
                 </div>
             </div> 
             <div id="menufooter">
                 <ul>
-                    <li><a href="pages/terms.php">Terms of use</a></li>
-                    <li><a href="pages/privacy.php">Privacy policy</a></li>
-                    <li><a href="pages/contact.php">Contact</a></li>
-                    <li><a href="pages/help.php">Help</a></li>
+                    <li><a href="pages/terms.php"><?php echo $lang['terms-of-use']; ?></a></li>
+                    <li><a href="pages/privacy.php"><?php echo $lang['privacy-policy']; ?></a></li>
+                    <li><a href="pages/contact.php"><?php echo $lang['contact-text']; ?></a></li>
+                    <li><a href="pages/help.php"><?php echo $lang['help-text']; ?></a></li>
                 </ul>
                 <div id="copyright">
                     <p><strong>OSFAC-Data Management Tool</strong>. Email: <a href="mailto:dmt@osfac.net">dmt@osfac.net</a></p>
-                    <p>Copyright © <?php echo date("Y") ?> OSFAC. All Rights Reserved.</p>
-                    <p style="color: #000000;"><em>Powered by OSFAC Team</em></p>
+                    <p>Copyright © 2012 - <?php echo date("Y") ?> OSFAC. <?php echo $lang['all-rights-reserved']; ?></p>
+                    <p style="color: #000000;"><em><?php echo $lang['powered-by-text']; ?></em></p>
                 </div>
             </div>
+
+            <div id="login-form">
+                <fieldset>
+                    <table>
+                        <tr>
+                            <td><label for="username" style="width: 100%;"><?php echo $lang['username']; ?></label></td>
+                            <td><input style="margin-left: 10px; margin-top: 5px;" type="text" id="username" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td><label for="password" style="width: 100%;"><?php echo $lang['password']; ?></label></td>
+                            <td><input style="margin-left: 10px; margin-top: 5px;" type="text" id="password" class="text ui-widget-content ui-corner-all"/></td>
+                        </tr>
+                        <tr>
+                            <td><label style="width: 100%;"></label></td>
+                            <td><label style="margin-left: 10px; margin-top: 5px;"><?php echo $lang['remember-me']; ?></label></td>
+                        </tr>
+                        <tr>
+                            <td><a href=""><?php echo $lang['password-forgot']; ?></a></td>
+                            <td><label style="width: 100%;"></label></td>
+                        </tr>
+                    </table>
+                </fieldset>
+            </div>
+            <div id="register-form"></div>
         </div>
     </body>
 </html>

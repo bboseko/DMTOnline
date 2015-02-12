@@ -20,4 +20,4 @@ if ($Connex->num_rows() >= 1) {
 
 echo $result;
 $Connex->free();
-?>
+

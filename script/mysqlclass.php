@@ -37,7 +37,7 @@ class db {
         }
         // selection de la base
 
-        if (@mysql_select_db($this->databasename, $this->link_id) == false) {
+        if (mysql_select_db($this->databasename, $this->link_id) == false) {
             $this->error = "Impossible to check the database !";
             return(0);
         }
@@ -47,7 +47,7 @@ class db {
     // pour liberer la memoire de la derniere requete
 
     function free() {
-        if (@mysql_free_result($this->query_id) == false) {
+        if (mysql_free_result($this->query_id) == false) {
             $this->error = "Erreur lors de la tentative de libération de memoire";
         }
         $this->query_id = 0;
@@ -60,15 +60,13 @@ class db {
         // pour tester si il existe une connexion
         if ($this->link_id != 0) {
             // test si on doit liberer la memoire
-            if ($this->query_id != 0) {
-                if ($this->auto_free == 1) {
-                    $this->free();
-                }
+            if ($this->query_id != 0 && $this->auto_free == 1) {
+                $this->free();
             }
             if (($this->query_id = mysql_query($query, $this->link_id)) == false) {
                 $this->error = "Impossible to launch the query";
             } else {
-                @ $this->lastinsertedid = mysql_insert_id();
+                $this->lastinsertedid = mysql_insert_id();
                 $rtval = $this->query_id;
                 $this->row = 0;
             }
@@ -82,7 +80,7 @@ class db {
     function next_record() {
         $rtval = 0;
         if ($this->query_id != -1) { // si il y a un index de resultat
-            $this->record = @mysql_fetch_array($this->query_id);
+            $this->record = mysql_fetch_array($this->query_id);
             $this->row = $this->row + 1;
             // test validite
             $stat = is_array($this->record);
@@ -102,7 +100,7 @@ class db {
     // pour positionner le pointeur interne du resultset a l'endroit desire
     function seek($pos = 0) {
         $rtval = -1;
-        if (@mysql_data_seek($this->query_id, $pos) != false) {
+        if (mysql_data_seek($this->query_id, $pos) != false) {
             $this->row = $pos;
             $rtval = $pos;
         }
@@ -112,12 +110,12 @@ class db {
     // retourne le nombre de lignes dans le recordset
     // (uniquement apres un select)
     function num_rows() {
-        return(@mysql_num_rows($this->query_id));
+        return(mysql_num_rows($this->query_id));
     }
 
     // retourne le nombre de champs de l'enregistrement courant
     function num_fields() {
-        return(@mysql_num_fields($this->query_id));
+        return(mysql_num_fields($this->query_id));
     }
 
     // retourne le nombre de tuples affectes
@@ -125,7 +123,7 @@ class db {
     // (!!! : si on fait un delete sur ts les enregistrements -> sans clause where
     // alors la fonction renvoie 0)
     function affected_rows() {
-        return(@mysql_affected_rows($this->link_id));
+        return(mysql_affected_rows($this->link_id));
     }
 
     //\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\//\\
@@ -151,5 +149,3 @@ class db {
     }
 
 }
-?>
-

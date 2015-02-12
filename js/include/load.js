@@ -33,7 +33,7 @@ DMT.load = {
                     $.blockUI({
                         theme: true,
                         title: 'Notice',
-                        message: '<p>Searching the entire map requires no area of interest be defined.</p>',
+                        message: '<p>' + lang.search_entire_map + '</p>',
                         timeout: 2500
                     });
                     polygon = null;
@@ -67,8 +67,8 @@ DMT.load = {
             if (category === '(none)') {
                 $.blockUI({
                     theme: true,
-                    title: 'Empty category of images',
-                    message: '<p>Please select at least a category of images.</p>',
+                    title: lang.empty_category_title,
+                    message: '<p>' + lang.empty_category_message + '</p>',
                     timeout: 4000
                 });
                 return;
@@ -105,8 +105,8 @@ DMT.load = {
             if (DMT.gmaps.coordinateList.length <= 0) {
                 $.blockUI({
                     theme: true,
-                    title: 'Empty interest area',
-                    message: '<p>Please select your interest area.</p>',
+                    title: lang.empty_interest_are_title,
+                    message: '<p>' + lang.empty_interest_are_message + '</p>',
                     timeout: 4000
                 });
                 return;
@@ -169,8 +169,8 @@ DMT.load = {
                     });
                     $.blockUI({
                         theme: true,
-                        title: 'Filling years',
-                        message: '<p>Still Filling years dropdown list. <br/><b>Click again on the Search button</b></p>',
+                        title: lang.filling_years_title,
+                        message: lang.filling_years_message,
                         timeout: 4000
                     });
                     return;
@@ -246,7 +246,7 @@ DMT.load = {
                 other += coordinates + period;
             }
 
-            $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="loading" src="images/loader.gif" /><span> Searching available images for your area of interest ...</span>');
+            $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
 
             $('#tabs').tabs({active: 2});
             var criteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
@@ -280,14 +280,15 @@ DMT.load = {
                         url: 'script/getNumRow.php',
                         data: items,
                         success: function (response) {
+//                            alert("bobbbb "+response);
                             var nr = parseInt(response);
                             nRowResult = nr;
                             if (nr === 0) {
                                 $('#search-results-container').html('');
                                 $.blockUI({
                                     theme: true,
-                                    title: 'None images found',
-                                    message: '<span style="color:#D10500;padding:7px;">None image matches your criteria</span>',
+                                    title: lang.no_image_found_title,
+                                    message: '<span style="color:#D10500;padding:7px;">' + lang.no_image_found_message + '</span>',
                                     timeout: 4000
                                 });
                                 return;
@@ -309,6 +310,7 @@ DMT.load = {
                                     }
                                 });
                                 var pn = 1;
+//                                alert("bobbbb "+pn + " " + nr);
                                 pagination(nr, pn);
                             }
                         }
@@ -344,7 +346,7 @@ DMT.load = {
             $('#pagingResultHeader, #pagingResultFooter').html('');
             var selected = $('#categoryResult').val();
             if (selected !== '') {
-                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="loading" src="images/loader.gif" /><span> Searching available images for your area of interest ...</span>');
+                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
                 if (selected === 'LANDSAT') {
                     items = '&landsat=' + landsat;
                 }
@@ -369,6 +371,7 @@ DMT.load = {
                     success: function (response) {
                         var nr = parseInt(response);
                         var pn = 1;
+                        alert(pn + " " + nr);
                         pagination(nr, pn);
                     }
                 });
@@ -397,8 +400,8 @@ DMT.load = {
         $('#shapefileSubmit').click(function () {
             $.blockUI({
                 theme: true,
-                title: 'Under construction',
-                message: '<p>This feature is under construction</p>',
+                title: lang.shapefile_submit_title,
+                message: lang.shapefile_submit_message,
                 timeout: 4000
             });
             return;
@@ -481,15 +484,14 @@ DMT.load = {
                             $(idChild).attr('disabled', true);
                             $.blockUI({
                                 theme: true,
-                                title: 'An error occured',
+                                title: lang.error_occured,
                                 message: '<p>' + ErrorMessage + '</p>',
                                 timeout: 3000
                             });
                         }
                     }
                 });
-            }
-            else {
+            } else {
                 DMT.gmaps.featureCoder.clear();
             }
         });
@@ -521,7 +523,7 @@ DMT.load = {
                             $(idChild).attr('disabled', true);
                             $.blockUI({
                                 theme: true,
-                                title: 'An error occured',
+                                title: lang.error_occured,
                                 message: '<p>' + ErrorMessage + '</p>',
                                 timeout: 3000
                             });
@@ -559,7 +561,7 @@ DMT.load = {
                             $(idChild).attr('disabled', true);
                             $.blockUI({
                                 theme: true,
-                                title: 'An error occured',
+                                title: lang.error_occured,
                                 message: '<p>' + ErrorMessage + '</p>',
                                 timeout: 3000
                             });
@@ -595,7 +597,7 @@ DMT.load = {
                             $(idChild).attr('disabled', true);
                             $.blockUI({
                                 theme: true,
-                                title: 'An error occured',
+                                title: lang.error_occured,
                                 message: '<p>' + ErrorMessage + '</p>',
                                 timeout: 3000
                             });
@@ -640,13 +642,13 @@ DMT.load = {
                 }
             }
             if (new Date($('#datepickerFrom').val()) > new Date($('#datepickerTo').val())) {
-                alert("Start date cannot be greater than end date.");
+                alert(lang.error_greater_date);
                 $('#datepickerTo').val(new Date($('#datepickerFrom').val()).format('m/d/Y'));
             }
         });
         $('#yearFrom, #yearTo').blur(function () {
             if (parseInt($('#yearFrom').val()) > parseInt($('#yearTo').val())) {
-                alert("Start year cannot be greater than end year.");
+                alert(lang.error_greater_year);
                 $('#yearTo').val($('#yearFrom').val());
             }
         });
@@ -774,8 +776,8 @@ DMT.load = {
             if (DMT.gmaps.coordinateList.length >= DMT.gmaps.settings.getMaxPoints()) {
                 $.blockUI({
                     theme: true,
-                    title: 'Maximum Number of Points Exceeded',
-                    message: '<p>You may only add ' + DMT.gmaps.settings.getMaxPoints() + ' points to the map.</p>',
+                    title: lang.max_point_exceeded,
+                    message: lang.max_point_exceeded_message1 + DMT.gmaps.settings.getMaxPoints() + lang.max_point_exceeded_message2,
                     timeout: 4000
                 });
                 return;
@@ -784,8 +786,8 @@ DMT.load = {
             if (DMT.gmaps.overlays.polygon.type === 'circle' && DMT.gmaps.coordinateList.length >= 2) {
                 $.blockUI({
                     theme: true,
-                    title: 'Warning',
-                    message: '<p>Circles are limited to 2 points. Please clear your coordinates to draw a new circle.</p>',
+                    title: lang.warning,
+                    message: lang.circle_error_message,
                     timeout: 4000
                 });
                 return;
@@ -837,7 +839,7 @@ DMT.load = {
                         if (error.length < 1) {
                             $(this).dialog('close');
                         } else {
-                            alert('Error: ' + error);
+                            alert(lang.error + ': ' + error);
                         }
 // Center the map on the new polygon
                         DMT.gmaps.centerMap();
@@ -846,7 +848,7 @@ DMT.load = {
                         $(this).dialog('close');
                     }
                 },
-                title: 'Add New Coordinate',
+                title: lang.add_new_coordinate,
                 open: function () {
                     var $dialogContent = $('#coordEntryDialogArea');
                     if (DMT.gmaps.settings.getFormat() === 'dd') {
@@ -916,7 +918,7 @@ DMT.load = {
                                 if (error.length < 1) {
                                     $(this).dialog('close');
                                 } else {
-                                    alert('Error: ' + error);
+                                    alert(lang.error + ': ' + error);
                                 }
 // Center the map on the new polygon
                                 DMT.gmaps.centerMap();
@@ -925,7 +927,7 @@ DMT.load = {
                                 $(this).dialog('close');
                             }
                         },
-                        title: 'Edit Coordinate #' + (index + 1).toString(),
+                        title: lang.edit_coordinate + ' #' + (index + 1).toString(),
                         open: function () {
                             var $dialogContent = $('#coordEntryDialogArea');
                             var latitude = DMT.gmaps.coordinateList[index].lat().toFixed(DMT.coordinatePrecision);

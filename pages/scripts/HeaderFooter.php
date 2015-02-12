@@ -42,5 +42,5 @@ function footerPage() {
             <p style="color: #000000;"><em>Powered by OSFAC Team</em></p>
         </div>                    
     </div>
-<?php }
-?>
+    <?php
+}

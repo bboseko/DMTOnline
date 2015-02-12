@@ -300,8 +300,8 @@ DMT.gmaps = {
             if (DMT.gmaps.coordinateList.length >= DMT.gmaps.settings.getMaxPoints()) {
                 $.blockUI({
                     theme: true,
-                    title: 'Maximum Number of Points Exceeded',
-                    message: '<p>You may only add ' + DMT.gmaps.settings.getMaxPoints() + ' points to the map.</p>',
+                    title: lang.max_point_exceeded_title,
+                    message: lang.max_point_exceeded_message1 + DMT.gmaps.settings.getMaxPoints() + lang.max_point_exceeded_message2,
                     timeout: 4000
                 });
                 return;
@@ -311,8 +311,8 @@ DMT.gmaps = {
                     draw = false;
                     $.blockUI({
                         theme: true,
-                        title: 'Warning',
-                        message: '<p>Circles are limited to 2 points. Please clear your coordinates to draw a new circle.</p>',
+                        title: lang.warning,
+                        message: lang.circle_error_message,
                         timeout: 4000
                     });
                 }
@@ -853,7 +853,7 @@ DMT.gmaps = {
             {
                 DMT.gmaps.overlays.markers[0].setOptions({
                     draggable: (currentTab === 1),
-                    title: (currentTab === 1) ? '1' : 'Area of Interest',
+                    title: (currentTab === 1) ? '1' : lang.area_of_interest,
                     visible: true
                 });
             }
@@ -1000,8 +1000,8 @@ DMT.gmaps = {
             if (address === '') {
                 $.blockUI({
                     theme: true,
-                    title: 'Empty Address or Place',
-                    message: '<p>Empty Address or Place not allowed.</p>',
+                    title: lang.empty_address_or_place_title,
+                    message: lang.empty_address_or_place_message,
                     timeout: 4000
                 });
                 return;
@@ -1037,10 +1037,10 @@ DMT.gmaps = {
                             $('#addressLoader').hide();//Hide loader
                             $('#addressInfo').hide();
                             if (status === google.maps.GeocoderStatus.ZERO_RESULTS) {
-                                $('#geoErrorMessageAddress').html('There were no results for your search query.');
+                                $('#geoErrorMessageAddress').html(lang.address_place_no_results);
                             }
                             else {
-                                $('#geoErrorMessageAddress').html('We were unable to locate the address or place you specified. Please make sure it is a valid location.');
+                                $('#geoErrorMessageAddress').html(lang.address_place_unable_found);
                             }
                             $('#geoErrorMessageAddress').stop(true, true).show();//slideDown(DMT.resultsSlideSpeed);
                         }
@@ -1062,8 +1062,8 @@ DMT.gmaps = {
             if (path === null || row === null) {
                 $.blockUI({
                     theme: true,
-                    title: 'Empty Path and/or Row',
-                    message: '<p>Empty Path or Row not allowed. You should choose a Path and a Row from the dropdown list respectively.</p>',
+                    title: lang.empty_path_row_title,
+                    message: lang.empty_path_row_message,
                     timeout: 4000
                 });
                 return;
@@ -1084,11 +1084,11 @@ DMT.gmaps = {
                         else {
                             $.blockUI({
                                 theme: true,
-                                title: 'Empty Path and/or Row',
-                                message: '<p>Your Path and Row is outside of our  ​​work area.</p>',
+                                title: lang.empty_path_row_title,
+                                message: lang.path_row_outside_work_area,
                                 timeout: 4000
                             });
-                            $('#geoErrorMessagePathRow').html('Your Path and Row is outside of our  ​​work area');
+                            $('#geoErrorMessagePathRow').html(lang.path_row_outside_work_area);
                             $('#geoErrorMessagePathRow').stop(true, true).show();
                         }
                     }
@@ -1122,8 +1122,8 @@ DMT.gmaps = {
             if (province === null && district === null && territory === null && sector === null && locality === null) {
                 $.blockUI({
                     theme: true,
-                    title: 'Empty Predefined Area',
-                    message: '<p>Empty Predefined Area not allowed.</p>',
+                    title: lang.empty_predefined_area_title,
+                    message: lang.empty_predefined_area_message,
                     timeout: 4000
                 });
             }

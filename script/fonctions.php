@@ -13,8 +13,8 @@ function connectdb() {
     $username = "root";
     $password = "ustopudie";
 
-    @mysql_pconnect($hostname, $username, $password) or die("Connection failed:" . mysql_error()); // connexion persistante au serveur
-    @mysql_select_db($databasename) or die("Database selection failed:" . mysql_error());
+    mysql_pconnect($hostname, $username, $password) or die("Connection failed:" . mysql_error()); // connexion persistante au serveur
+    mysql_select_db($databasename) or die("Database selection failed:" . mysql_error());
 }
 
 function loadComboboxCategory() {
@@ -253,14 +253,12 @@ function getTotalSize($idss) {
     $Connex->connect();
     for ($i = 0; $i < count($idss); $i++) {
         $Connex->query("SELECT size FROM dmt_image where id_image = " . $idss[$i]);
-        if ($Connex->num_rows() >= 1) {
-            while ($Connex->next_record()) {
-                $size += $Connex->f("size");
-            }
+        if ($Connex->num_rows() >= 1 && $Connex->next_record()) {
+            $size += $Connex->f("size");
         }
     }
-    return bytesToSize($size * 1024 * 1024);
     $Connex->free();
+    return bytesToSize($size * 1024 * 1024);
 }
 
 function bytesToSize($bytes) {
@@ -284,4 +282,3 @@ function bytesToSize($bytes) {
         return $bytes . ' B';
     }
 }
-?>

@@ -1,6 +1,6 @@
 <?php
 
-header("content-type: text/html; charset=ISO-8859-1");
+header("content-type: text/html; charset=UTF-8");
 include_once ("mysqlclass.php");
 $Connex = new db(0);
 $Connex->connect();
@@ -55,4 +55,3 @@ if ($asterdem != '') {
 echo $totalRecord;
 //echo $result;
 $Connex->free();
-?>

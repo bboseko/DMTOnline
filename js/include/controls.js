@@ -46,13 +46,13 @@ function isNumber(value) {
 // Examined
 function validateDialogInput(latitude, longitude, type) {
     var errors = {
-        latitude: 'Invalid latitude input.',
-        longitude: 'Invalid longitude input.',
-        numeric: 'Must contain only digits.',
-        latRange: 'Must be between -90 and 90.',
-        lngRange: 'Must be between -180 and 180.',
-        dmslatRange: 'Must be between 0 and 90.',
-        dmslngRange: 'Must be between 0 and 180.'
+        latitude: lang.invalid_latitude,
+        longitude: lang.invalid_longitude,
+        numeric: lang.only_numeric,
+        latRange: lang.latRange,
+        lngRange: lang.lngRange,
+        dmslatRange: lang.dmslatRange,
+        dmslngRange: lang.dmslngRange
     };
     if (type === 'dd') {
         if (!isNumber(latitude))
