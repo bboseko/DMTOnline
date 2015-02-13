@@ -1,4 +1,5 @@
 $(function () {
+    var loginForm;
     $("#tabs").tabs();
     $("#accordion").accordion({
         heightStyle: "content",
@@ -11,6 +12,7 @@ $(function () {
         changeMonth: true,
         changeYear: true
     });
+    $("#sex").buttonset();
     $("#logInCommand").button({
         icons: {
             primary: "ui-icon-person"
@@ -22,28 +24,45 @@ $(function () {
         }
     });
     $("#registerCommand").button().on("click", function () {
+        $('#registerFormBox').removeClass('displayNone');
         $("#register-form").dialog({
             autoOpen: false,
-            height: 600,
-            width: 350,
+            height: 520,
+            width: 400,
             modal: true,
-            title: lang.register,
-            buttons: {
-                "Register": function () {
+            title: lang.registration,
+            buttons: [
+                {
+                    text: lang.ok,
+                    icons: {
+                        primary: "ui-icon-check"
+                    },
+                    click: function () {
+
+                    }
                 },
-                "Cancel": function () {
-                    $(this).dialog("close");
+                {
+                    text: lang.close,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $('#registerFormBox').addClass('displayNone');
+                        $(this).dialog("close");
+                    }
                 }
-            },
+            ],
             close: function () {
+                $('#registerFormBox').addClass('displayNone');
                 $(this).dialog('destroy');
             }
         }).dialog("open");
     });
     $("#logInCommand").button().on("click", function () {
-        $("#login-form").dialog({
+        $('#loginFormBox').removeClass('displayNone');
+        loginForm = $("#login-form").dialog({
             autoOpen: false,
-            height: 210,
+            height: 240,
             width: 350,
             modal: true,
             title: lang.login_form_title,
@@ -63,10 +82,46 @@ $(function () {
                         primary: "ui-icon-close"
                     },
                     click: function () {
+                        $('#loginFormBox').addClass('displayNone');
                         $(this).dialog("close");
                     }
                 }
             ], close: function () {
+                $('#loginFormBox').addClass('displayNone');
+                $(this).dialog('destroy');
+            }
+        }).dialog("open");
+    });
+    $("#passwordForgotten").button().on("click", function () {
+        $('#passwordForgottenFormBox').removeClass('displayNone');
+        $("#passwordForgotten-form").dialog({
+            autoOpen: false,
+            height: 220,
+            width: 350,
+            modal: true,
+            title: lang.login_form_title,
+            buttons: [
+                {
+                    text: lang.ok,
+                    icons: {
+                        primary: "ui-icon-check"
+                    },
+                    click: function () {
+                        $(loginForm).dialog("destroy");
+                    }
+                },
+                {
+                    text: lang.close,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $('#passwordForgottenFormBox').addClass('displayNone');
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $('#passwordForgottenFormBox').addClass('displayNone');
                 $(this).dialog('destroy');
             }
         }).dialog("open");

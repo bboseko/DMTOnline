@@ -227,6 +227,9 @@ input.disabled {
     display: none;
     overflow: auto;    
 }
+.displayNone{
+    display: none;
+}
 #coordEntryDialogTemplate {
     display: none;
 }

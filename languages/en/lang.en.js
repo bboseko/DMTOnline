@@ -55,5 +55,7 @@ lang = {
     login: "Login",
     login_form_title: "Login form",
     register: "Register",
-    close: "Close"
+    close: "Close",
+    ok: "OK",
+    registration: "Registration form"
 };

@@ -55,5 +55,7 @@ lang = {
     login: "Connexion",
     login_form_title: "Formulaire de connexion",
     register: "Inscription",
-    close: "Fermer"
+    close: "Fermer",
+    ok: "OK",
+    registration: "Formulaire d'inscription"
 };

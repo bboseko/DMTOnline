@@ -799,55 +799,67 @@ DMT.load = {
                 height: 170,
                 width: 400,
                 modal: true,
-                buttons: {
-                    'Add': function () {
-                        var error = '';
-                        var response;
-                        var format = DMT.gmaps.settings.getFormat();
-                        var latitude, longitude, response;
-                        var $dialogContent = $('#coordEntryDialogArea');
-                        if (format === 'dd') {
-                            latitude = $dialogContent.find('input.latitude').val();
-                            longitude = $dialogContent.find('input.longitude').val();
-                            response = validateDialogInput(latitude, longitude, format);
+                buttons: [
+                    {
+                        text: lang.add,
+                        icons: {
+                            primary: "ui-icon-check"
+                        },
+                        click: function () {
+                            var error = '';
+                            var response;
+                            var format = DMT.gmaps.settings.getFormat();
+                            var latitude, longitude, response;
+                            var $dialogContent = $('#coordEntryDialogArea');
+                            if (format === 'dd') {
+                                latitude = $dialogContent.find('input.latitude').val();
+                                longitude = $dialogContent.find('input.longitude').val();
+                                response = validateDialogInput(latitude, longitude, format);
 // Make sure the input is numeric
-                            if (response.valid) {
-                                DMT.gmaps.coordinates.add(new google.maps.LatLng(latitude, longitude));
+                                if (response.valid) {
+                                    DMT.gmaps.coordinates.add(new google.maps.LatLng(latitude, longitude));
+                                } else {
+                                    error = response.message;
+                                }
                             } else {
-                                error = response.message;
+                                latitude = ['', '', '', ''];
+                                longitude = ['', '', '', ''];
+                                latitude[0] = $dialogContent.find('input.degreesLat').val();
+                                latitude[1] = $dialogContent.find('input.minutesLat').val();
+                                latitude[2] = $dialogContent.find('input.secondsLat').val();
+                                latitude[3] = $dialogContent.find('select.directionLat').val();
+                                longitude[0] = $dialogContent.find('input.degreesLng').val();
+                                longitude[1] = $dialogContent.find('input.minutesLng').val();
+                                longitude[2] = $dialogContent.find('input.secondsLng').val();
+                                longitude[3] = $dialogContent.find('select.directionLng').val();
+                                response = validateDialogInput(latitude, longitude, format);
+                                if (response.valid) {
+                                    var latitudeDec = convertDMSToDec(latitude);
+                                    var longitudeDec = convertDMSToDec(longitude);
+                                    DMT.gmaps.coordinates.add(new google.maps.LatLng(latitudeDec, longitudeDec));
+                                } else {
+                                    error = response.message;
+                                }
                             }
-                        } else {
-                            latitude = ['', '', '', ''];
-                            longitude = ['', '', '', ''];
-                            latitude[0] = $dialogContent.find('input.degreesLat').val();
-                            latitude[1] = $dialogContent.find('input.minutesLat').val();
-                            latitude[2] = $dialogContent.find('input.secondsLat').val();
-                            latitude[3] = $dialogContent.find('select.directionLat').val();
-                            longitude[0] = $dialogContent.find('input.degreesLng').val();
-                            longitude[1] = $dialogContent.find('input.minutesLng').val();
-                            longitude[2] = $dialogContent.find('input.secondsLng').val();
-                            longitude[3] = $dialogContent.find('select.directionLng').val();
-                            response = validateDialogInput(latitude, longitude, format);
-                            if (response.valid) {
-                                var latitudeDec = convertDMSToDec(latitude);
-                                var longitudeDec = convertDMSToDec(longitude);
-                                DMT.gmaps.coordinates.add(new google.maps.LatLng(latitudeDec, longitudeDec));
+                            if (error.length < 1) {
+                                $(this).dialog('close');
                             } else {
-                                error = response.message;
+                                alert(lang.error + ': ' + error);
                             }
-                        }
-                        if (error.length < 1) {
-                            $(this).dialog('close');
-                        } else {
-                            alert(lang.error + ': ' + error);
-                        }
 // Center the map on the new polygon
-                        DMT.gmaps.centerMap();
+                            DMT.gmaps.centerMap();
+                        }
                     },
-                    'Cancel': function () {
-                        $(this).dialog('close');
+                    {
+                        text: lang.close,
+                        icons: {
+                            primary: "ui-icon-close"
+                        },
+                        click: function () {
+                            $(this).dialog("close");
+                        }
                     }
-                },
+                ],
                 title: lang.add_new_coordinate,
                 open: function () {
                     var $dialogContent = $('#coordEntryDialogArea');
@@ -878,55 +890,67 @@ DMT.load = {
                         height: 170,
                         width: 400,
                         modal: true,
-                        buttons: {
-                            'Save': function () {
-                                var error = '';
-                                var response;
-                                var format = DMT.gmaps.settings.getFormat();
-                                var latitude, longitude, response;
-                                var $dialogContent = $('#coordEntryDialogArea');
-                                if (format === 'dd') {
-                                    latitude = $dialogContent.find('input.latitude').val();
-                                    longitude = $dialogContent.find('input.longitude').val();
-                                    response = validateDialogInput(latitude, longitude, format);
+                        buttons: [
+                            {
+                                text: lang.save,
+                                icons: {
+                                    primary: "ui-icon-check"
+                                },
+                                click: function () {
+                                    var error = '';
+                                    var response;
+                                    var format = DMT.gmaps.settings.getFormat();
+                                    var latitude, longitude, response;
+                                    var $dialogContent = $('#coordEntryDialogArea');
+                                    if (format === 'dd') {
+                                        latitude = $dialogContent.find('input.latitude').val();
+                                        longitude = $dialogContent.find('input.longitude').val();
+                                        response = validateDialogInput(latitude, longitude, format);
 // Make sure the input is numeric
-                                    if (response.valid) {
-                                        DMT.gmaps.coordinates.update(index, new google.maps.LatLng(latitude, longitude));
+                                        if (response.valid) {
+                                            DMT.gmaps.coordinates.update(index, new google.maps.LatLng(latitude, longitude));
+                                        } else {
+                                            error = response.message;
+                                        }
                                     } else {
-                                        error = response.message;
+                                        latitude = ['', '', '', ''];
+                                        longitude = ['', '', '', ''];
+                                        latitude[0] = $dialogContent.find('input.degreesLat').val();
+                                        latitude[1] = $dialogContent.find('input.minutesLat').val();
+                                        latitude[2] = $dialogContent.find('input.secondsLat').val();
+                                        latitude[3] = $dialogContent.find('select.directionLat').val();
+                                        longitude[0] = $dialogContent.find('input.degreesLng').val();
+                                        longitude[1] = $dialogContent.find('input.minutesLng').val();
+                                        longitude[2] = $dialogContent.find('input.secondsLng').val();
+                                        longitude[3] = $dialogContent.find('select.directionLng').val();
+                                        response = validateDialogInput(latitude, longitude, format);
+                                        if (response.valid) {
+                                            var latitudeDec = convertDMSToDec(latitude);
+                                            var longitudeDec = convertDMSToDec(longitude);
+                                            DMT.gmaps.coordinates.update(index, new google.maps.LatLng(latitudeDec, longitudeDec));
+                                        } else {
+                                            error = response.message;
+                                        }
                                     }
-                                } else {
-                                    latitude = ['', '', '', ''];
-                                    longitude = ['', '', '', ''];
-                                    latitude[0] = $dialogContent.find('input.degreesLat').val();
-                                    latitude[1] = $dialogContent.find('input.minutesLat').val();
-                                    latitude[2] = $dialogContent.find('input.secondsLat').val();
-                                    latitude[3] = $dialogContent.find('select.directionLat').val();
-                                    longitude[0] = $dialogContent.find('input.degreesLng').val();
-                                    longitude[1] = $dialogContent.find('input.minutesLng').val();
-                                    longitude[2] = $dialogContent.find('input.secondsLng').val();
-                                    longitude[3] = $dialogContent.find('select.directionLng').val();
-                                    response = validateDialogInput(latitude, longitude, format);
-                                    if (response.valid) {
-                                        var latitudeDec = convertDMSToDec(latitude);
-                                        var longitudeDec = convertDMSToDec(longitude);
-                                        DMT.gmaps.coordinates.update(index, new google.maps.LatLng(latitudeDec, longitudeDec));
+                                    if (error.length < 1) {
+                                        $(this).dialog('close');
                                     } else {
-                                        error = response.message;
+                                        alert(lang.error + ': ' + error);
                                     }
-                                }
-                                if (error.length < 1) {
-                                    $(this).dialog('close');
-                                } else {
-                                    alert(lang.error + ': ' + error);
-                                }
 // Center the map on the new polygon
-                                DMT.gmaps.centerMap();
+                                    DMT.gmaps.centerMap();
+                                }
                             },
-                            'Cancel': function () {
-                                $(this).dialog('close');
+                            {
+                                text: lang.close,
+                                icons: {
+                                    primary: "ui-icon-close"
+                                },
+                                click: function () {
+                                    $(this).dialog("close");
+                                }
                             }
-                        },
+                        ],
                         title: lang.edit_coordinate + ' #' + (index + 1).toString(),
                         open: function () {
                             var $dialogContent = $('#coordEntryDialogArea');
