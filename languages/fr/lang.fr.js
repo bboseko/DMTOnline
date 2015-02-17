@@ -57,5 +57,10 @@ lang = {
     register: "Inscription",
     close: "Fermer",
     ok: "OK",
-    registration: "Formulaire d'inscription"
+    registration: "Formulaire d'inscription",
+    some_required_field_empty_title: "Champs obligatoire vide",
+    some_required_field_empty: "Quelques champs obligatoire sont vide",
+    password_do_not_match: "Vos champs de mot de passe ne correspondent pas",
+    password_do_not_match_title: "Champs de mot de passe ne correspondent pas",
+    username_error_title: "Erreur nom d'utilisateur"
 };

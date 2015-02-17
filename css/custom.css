@@ -699,3 +699,6 @@ table.resultPageTable tr.excludedResultRow td {
     text-align: center;
     text-transform: uppercase;
 }
+.no-close .ui-dialog-titlebar-close {
+    display: none;
+}

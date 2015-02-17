@@ -280,7 +280,6 @@ DMT.load = {
                         url: 'script/getNumRow.php',
                         data: items,
                         success: function (response) {
-//                            alert("bobbbb "+response);
                             var nr = parseInt(response);
                             nRowResult = nr;
                             if (nr === 0) {
@@ -310,7 +309,6 @@ DMT.load = {
                                     }
                                 });
                                 var pn = 1;
-//                                alert("bobbbb "+pn + " " + nr);
                                 pagination(nr, pn);
                             }
                         }

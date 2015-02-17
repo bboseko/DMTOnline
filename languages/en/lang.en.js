@@ -57,5 +57,10 @@ lang = {
     register: "Register",
     close: "Close",
     ok: "OK",
-    registration: "Registration form"
+    registration: "Registration form",
+    some_required_field_empty_title: "Required fields empty",
+    some_required_field_empty: "Some required fields are empty",
+    password_do_not_match: "Your password fields do not match",
+    password_do_not_match_title: "Password fields do not match",
+    username_error_title: "Username error"
 };
