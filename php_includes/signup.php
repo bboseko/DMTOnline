@@ -50,9 +50,7 @@ if ($firstname === "" || $familyname === "" || $sex === "" || $address === "" ||
     // END FORM DATA ERROR HANDLING
     // Begin Insertion of data into the database
     // Hash the password and apply your own mysterious unique salt
-    $cryptpass = crypt($password1);
-    include_once ("randStrGen.php");
-    $password_hash = randStrGen(20) . "$cryptpass" . randStrGen(20);
+    $password_hash = md5($password1);
     $id_profile = 2;
     include_once ("../script/fonctions.php");
     connectdb();

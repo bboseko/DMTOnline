@@ -27,13 +27,19 @@
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="index.php?lang=en"><img src="images/en.gif" /> <?php echo $lang['english']; ?></a>
         </li>
-
+        <li style="float:right !important; font-weight: bold; 
+            text-transform: uppercase; margin-right: 50px; background: none; ">
+            <button class="displayNone" id="profileCommand" style="margin-top: -5px;"><?php echo $_COOKIE["user"]; ?></button>
+        </li>
         <li style="float:right !important; font-weight: bold; 
             text-transform: uppercase; margin-right: 50px; background: none; ">
             <button id="registerCommand" style="margin-top: -5px;"><?php echo $lang['register']; ?></button>
         </li>
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <button id="logInCommand" style="margin-top: -5px;"><?php echo $lang['login']; ?></button>
+        </li>
+        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
+            <button class="displayNone" id="logOutCommand" style="margin-top: -5px;"><?php echo $lang['logout']; ?></button>
         </li>
     </ul>
 </div>

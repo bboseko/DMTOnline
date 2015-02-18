@@ -1,31 +1,37 @@
 <div id="login-form">
-    <div id="loginFormBox" class="requestFormBox displayNone" style="width: 300px;">
-        <table>
-            <tr>
-                <td><label for="username" style="width: 100%;"><?php echo $lang['username']; ?></label></td>
-                <td><input style="width: 100%;margin-left: 10px; margin-top: 5px;" type="text" id="username" class="text ui-widget-content ui-corner-all"/></td>
-            </tr>
-            <tr>
-                <td><label for="password" style="width: 100%;"><?php echo $lang['password']; ?></label></td>
-                <td><input style="width: 100%;margin-left: 10px; margin-top: 5px;" type="password" id="password" class="text ui-widget-content ui-corner-all"/></td>
-            </tr>
-            <tr>
-                <td><label style="width: 100%;"></label></td>
-                <td>
-                    <input type="checkbox" style="margin-left: 10px; margin-top: 5px;" id="rememberMe"/>
-                    <label for="rememberMe" style="width: 100%;"><?php echo $lang['remember-me']; ?></label>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <label style="width: 100%;"></label>
-                </td>
-                <td>
-                    <a style="color: #327E04; float: right;"><?php echo $lang['password-forgot']; ?></a>
-                </td>                            
-            </tr>
-        </table>
-    </div>
+    <form name="loginform" id="loginform" onsubmit="return false;">
+        <div id="loginFormBox" class="requestFormBox displayNone" style="width: 300px;">
+            <table>
+                <tr>
+                    <td style="width: 100px;"><label for="username" style="width: 100%;"><?php echo $lang['username']; ?></label></td>
+                    <td><input style="width: 100%;margin-left: 10px; margin-top: 5px;" type="text" id="username" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td style="width: 100px;"><label for="password" style="width: 100%;"><?php echo $lang['password']; ?></label></td>
+                    <td><input style="width: 100%;margin-left: 10px; margin-top: 5px;" type="password" id="password" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td>
+                        <label style="width: 100%;"></label>
+                    </td>
+                    <td>
+                        <a style="color: #327E04; float: right;"><?php echo $lang['password-forgot']; ?></a>
+                    </td>                            
+                </tr>
+                <tr>
+                    <td>
+                        <label style="width: 100%;"></label>
+                    </td>
+                    <td>
+                        <a style="color: #327E04; float: right;"><?php echo $lang['username-forgot']; ?></a>
+                    </td>                            
+                </tr>
+            </table>            
+        </div>
+        <span id="loaderConnection" class="displayNone" style="margin-top: -3px;float: right;margin-right: 20px;font-size: 11px;color: #660000;">
+            Connecting ... <img alt="loading" src="./images/loader.gif" /> 
+        </span>
+    </form>
 </div>
 <div id="passwordForgotten-form">
     <div id="passwordForgottenFormBox" class="requestFormBox displayNone" style="width: 300px;">
@@ -37,10 +43,18 @@
         </table>
     </div>
 </div>
-<div id="loading-form">
-    <div id="loadingFormBox" class="displayNone">
-        <img src="../images/loader.gif" alt="loading" />
-    </div>
+<div id="profile-form">
+    <form name="profileform" id="profileform" onsubmit="return false;">
+        <div id="profileFormBox" class="requestFormBox displayNone" style="width: 400px;">
+            <table>
+                <tr>
+                    <td style="width: 100px;"><label style="width: 100%;"><?php echo $lang['firstname']; ?></label></td>
+                    <td><label style="width: 100%;"><?php echo $lang['firstname']; ?></label></td>
+                </tr>
+
+            </table>            
+        </div>
+    </form>
 </div>
 <div id="register-form">
     <form name="signupform" id="signupform" onsubmit="return false;">

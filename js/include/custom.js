@@ -1,5 +1,22 @@
 $(function () {
-    var loginForm, registerForm;
+    var loginForm, registerForm, profileForm;
+    $.ajax({
+        type: 'POST',
+        url: 'php_includes/check_login_status.php',
+        success: function (response) {
+            if (response !== "") {
+                $("#logInCommand").addClass('displayNone');
+                $("#logOutCommand").removeClass('displayNone');
+                $("#registerCommand").addClass('displayNone');
+                $("#profileCommand").removeClass('displayNone');
+            } else {
+                $("#logOutCommand").addClass('displayNone');
+                $("#logInCommand").removeClass('displayNone');
+                $("#profileCommand").addClass('displayNone');
+                $("#registerCommand").removeClass('displayNone');
+            }
+        }
+    });
     $("#tabs").tabs();
     $("#accordion").accordion({
         heightStyle: "content",
@@ -14,6 +31,16 @@ $(function () {
     });
     $("#sex").buttonset();
     $("#logInCommand").button({
+        icons: {
+            primary: "ui-icon-person"
+        }
+    });
+    $("#logOutCommand").button({
+        icons: {
+            primary: "ui-icon-power"
+        }
+    });
+    $("#profileCommand").button({
         icons: {
             primary: "ui-icon-person"
         }
@@ -132,9 +159,11 @@ $(function () {
     });
     $("#logInCommand").button().on("click", function () {
         $('#loginFormBox').removeClass('displayNone');
+        $('#loaderConnection').addClass('displayNone');
+//        $("#loginform")[0].reset();
         loginForm = $("#login-form").dialog({
             autoOpen: false,
-            height: 240,
+            height: 250,
             width: 350,
             modal: true,
             title: lang.login_form_title,
@@ -145,7 +174,67 @@ $(function () {
                         primary: "ui-icon-check"
                     },
                     click: function () {
-
+                        var username = $('#username').val();
+                        var password = $('#password').val();
+                        if (username === "" || password === "") {
+                            $.blockUI({
+                                theme: true,
+                                title: lang.some_required_field_empty_title,
+                                message: '<p>' + lang.some_required_field_empty + '</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else {
+                            $('#loaderConnection').removeClass('displayNone');
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php_includes/login.php',
+                                data: '&username=' + username + '&password=' + password,
+                                success: function (response) {
+//                                    $("#logInCommand").button("option", "disabled", true);
+                                    $('#loaderConnection').addClass('displayNone');
+                                    if (response === "required_fields_empty") {
+                                        $.blockUI({
+                                            theme: true,
+                                            title: lang.some_required_field_empty_title,
+                                            message: '<p>' + lang.some_required_field_empty + '</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else if (response === "username_does_not_match") {
+                                        $.blockUI({
+                                            theme: true,
+                                            title: "Username incorrect",
+                                            message: '<p>The username entered does not exist in the system</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else if (response === "passwords_do_not_match") {
+                                        $.blockUI({
+                                            theme: true,
+                                            title: "Password incorrect",
+                                            message: '<p>The password entered is not correct</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else if (response === "account_not_activated_yet") {
+                                        $.blockUI({
+                                            theme: true,
+                                            title: "Account not activated",
+                                            message: '<p>Your account has not been activated yet</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else {
+                                        loginForm.dialog("close");
+                                        $("#logInCommand").addClass('displayNone');
+                                        $("#logOutCommand").removeClass('displayNone');
+                                        $("#registerCommand").addClass('displayNone');
+                                        $("#profileCommand").removeClass('displayNone');
+                                    }
+                                }
+                            });
+                        }
                     }
                 },
                 {
@@ -163,6 +252,78 @@ $(function () {
                 $(this).dialog('destroy');
             }
         }).dialog("open");
+    });
+    $("#profileCommand").button().on("click", function () {
+        $('#profileFormBox').removeClass('displayNone');
+//        $("#loginform")[0].reset();
+        profileForm = $("#profile-form").dialog({
+            autoOpen: false,
+            height: 600,
+            width: 500,
+            modal: true,
+            title: "Details",
+            buttons: [
+                {
+                    text: lang.close,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $('#profileFormBox').addClass('displayNone');
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $('#profileFormBox').addClass('displayNone');
+                $(this).dialog('destroy');
+            }
+        }).dialog("open");
+    });
+    $("#passwordForgotten").button().on("click", function () {
+        $('#passwordForgottenFormBox').removeClass('displayNone');
+        $("#passwordForgotten-form").dialog({
+            autoOpen: false,
+            height: 220,
+            width: 350,
+            modal: true,
+            title: lang.login_form_title,
+            buttons: [
+                {
+                    text: lang.ok,
+                    icons: {
+                        primary: "ui-icon-check"
+                    },
+                    click: function () {
+                        $(loginForm).dialog("destroy");
+                    }
+                },
+                {
+                    text: lang.close,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $('#passwordForgottenFormBox').addClass('displayNone');
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $('#passwordForgottenFormBox').addClass('displayNone');
+                $(this).dialog('destroy');
+            }
+        }).dialog("open");
+    });
+    $("#logOutCommand").button().on("click", function () {
+        $.ajax({
+            type: 'POST',
+            url: 'php_includes/logout.php',
+            success: function () {
+                $("#logOutCommand").addClass('displayNone');
+                $("#logInCommand").removeClass('displayNone');
+                $("#profileCommand").addClass('displayNone');
+                $("#registerCommand").removeClass('displayNone');
+            }
+        });
     });
     $("#passwordForgotten").button().on("click", function () {
         $('#passwordForgottenFormBox').removeClass('displayNone');

@@ -7,7 +7,7 @@ $u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 $e = $_GET['e'];
 $p = $_GET['p'];
 // Evaluate the lengths of the incoming $_GET variable
-if ($id == "" || strlen($u) < 3 || strlen($e) < 5 || strlen($p) != 74) {
+if ($id == "" || strlen($u) < 3 || strlen($e) < 5 || $p == "") {
     // Log this issue into a text file and email details to yourself
     header("location: message.php?msg=activation_string_length_issues");
     exit();
