@@ -254,30 +254,7 @@ $(function () {
         }).dialog("open");
     });
     $("#profileCommand").button().on("click", function () {
-        $('#profileFormBox').removeClass('displayNone');
-//        $("#loginform")[0].reset();
-        profileForm = $("#profile-form").dialog({
-            autoOpen: false,
-            height: 600,
-            width: 500,
-            modal: true,
-            title: "Details",
-            buttons: [
-                {
-                    text: lang.close,
-                    icons: {
-                        primary: "ui-icon-close"
-                    },
-                    click: function () {
-                        $('#profileFormBox').addClass('displayNone');
-                        $(this).dialog("close");
-                    }
-                }
-            ], close: function () {
-                $('#profileFormBox').addClass('displayNone');
-                $(this).dialog('destroy');
-            }
-        }).dialog("open");
+        window.location = "php_includes/profile.php";
     });
     $("#passwordForgotten").button().on("click", function () {
         $('#passwordForgottenFormBox').removeClass('displayNone');
