@@ -8,6 +8,8 @@ if ($msg == "activation_failure") {
     $message = '<div style="margin-bottom: 10px;font-size: 16px;">Activation Error</div> Sorry there seems to have been an issue activating your account at this time. We have already notified ourselves of this issue and we will contact you via email when we have identified the issue.';
 } else if ($msg == "activation_success") {
     $message = '<div style="margin-bottom: 10px;font-size: 16px;">Activation Success</div> Your account is now activated. <a href="../index.php">Click here to go home and login</a>';
+} else if ($msg == "password_reset_success") {
+    $message = '<div style="margin-bottom: 10px;font-size: 16px;">Password reset Success</div> Your password is now reset. <a href="../index.php">Click here to go home and login</a>';
 } else {
     $message = $msg;
 }

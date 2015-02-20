@@ -57,6 +57,8 @@ lang = {
     register: "Inscription",
     close: "Fermer",
     ok: "OK",
+    yes: "Oui",
+    no: "Non",
     registration: "Formulaire d'inscription",
     some_required_field_empty_title: "Champs obligatoire vide",
     some_required_field_empty: "Quelques champs obligatoire sont vide",

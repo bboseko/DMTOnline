@@ -1,5 +1,5 @@
 $(function () {
-    var loginForm, registerForm, profileForm;
+    var loginForm, registerForm, logoutForm, pfForm;
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
@@ -29,7 +29,8 @@ $(function () {
         changeMonth: true,
         changeYear: true
     });
-    $("#sex").buttonset();
+    $("#passwordForgot").button({
+    });
     $("#logInCommand").button({
         icons: {
             primary: "ui-icon-person"
@@ -125,13 +126,18 @@ $(function () {
                                         return;
                                     } else {
                                         registerForm.dialog("close");
-                                        $.blockUI({
-                                            theme: true,
-                                            title: "Sign up success",
-                                            message: '<span style="font-size:13px;">OK <b>' + firstname + ' ' + familyname + '</b>, check your email inbox and junk mail box at <b><u>' + email + '</u></b> in a moment to complete the sign up process by activating your account. You will not be able to do anything on the site until you successfully activate your account.</span>',
-                                            timeout: 15000
+                                        $("#dialog-message").dialog({
+                                            modal: true,
+                                            hide: {
+                                                effect: "explode",
+                                                duration: 1000
+                                            },
+                                            buttons: {
+                                                Ok: function () {
+                                                    $(this).dialog("close");
+                                                }
+                                            }
                                         });
-                                        return;
                                     }
                                 }
                             });
@@ -160,10 +166,9 @@ $(function () {
     $("#logInCommand").button().on("click", function () {
         $('#loginFormBox').removeClass('displayNone');
         $('#loaderConnection').addClass('displayNone');
-//        $("#loginform")[0].reset();
         loginForm = $("#login-form").dialog({
             autoOpen: false,
-            height: 250,
+            height: 235,
             width: 350,
             modal: true,
             title: lang.login_form_title,
@@ -191,7 +196,6 @@ $(function () {
                                 url: 'php_includes/login.php',
                                 data: '&username=' + username + '&password=' + password,
                                 success: function (response) {
-//                                    $("#logInCommand").button("option", "disabled", true);
                                     $('#loaderConnection').addClass('displayNone');
                                     if (response === "required_fields_empty") {
                                         $.blockUI({
@@ -231,6 +235,7 @@ $(function () {
                                         $("#logOutCommand").removeClass('displayNone');
                                         $("#registerCommand").addClass('displayNone');
                                         $("#profileCommand").removeClass('displayNone');
+                                        window.location = response;
                                     }
                                 }
                             });
@@ -256,60 +261,56 @@ $(function () {
     $("#profileCommand").button().on("click", function () {
         window.location = "php_includes/profile.php";
     });
-    $("#passwordForgotten").button().on("click", function () {
-        $('#passwordForgottenFormBox').removeClass('displayNone');
-        $("#passwordForgotten-form").dialog({
-            autoOpen: false,
-            height: 220,
-            width: 350,
+    $("#logOutCommand").button().on("click", function () {
+        logoutForm = $("#dialog-confirm").dialog({
+            resizable: false,
+            height: 140,
             modal: true,
-            title: lang.login_form_title,
             buttons: [
                 {
-                    text: lang.ok,
+                    text: lang.yes,
                     icons: {
                         primary: "ui-icon-check"
                     },
                     click: function () {
-                        $(loginForm).dialog("destroy");
+                        $('#loaderLogout').removeClass('displayNone');
+                        $.ajax({
+                            type: 'POST',
+                            url: 'php_includes/logout.php',
+                            success: function () {
+                                logoutForm.dialog("close");
+                                $('#loaderLogout').addClass('displayNone');
+                                $("#logOutCommand").addClass('displayNone');
+                                $("#logInCommand").removeClass('displayNone');
+                                $("#profileCommand").addClass('displayNone');
+                                $("#registerCommand").removeClass('displayNone');
+                            }
+                        });
                     }
                 },
                 {
-                    text: lang.close,
+                    text: lang.no,
                     icons: {
                         primary: "ui-icon-close"
                     },
                     click: function () {
-                        $('#passwordForgottenFormBox').addClass('displayNone');
                         $(this).dialog("close");
                     }
                 }
             ], close: function () {
-                $('#passwordForgottenFormBox').addClass('displayNone');
                 $(this).dialog('destroy');
-            }
-        }).dialog("open");
-    });
-    $("#logOutCommand").button().on("click", function () {
-        $.ajax({
-            type: 'POST',
-            url: 'php_includes/logout.php',
-            success: function () {
-                $("#logOutCommand").addClass('displayNone');
-                $("#logInCommand").removeClass('displayNone');
-                $("#profileCommand").addClass('displayNone');
-                $("#registerCommand").removeClass('displayNone');
             }
         });
     });
-    $("#passwordForgotten").button().on("click", function () {
+    $("#passwordForgot").button().on("click", function () {
         $('#passwordForgottenFormBox').removeClass('displayNone');
-        $("#passwordForgotten-form").dialog({
+        loginForm.dialog("close");
+        pfForm = $("#passwordForgotten-form").dialog({
             autoOpen: false,
-            height: 220,
-            width: 350,
+            height: 190,
+            width: 300,
             modal: true,
-            title: lang.login_form_title,
+            title: "Password forgotten",
             buttons: [
                 {
                     text: lang.ok,
@@ -317,7 +318,67 @@ $(function () {
                         primary: "ui-icon-check"
                     },
                     click: function () {
-                        $(loginForm).dialog("destroy");
+                        var emailPF = $('#emailPF').val();
+                        if (emailPF === "") {
+                            $.blockUI({
+                                theme: true,
+                                title: 'Empty email',
+                                message: '<p>Email field is empty</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else if (!isValidEmail(emailPF)) {
+                            $.blockUI({
+                                theme: true,
+                                title: 'Email address error',
+                                message: '<p>This email address is not correct</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else {
+                            $('#loaderPF').removeClass('displayNone');
+                            $.ajax({
+                                type: 'POST',
+                                url: 'php_includes/forgot_password.php',
+                                data: '&email=' + emailPF,
+                                success: function (response) {
+                                    if (response === "no_exist") {
+                                        $('#loaderPF').addClass('displayNone');
+                                        $.blockUI({
+                                            theme: true,
+                                            title: 'Email address error',
+                                            message: '<p>This email address does not exist in the system</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else if (response === "email_send_failed") {
+                                        $('#loaderPF').addClass('displayNone');
+                                        $.blockUI({
+                                            theme: true,
+                                            title: lang.error_occured,
+                                            message: '<p>An error occured while sending an email to </p>' + emailPF,
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else {
+                                        pfForm.dialog("close");
+                                        $('#loaderPF').addClass('displayNone');
+                                        $("#dialog-message-forgot-password").dialog({
+                                            modal: true,
+                                            hide: {
+                                                effect: "explode",
+                                                duration: 1000
+                                            },
+                                            buttons: {
+                                                Ok: function () {
+                                                    $(this).dialog("close");
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
                     }
                 },
                 {

@@ -1,3 +1,29 @@
+<div id="dialog-confirm" title="Log out" class="displayNone">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
+        </span>
+        Are you sure you want to log out?
+        <span id="loaderLogout" class="displayNone" 
+              style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+            <img alt="loading" src="./images/loader.gif" /> 
+        </span>
+    </p>
+</div>
+<div id="dialog-message" title="Sign up success" class="requestFormBox displayNone" style="width: 400px;">
+    <p style="font-size:13px;">
+        <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+        Check your email inbox and junk mail box in a moment to complete the sign up process by activating your account. 
+    </p><br/>
+    <p>
+        You will not be able to do anything on the site until <b>you successfully activate your account</b>.
+    </p>
+</div>
+<div id="dialog-message-forgot-password" title="Password forgotten" class="requestFormBox displayNone" style="width: 400px;">
+    <p style="font-size:13px;">
+        <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
+        Check your email inbox and junk mail box in a moment to complete the Forgot Password process by applying the temporary password . 
+    </p>
+</div>
 <div id="login-form">
     <form name="loginform" id="loginform" onsubmit="return false;">
         <div id="loginFormBox" class="requestFormBox displayNone" style="width: 300px;">
@@ -15,47 +41,37 @@
                         <label style="width: 100%;"></label>
                     </td>
                     <td>
-                        <a style="color: #327E04; float: right;"><?php echo $lang['password-forgot']; ?></a>
+                        <a id="passwordForgot" style="margin-top: 5px;color: #327E04; float: right;background: none;border: none;"><?php echo $lang['password-forgot']; ?></a>
                     </td>                            
                 </tr>
-                <tr>
-                    <td>
-                        <label style="width: 100%;"></label>
-                    </td>
-                    <td>
-                        <a style="color: #327E04; float: right;"><?php echo $lang['username-forgot']; ?></a>
-                    </td>                            
-                </tr>
-            </table>            
+            </table>
+            <span id="loaderConnection" class="displayNone" 
+                  style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
+                Connecting ... <img alt="loading" src="./images/loader.gif" /> 
+            </span>
         </div>
-        <span id="loaderConnection" class="displayNone" style="margin-top: -3px;float: right;margin-right: 20px;font-size: 11px;color: #660000;">
-            Connecting ... <img alt="loading" src="./images/loader.gif" /> 
-        </span>
     </form>
 </div>
 <div id="passwordForgotten-form">
-    <div id="passwordForgottenFormBox" class="requestFormBox displayNone" style="width: 300px;">
+    <div id="passwordForgottenFormBox" class="requestFormBox displayNone" style="width: 250px;">
         <table>
             <tr>
-                <td><label for="emailPF" style="width: 100%;"><?php echo $lang['email']; ?></label></td>
-                <td><input style="margin-left: 10px; margin-top: 5px;" type="text" id="emailPF" class="text ui-widget-content ui-corner-all"/></td>
+                <td>
+                    <label for="emailPF" style="width: 100%;"><?php echo $lang['email']; ?></label>
+                </td>
+                <td>
+                    <input style="margin-left: 10px; margin-top: 5px;width: 190px;" type="text" id="emailPF" 
+                           class="text ui-widget-content ui-corner-all"/>
+                    <span id="loaderPF" class="displayNone" 
+                          style="float: right;margin-right: 20px;font-size: 11px;color: #660000;margin-top: 2px;">
+                        Sending ... <img alt="loading" src="./images/loader.gif" /> 
+                    </span>
+                </td>
             </tr>
-        </table>
+        </table>        
     </div>
 </div>
-<div id="profile-form">
-    <form name="profileform" id="profileform" onsubmit="return false;">
-        <div id="profileFormBox" class="requestFormBox displayNone" style="width: 400px;">
-            <table>
-                <tr>
-                    <td style="width: 100px;"><label style="width: 100%;"><?php echo $lang['firstname']; ?></label></td>
-                    <td><label style="width: 100%;"><?php echo $lang['firstname']; ?></label></td>
-                </tr>
 
-            </table>            
-        </div>
-    </form>
-</div>
 <div id="register-form">
     <form name="signupform" id="signupform" onsubmit="return false;">
         <div id="registerFormBox" class="requestFormBox displayNone" style="width: 360px;">

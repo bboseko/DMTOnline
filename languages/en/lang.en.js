@@ -57,6 +57,8 @@ lang = {
     register: "Register",
     close: "Close",
     ok: "OK",
+    yes: "Yes",
+    no: "No",
     registration: "Registration form",
     some_required_field_empty_title: "Required fields empty",
     some_required_field_empty: "Some required fields are empty",
