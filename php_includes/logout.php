@@ -15,6 +15,6 @@ session_destroy();
 if (isset($_SESSION['username'])) {
     header("location: message.php?msg=Error:_Logout_Failed");
 } else {
-    header("location: http://www.osfac.net/dev/");
+    header("location: http://localhost/DMT/");
     exit();
 }

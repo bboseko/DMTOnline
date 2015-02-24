@@ -13,8 +13,8 @@
 </div>
 <div id="top-menu">
     <ul>
-        <li><a href="index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['home']; ?></a></li>
-        <li><a href="pages/about.php"><?php echo $lang['about']; ?></a></li>                    
+        <li><button id="homeCommand" style="margin-top: -5px;"><?php echo $lang['home']; ?></button></li>
+        <li><button id="aboutCommand" style="margin-top: -5px;"><?php echo $lang['about']; ?></button></li>                    
         <li><a href="pages/desktop.php"><?php echo $lang['desktop']; ?></a></li>
         <li><a href="pages/tutorial.php"><?php echo $lang['tutorial']; ?></a></li>
         <li><a href="pages/whatnew.php"><?php echo $lang['whatsnew']; ?></a></li>

@@ -330,15 +330,32 @@ DMT.load = {
             if ($(this).hasClass('disabled')) {
                 return;
             }
-            var tabID = ReturnIdsChecked().split(';');
-            var idss = '';
-            var limit;
-            tabID.length >= 1 ? limit = tabID.length - 1 : limit = tabID.length;
-            for (var i = 0; i < limit; i++) {
-                idss += tabID[i] + ';';
-            }
-            idss = idss.substring(0, idss.length - 1);
-            document.location.href = 'pages/requestForm.php?' + idss;
+            $.ajax({
+                type: 'POST',
+                url: 'php_includes/check_login_status.php',
+                success: function (response) {
+                    if (response === "") {
+                        $.blockUI({
+                            theme: true,
+                            title: 'Warning',
+                            message: '<p>You must log in before submitting your data request</p>',
+                            timeout: 4000
+                        });
+                        return;
+                    } else {
+                        var tabID = ReturnIdsChecked().split(';');
+                        var idss = '';
+                        var limit;
+                        tabID.length >= 1 ? limit = tabID.length - 1 : limit = tabID.length;
+                        for (var i = 0; i < limit; i++) {
+                            idss += tabID[i] + ';';
+                        }
+                        idss = idss.substring(0, idss.length - 1);
+                        document.location.href = 'pages/requestForm.php?' + idss;
+                    }
+                }
+            });
+
         });
         $('#categoryResult').change(function () {
             $('#pagingResultHeader, #pagingResultFooter').html('');

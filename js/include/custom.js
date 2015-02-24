@@ -29,6 +29,22 @@ $(function () {
         changeMonth: true,
         changeYear: true
     });
+    $("#homeCommand").button({
+        icons: {
+            primary: "ui-icon-home"
+        }
+    });
+    $("#homeCommand").button().on("click", function () {
+        window.location = "index.php";
+    });
+    $("#aboutCommand").button({
+        icons: {
+            primary: "ui-icon-star"
+        }
+    });
+    $("#aboutCommand").button().on("click", function () {
+        window.location = "pages/about.php";
+    });
     $("#passwordForgot").button({
     });
     $("#logInCommand").button({
@@ -45,6 +61,14 @@ $(function () {
         icons: {
             primary: "ui-icon-person"
         }
+    });
+    $("#homeCommandProfile").button({
+        icons: {
+            primary: "ui-icon-home"
+        }
+    });
+    $("#homeCommandProfile").button().on("click", function () {
+        window.location = "../index.php";
     });
     $("#registerCommand").button({
         icons: {
@@ -259,7 +283,7 @@ $(function () {
         }).dialog("open");
     });
     $("#profileCommand").button().on("click", function () {
-        window.location = "php_includes/profile.php";
+        window.location = "profile/profile.php";
     });
     $("#logOutCommand").button().on("click", function () {
         logoutForm = $("#dialog-confirm").dialog({
@@ -436,7 +460,36 @@ function checkusername() {
         });
     }
 }
-function openTerms() {
-    _("terms").style.display = "block";
-    emptyElement("status");
+function quickLook(name, preview) {
+    if (preview === '/preview/nobrowse_small.png') {
+        preview = '/preview/nobrowse.png';
+    }
+    $('#quickLookDialogArea').dialog({
+        bgiframe: true,
+        autoOpen: false,
+        resizable: false,
+        height: 600,
+        width: 600,
+        modal: true,
+        buttons: [
+            {
+                text: lang.close,
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function () {
+                    $(this).dialog('destroy');
+                }
+            }
+        ],
+        title: lang.thumbnail + name,
+        open: function () {
+            var $dialogContent = $('#quickLookDialogArea');
+            $dialogContent.html('<img alt="No Browse" src = http://www.osfac.net' + preview + ' width="574px" height="485px" />');
+        },
+        close: function () {
+            $(this).dialog('destroy');
+        }
+    });
+    $('#quickLookDialogArea').dialog('open');
 }

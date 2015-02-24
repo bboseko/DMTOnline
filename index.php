@@ -40,39 +40,12 @@ include("./languages/langConfig.php");
 
         <script type="text/javascript" src="js/include/mapOverlays.js"></script>
         <script type="text/javascript" src="js/include/tabs.js"></script>     
-        <script type="text/javascript" src="js/include/custom.js"></script> 
+        <script type="text/javascript" src="js/include/custom.js"></script>
         <script type="text/javascript" src="languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
         <script type="text/javascript">
             var hash = new Array();
             var arrayColorfp = new Array();
-            var nRowResult = 0;
-            function quickLook(name, preview) {
-                if (preview === '/preview/nobrowse_small.png') {
-                    preview = '/preview/nobrowse.png';
-                }
-                $('#quickLookDialogArea').dialog({
-                    bgiframe: true,
-                    autoOpen: false,
-                    resizable: false,
-                    height: 600,
-                    width: 600,
-                    modal: true,
-                    buttons: {
-                        'Close': function () {
-                            $(this).dialog('destroy');
-                        }
-                    },
-                    title: 'Thumbnail of ' + name,
-                    open: function () {
-                        var $dialogContent = $('#quickLookDialogArea');
-                        $dialogContent.html('<img alt="No Browse" src = http://www.osfac.net' + preview + ' width="574px" height="485px" />');
-                    },
-                    close: function () {
-                        $(this).dialog('destroy');
-                    }
-                });
-                $('#quickLookDialogArea').dialog('open');
-            }
+            var nRowResult = 0;            
             function pagination(nr, pn) {
                 $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
                 var itemsPerPage = 10;

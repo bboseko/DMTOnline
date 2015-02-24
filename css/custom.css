@@ -702,3 +702,15 @@ table.resultPageTable tr.excludedResultRow td {
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
+#left-profile {
+    float: left;
+    width: 422px;
+    padding: 5px;
+}
+#right-profile {
+    width: auto;
+    padding: 5px;
+    margin-left: 430px;
+    clear: none;
+    border: 1px solid #cccccc;
+}

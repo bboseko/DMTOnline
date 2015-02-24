@@ -64,5 +64,6 @@ lang = {
     some_required_field_empty: "Quelques champs obligatoire sont vide",
     password_do_not_match: "Vos champs de mot de passe ne correspondent pas",
     password_do_not_match_title: "Champs de mot de passe ne correspondent pas",
-    username_error_title: "Erreur nom d'utilisateur"
+    username_error_title: "Erreur nom d'utilisateur",
+    thumbnail: "Aperçu de "
 };

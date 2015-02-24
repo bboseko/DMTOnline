@@ -27,7 +27,21 @@ include("../languages/langConfig.php");
         <link type="text/css" href="../css/custom.css" rel="stylesheet"></link>
 
         <script type="text/javascript" src="../js/library/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="../js/library/jquery-ui.js"></script>
+
+        <script type="text/javascript" src="../js/include/custom.js"></script>
         <script type="text/javascript" src="../languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
+        <script>
+            $(function () {
+                $("#menu").menu({
+                    items: "> :not(.ui-widget-header)"
+                });
+            });
+        </script>
+        <style>
+            .ui-menu { width: 200px; }
+            .ui-widget-header { padding: 0.2em; }
+        </style>
     </head>
     <body>
         <div id="container" class="clearfix">
@@ -46,15 +60,27 @@ include("../languages/langConfig.php");
             </div>
             <div id="top-menu">
                 <ul>
-                    <li><a href="../index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['home']; ?></a></li>
+                    <li><button id="homeCommandProfile" style="margin-top: -5px;"><?php echo $lang['home']; ?></button></li>
                 </ul>
             </div>
             <div class="content">
-                <p align="justify">
-                    <div style="font-size: 14px;"></div>
-                </p>
+                <div id="left-profile">
+                    <ul id="menu">
+                        <li class="ui-widget-header">Category 1</li>
+                        <li>Option 1</li>
+                        <li>Option 2</li>
+                        <li>Option 3</li>
+                        <li class="ui-widget-header">Category 2</li>    
+                        <li>Option 4</li>
+                        <li>Option 5</li>
+                        <li>Option 6</li>
+                    </ul>
+                </div>
+                <div id="right-profile">
+
+                </div>                
             </div> 
-            <?php include_once("../template/index_pageBottom.php"); ?>
+            <?php include_once("../template/template_pageBottom.php"); ?>
         </div>       
     </body>
 </html>
