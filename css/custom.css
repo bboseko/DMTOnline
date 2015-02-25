@@ -227,6 +227,10 @@ input.disabled {
     display: none;
     overflow: auto;    
 }
+.backgroundNone {
+    clear: both;
+    background: none !important;
+}
 .displayNone{
     display: none;
 }
@@ -702,15 +706,7 @@ table.resultPageTable tr.excludedResultRow td {
 .no-close .ui-dialog-titlebar-close {
     display: none;
 }
-#left-profile {
-    float: left;
-    width: 422px;
-    padding: 5px;
-}
-#right-profile {
-    width: auto;
-    padding: 5px;
-    margin-left: 430px;
-    clear: none;
-    border: 1px solid #cccccc;
+.ui-menu { 
+    position: absolute; 
+    width: 100px; 
 }

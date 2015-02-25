@@ -279,13 +279,14 @@
                         <input id="id-user-edit" value="<?php echo $db_id; ?>" type="hidden"/>
                     </td>
                 </tr>
-            </table>            
+            </table>  
+<!--            <span style="color: #ff0000;">*</span>
+            <span style="font-size: 11px;"> <?php echo $lang['required-field']; ?></span>-->
         </div>
         <span id="loaderRegistration-edit" class="displayNone" style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
             Saving your data ... <img alt="loading" src="./images/loader.gif" /> 
         </span>
-        <span style="color: #ff0000;">*</span>
-        <span style="font-size: 11px;"> <?php echo $lang['required-field']; ?></span>
+
     </form>
 </div>
 <div id="register-form">

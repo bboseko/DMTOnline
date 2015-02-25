@@ -167,7 +167,7 @@
 <option value="Oman">Oman</option>
 <option value="Pakistan">Pakistan</option>
 <option value="Palau">Palau</option>
-<option value="Palestinian Territory, Occupied">Palestine/option>
+<option value="Palestinian Territory, Occupied">Palestine</option>
 <option value="Panama">Panama</option>
 <option value="Papua New Guinea">Papouasie-Nouvelle-Guinée</option>
 <option value="Paraguay">Paraguay</option>

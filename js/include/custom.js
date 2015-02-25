@@ -9,11 +9,19 @@ $(function () {
                 $("#logOutCommand").removeClass('displayNone');
                 $("#registerCommand").addClass('displayNone');
                 $("#profileCommand").removeClass('displayNone');
+                $("#saveCriteria").removeClass('displayNone');
+                $("#manageCriteria").removeClass('displayNone');
+                $("#liSaveCriteria").removeClass('backgroundNone');
+                $("#liManageCriteria").removeClass('backgroundNone');
             } else {
                 $("#logOutCommand").addClass('displayNone');
                 $("#logInCommand").removeClass('displayNone');
                 $("#profileCommand").addClass('displayNone');
                 $("#registerCommand").removeClass('displayNone');
+                $("#saveCriteria").addClass('displayNone');
+                $("#manageCriteria").addClass('displayNone');
+                $("#liSaveCriteria").addClass('backgroundNone');
+                $("#liManageCriteria").addClass('backgroundNone');
             }
         }
     });
@@ -39,12 +47,33 @@ $(function () {
     });
     $("#aboutCommand").button({
         icons: {
-            primary: "ui-icon-star"
+            primary: "ui-icon-info"
         }
     });
     $("#aboutCommand").button().on("click", function () {
         window.location = "pages/about.php";
     });
+    $("#desktopCommand").button({
+        icons: {
+            primary: "ui-icon-disk"
+        }
+    });
+    $("#helpCommand").button({
+        icons: {
+            primary: "ui-icon-help"
+        }
+    });
+    $("#saveCriteria").button({
+        icons: {
+            primary: "ui-icon-circle-check"
+        }
+    });
+    $("#manageCriteria").button({
+        icons: {
+            primary: "ui-icon-gear"
+        }
+    });
+
     $("#passwordForgot").button({
     });
     $("#logInCommand").button({
@@ -259,6 +288,10 @@ $(function () {
                                         $("#logOutCommand").removeClass('displayNone');
                                         $("#registerCommand").addClass('displayNone');
                                         $("#profileCommand").removeClass('displayNone');
+                                        $("#saveCriteria").removeClass('displayNone');
+                                        $("#manageCriteria").removeClass('displayNone');
+                                        $("#liSaveCriteria").removeClass('backgroundNone');
+                                        $("#liManageCriteria").removeClass('backgroundNone');
                                         window.location = response;
                                     }
                                 }
@@ -340,6 +373,10 @@ $(function () {
                             $("#logOutCommand").removeClass('displayNone');
                             $("#registerCommand").addClass('displayNone');
                             $("#profileCommand").removeClass('displayNone');
+                            $("#saveCriteria").removeClass('displayNone');
+                            $("#manageCriteria").removeClass('displayNone');
+                            $("#liSaveCriteria").removeClass('backgroundNone');
+                            $("#liManageCriteria").removeClass('backgroundNone');
                             window.location = response;
                         }
                     }
@@ -583,6 +620,10 @@ $(function () {
                                 $("#logInCommand").removeClass('displayNone');
                                 $("#profileCommand").addClass('displayNone');
                                 $("#registerCommand").removeClass('displayNone');
+                                $("#saveCriteria").addClass('displayNone');
+                                $("#manageCriteria").addClass('displayNone');
+                                $("#liSaveCriteria").addClass('backgroundNone');
+                                $("#liManageCriteria").addClass('backgroundNone');
                             }
                         });
                     }

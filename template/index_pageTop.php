@@ -14,12 +14,22 @@
 <div id="top-menu">
     <ul>
         <li><button id="homeCommand" style="margin-top: -5px;"><?php echo $lang['home']; ?></button></li>
-        <li><button id="aboutCommand" style="margin-top: -5px;"><?php echo $lang['about']; ?></button></li>                    
-        <li><a href="pages/desktop.php"><?php echo $lang['desktop']; ?></a></li>
-        <li><a href="pages/tutorial.php"><?php echo $lang['tutorial']; ?></a></li>
+        <li><button id="aboutCommand" style="margin-top: -5px;"><?php echo $lang['about']; ?></button></li>
+        <li><button id="desktopCommand" style="margin-top: -5px;"><?php echo $lang['desktop']; ?></button></li>
+        <li><button id="helpCommand" style="margin-top: -5px;"><?php echo $lang['help-text']; ?></button></li>   
+        <!--<li><a href="pages/desktop.php"><?php echo $lang['desktop']; ?></a></li>-->
+<!--        <li><a href="pages/tutorial.php"><?php echo $lang['tutorial']; ?></a></li>
         <li><a href="pages/whatnew.php"><?php echo $lang['whatsnew']; ?></a></li>
         <li><a href="pages/faq.php"><?php echo $lang['faq']; ?></a></li>
-        <li><a href="pages/help.php"><?php echo $lang['help-text']; ?></a></li>
+        <li><a href="pages/help.php"><?php echo $lang['help-text']; ?></a></li>-->
+
+        <li id="liSaveCriteria" class="backgroundNone">
+            <button id="saveCriteria" class="displayNone" style="margin-top: -5px;">Save Criteria</button>
+        </li>
+        <li id="liManageCriteria" class="backgroundNone">
+            <button id="manageCriteria" class="displayNone" style="margin-top: -5px;">Manage Criteria</button>
+        </li>
+             
 
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="index.php?lang=fr"><img src="images/fr.gif" /> <?php echo $lang['french']; ?></a>
@@ -27,18 +37,16 @@
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="index.php?lang=en"><img src="images/en.gif" /> <?php echo $lang['english']; ?></a>
         </li>
-        <li style="float:right !important; font-weight: bold; 
-            text-transform: uppercase; margin-right: 50px; background: none; ">
+        <li style="float:right !important;">
             <button class="displayNone" id="profileCommand" style="margin-top: -5px;"><?php echo $_COOKIE["user"]; ?></button>
         </li>
-        <li style="float:right !important; font-weight: bold; 
-            text-transform: uppercase; margin-right: 50px; background: none; ">
+        <li style="float:right !important;">
             <button id="registerCommand" style="margin-top: -5px;"><?php echo $lang['register']; ?></button>
         </li>
-        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
+        <li style="float:right !important; background: none;">
             <button id="logInCommand" style="margin-top: -5px;"><?php echo $lang['login']; ?></button>
         </li>
-        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
+        <li style="float:right !important; background: none;">
             <button class="displayNone" id="logOutCommand" style="margin-top: -5px;"><?php echo $lang['logout']; ?></button>
         </li>
     </ul>
