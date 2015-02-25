@@ -1,5 +1,5 @@
 $(function () {
-    var loginForm, registerForm, logoutForm, pfForm;
+    var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
@@ -282,8 +282,283 @@ $(function () {
             }
         }).dialog("open");
     });
+    $('#password').keypress(function (e) {
+        if (e.which === 13) {
+            var username = $('#username').val();
+            var password = $('#password').val();
+            if (username === "" || password === "") {
+                $.blockUI({
+                    theme: true,
+                    title: lang.some_required_field_empty_title,
+                    message: '<p>' + lang.some_required_field_empty + '</p>',
+                    timeout: 4000
+                });
+                return;
+            } else {
+                $('#loaderConnection').removeClass('displayNone');
+                $.ajax({
+                    type: 'POST',
+                    url: 'php_includes/login.php',
+                    data: '&username=' + username + '&password=' + password,
+                    success: function (response) {
+                        $('#loaderConnection').addClass('displayNone');
+                        if (response === "required_fields_empty") {
+                            $.blockUI({
+                                theme: true,
+                                title: lang.some_required_field_empty_title,
+                                message: '<p>' + lang.some_required_field_empty + '</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else if (response === "username_does_not_match") {
+                            $.blockUI({
+                                theme: true,
+                                title: "Username incorrect",
+                                message: '<p>The username entered does not exist in the system</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else if (response === "passwords_do_not_match") {
+                            $.blockUI({
+                                theme: true,
+                                title: "Password incorrect",
+                                message: '<p>The password entered is not correct</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else if (response === "account_not_activated_yet") {
+                            $.blockUI({
+                                theme: true,
+                                title: "Account not activated",
+                                message: '<p>Your account has not been activated yet</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else {
+                            loginForm.dialog("close");
+                            $("#logInCommand").addClass('displayNone');
+                            $("#logOutCommand").removeClass('displayNone');
+                            $("#registerCommand").addClass('displayNone');
+                            $("#profileCommand").removeClass('displayNone');
+                            window.location = response;
+                        }
+                    }
+                });
+            }
+            return false;
+        }
+    });
     $("#profileCommand").button().on("click", function () {
-        window.location = "profile/profile.php";
+        profileForm = $("#dialog-myProfile").dialog({
+            resizable: true,
+            width: 500,
+            modal: true,
+            buttons: [
+                {
+                    text: lang.change_password,
+                    icons: {
+                        primary: "ui-icon-locked"
+                    },
+                    click: function () {
+                        $("#change-password-Form")[0].reset();
+                        pcForm = $("#dialog-changePassword").dialog({
+                            resizable: false,
+                            autoOpen: false,
+                            width: 345,
+                            modal: true,
+                            buttons: [
+                                {
+                                    text: lang.ok,
+                                    icons: {
+                                        primary: "ui-icon-check"
+                                    },
+                                    click: function () {
+                                        var op = $('#oldPassword').val();
+                                        var np = $('#newPassword').val();
+                                        var rp = $('#retypePassword').val();
+                                        if (op === "" || np === "" || rp === "") {
+                                            $.blockUI({
+                                                theme: true,
+                                                title: lang.some_required_field_empty_title,
+                                                message: '<p>' + lang.some_required_field_empty + '</p>',
+                                                timeout: 4000
+                                            });
+                                            return;
+                                        } else if (np !== rp) {
+                                            $.blockUI({
+                                                theme: true,
+                                                title: "Passwords do not match",
+                                                message: '<p>Your new password and the repeat one do not match</p>',
+                                                timeout: 4000
+                                            });
+                                            return;
+                                        } else {
+                                            $('#loaderChangePassword').removeClass('displayNone');
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'php_includes/change_password.php',
+                                                data: '&op=' + op + '&np=' + np + '&rp=' + rp,
+                                                success: function (response) {
+                                                    $('#loaderChangePassword').addClass('displayNone');
+                                                    if (response === "Old_password_error") {
+                                                        $.blockUI({
+                                                            theme: true,
+                                                            title: "Old password error",
+                                                            message: '<p>The old password entered is not correct</p>',
+                                                            timeout: 4000
+                                                        });
+                                                        return;
+                                                    } else if (response === "Password_must_have_at_least_5_characters") {
+                                                        $.blockUI({
+                                                            theme: true,
+                                                            title: "Password error",
+                                                            message: '<p>New password must have at least 5 characters</p>',
+                                                            timeout: 4000
+                                                        });
+                                                        return;
+                                                    } else if (response === "New_password_can_not_be_the_same_to_old_one") {
+                                                        $.blockUI({
+                                                            theme: true,
+                                                            title: "Password error",
+                                                            message: '<p>New password can not be the same to the old one</p>',
+                                                            timeout: 4000
+                                                        });
+                                                        return;
+                                                    } else {
+                                                        pcForm.dialog("close");
+                                                        $.blockUI({
+                                                            theme: true,
+                                                            title: "Passwords changed successfully",
+                                                            message: "Your password has been changed successfully",
+                                                            timeout: 4000
+                                                        });
+                                                        return;
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                },
+                                {
+                                    text: lang.cancel,
+                                    icons: {
+                                        primary: "ui-icon-close"
+                                    },
+                                    click: function () {
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            ], close: function () {
+                                $(this).dialog('destroy');
+                            }
+                        }).dialog("open");
+                    }
+                }, {
+                    text: lang.edit_profile,
+                    icons: {
+                        primary: "ui-icon-pencil"
+                    },
+                    click: function () {
+                        $(this).dialog("close");
+                        $("#registerFormBox-edit").removeClass('displayNone');
+                        editProfileForm = $("#register-form-edit").dialog({
+                            resizable: false,
+                            autoOpen: false,
+                            width: 400,
+                            modal: true,
+                            buttons: [
+                                {
+                                    text: lang.ok,
+                                    icons: {
+                                        primary: "ui-icon-check"
+                                    },
+                                    click: function () {
+                                        var id = $('#id-user-edit').val();
+                                        var firstname = $('#firstname-edit').val();
+                                        var familyname = $('#familyname-edit').val();
+                                        var othername = $('#othername-edit').val();
+                                        var sex = $('#sex-edit').val();
+                                        var address = $('#address-edit').val();
+                                        var phone = $('#phone-edit').val();
+                                        var email = $('#email-edit').val();
+                                        var nationality = $('#nationality-edit').val();
+                                        var profession = $('#profession-edit').val();
+                                        var institution = $('#institution-edit').val();
+
+                                        if (firstname === "" || familyname === "" || sex === "" || address === "" || phone === ""
+                                                || email === "" || nationality === "" || profession === "" || institution === "") {
+                                            $.blockUI({
+                                                theme: true,
+                                                title: lang.some_required_field_empty_title,
+                                                message: '<p>' + lang.some_required_field_empty + '</p>',
+                                                timeout: 4000
+                                            });
+                                            return;
+                                        } else if (!isValidEmail(email)) {
+                                            $.blockUI({
+                                                theme: true,
+                                                title: 'Email address error',
+                                                message: '<p>This email address is not correct</p>',
+                                                timeout: 4000
+                                            });
+                                            return;
+                                        } else {
+                                            $("#loaderRegistration-edit").removeClass('displayNone');
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'php_includes/edit_profile.php',
+                                                data: '&id-edit=' + id + '&firstname=' + firstname + '&familyname=' + familyname + '&othername=' + othername + '&sex=' + sex + '&address=' + address + '&phone=' + phone + '&email=' + email + '&nationality=' + nationality + '&profession=' + profession + '&institution=' + institution,
+                                                success: function (response) {
+                                                    $('#loaderRegistration').addClass('displayNone');
+                                                    if (response !== "edit_success") {
+                                                        $.blockUI({
+                                                            theme: true,
+                                                            title: lang.error_occured,
+                                                            message: response,
+                                                            timeout: 4000
+                                                        });
+                                                        return;
+                                                    } else {
+                                                        editProfileForm.dialog("close");
+                                                        window.location = "index.php";
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                },
+                                {
+                                    text: lang.cancel,
+                                    icons: {
+                                        primary: "ui-icon-close"
+                                    },
+                                    click: function () {
+                                        $("#loaderRegistration-edit").addClass('displayNone');
+                                        $("#registerFormBox-edit").addClass('displayNone');
+                                        $(this).dialog("close");
+                                    }
+                                }
+                            ], close: function () {
+                                $("#loaderRegistration-edit").addClass('displayNone');
+                                $("#registerFormBox-edit").addClass('displayNone');
+                                $(this).dialog('destroy');
+                            }
+                        }).dialog("open");
+                    }
+                },
+                {
+                    text: lang.cancel,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $(this).dialog('destroy');
+            }
+        });
     });
     $("#logOutCommand").button().on("click", function () {
         logoutForm = $("#dialog-confirm").dialog({

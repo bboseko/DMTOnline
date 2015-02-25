@@ -1,3 +1,155 @@
+<?php include('./php_includes/profile.php'); ?>
+<div id="dialog-myProfile" title="My profile" class="requestFormBox displayNone">
+    <div class="requestFormBox" style="width: 450px; margin: 5px;">
+        <table>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['firstname']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_firstname; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['familyname']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_familyname; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['othername']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_othername; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['sex']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_sex; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['email']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_email; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['phone']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_phone; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['address']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_address; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['profession']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_profession; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['institution']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_institution; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['nationality']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_nationality; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['register-date']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_register_date; ?></label>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label><b><?php echo $lang['last-visit-date']; ?></b></label>
+                </td>
+                <td>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_last_visit_date; ?></label>
+                </td>
+            </tr>
+        </table>
+        <div class="requestFormBox" style="margin-top: 10px; width: 420px;margin-left: 5px;">
+            <table>
+                <tr>
+                    <td>
+                        <label><b><?php echo $lang['username']; ?></b></label>
+                    </td>
+                    <td>
+                        <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_username; ?></label>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label><b><?php echo $lang['password']; ?></b></label>
+                    </td>
+                    <td>
+                        <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: *******************</label>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div id="dialog-changePassword" title="Change password" class="requestFormBox displayNone">
+    <form id="change-password-Form" onsubmit="return false;" >
+        <table>
+            <tr>
+                <td>
+                    <label for ="oldPassword" style="width: 100%;"><?php echo $lang['old-password']; ?></label>
+                </td>
+                <td>
+                    <input style="margin-left: 10px; margin-top: 5px; width: 150px;" type="password" id="oldPassword" 
+                           class="text ui-widget-content ui-corner-all" />
+                </td>
+            </tr>
+            <tr>
+                <td><label for="newPassword" style="width: 100%;"><?php echo $lang['new-password']; ?></label></td>
+                <td><input style="margin-left: 10px; margin-top: 5px; width: 150px;" type="password" id="newPassword" 
+                           class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+            <tr>
+                <td><label for="retypePassword" style="width: 100%;"><?php echo $lang['repeat-new-password']; ?></label></td>
+                <td><input style="margin-left: 10px; margin-top: 5px; width: 150px;" type="password" id="retypePassword" 
+                           class="text ui-widget-content ui-corner-all"/></td>
+            </tr>
+        </table>
+        <span id="loaderChangePassword" class="displayNone" 
+              style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
+            Connecting ... <img alt="loading" src="./images/loader.gif" /> 
+        </span>
+    </form>
+</div>
 <div id="dialog-confirm" title="Log out" class="displayNone">
     <p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
@@ -29,7 +181,7 @@
         <div id="loginFormBox" class="requestFormBox displayNone" style="width: 300px;">
             <table>
                 <tr>
-                    <td style="width: 100px;"><label for="username" style="width: 100%;"><?php echo $lang['username']; ?></label></td>
+                    <td style="width: 110px;"><label for="username" style="width: 100%;"><?php echo $lang['username']; ?></label></td>
                     <td><input style="width: 100%;margin-left: 10px; margin-top: 5px;" type="text" id="username" class="text ui-widget-content ui-corner-all"/></td>
                 </tr>
                 <tr>
@@ -71,7 +223,71 @@
         </table>        
     </div>
 </div>
-
+<div id="register-form-edit" title="Edit my profile">
+    <form name="signupform-edit" id="signupform-edit" onsubmit="return false;">
+        <div id="registerFormBox-edit" class="requestFormBox displayNone" style="width: 360px;">
+            <table>
+                <tr>
+                    <td><label for="firstname-edit" style="width: 100%;"><?php echo $lang['firstname']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td><input value="<?php echo $db_firstname; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="text" id="firstname-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td><label for="familyname-edit" style="width: 100%;"><?php echo $lang['familyname']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td><input value="<?php echo $db_familyname; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="text" id="familyname-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td><label for="othername-edit" style="width: 100%;"><?php echo $lang['othername']; ?></label></td>
+                    <td><input value="<?php echo $db_othername; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="text" id="othername-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>                        
+                <tr>
+                    <td><label for="sex" style="width: 100%;"><?php echo $lang['sex']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td>
+                        <select id="sex-edit" class="text ui-widget-content ui-corner-all" style="margin-left: 10px; margin-top: 5px; width: 250px;">
+                            <option value="male" <?php selectedOption($db_sex, "male") ?>><?php echo $lang['male']; ?></option>
+                            <option value="female" <?php selectedOption($db_sex, "female") ?>><?php echo $lang['female']; ?></option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="address-edit" style="width: 100%;"><?php echo $lang['address']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td><input value="<?php echo $db_address; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="text" id="address-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td><label for="phone-edit" style="width: 100%;"><?php echo $lang['phone']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td><input value="<?php echo $db_phone; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="tel" id="phone-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td><label for="email-edit" style="width: 100%;"><?php echo $lang['email']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td><input value="<?php echo $db_email; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="email" id="email-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td><label for="nationality-edit" style="width: 100%;"><?php echo $lang['nationality']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td>
+                        <select name="nationality" id="nationality-edit" class="text ui-widget-content ui-corner-all" style="margin-left: 10px; margin-top: 5px; width: 250px;">
+                            <?php include_once("./template/template_country_list_edit_" . $_SESSION['lang'] . ".php"); ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="profession-edit" style="width: 100%;"><?php echo $lang['profession']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td><input value="<?php echo $db_profession; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="text" id="profession-edit" class="text ui-widget-content ui-corner-all"/></td>
+                </tr>
+                <tr>
+                    <td><label for="institution-edit" style="width: 100%;"><?php echo $lang['institution']; ?></label> <span style="color: #ff0000;">*</span></td>
+                    <td>
+                        <input value="<?php echo $db_institution; ?>" style="margin-left: 10px; margin-top: 5px; width: 250px;" type="text" id="institution-edit" class="text ui-widget-content ui-corner-all"/>
+                        <input id="id-user-edit" value="<?php echo $db_id; ?>" type="hidden"/>
+                    </td>
+                </tr>
+            </table>            
+        </div>
+        <span id="loaderRegistration-edit" class="displayNone" style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
+            Saving your data ... <img alt="loading" src="./images/loader.gif" /> 
+        </span>
+        <span style="color: #ff0000;">*</span>
+        <span style="font-size: 11px;"> <?php echo $lang['required-field']; ?></span>
+    </form>
+</div>
 <div id="register-form">
     <form name="signupform" id="signupform" onsubmit="return false;">
         <div id="registerFormBox" class="requestFormBox displayNone" style="width: 360px;">

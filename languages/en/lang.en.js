@@ -65,5 +65,8 @@ lang = {
     password_do_not_match: "Your password fields do not match",
     password_do_not_match_title: "Password fields do not match",
     username_error_title: "Username error",
-    thumbnail: "Thumbnail of "
+    thumbnail: "Thumbnail of ",
+    edit: "Edit",
+    edit_profile: "Edit my profile",
+    change_password: "Change password"
 };

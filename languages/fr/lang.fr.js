@@ -65,5 +65,8 @@ lang = {
     password_do_not_match: "Vos champs de mot de passe ne correspondent pas",
     password_do_not_match_title: "Champs de mot de passe ne correspondent pas",
     username_error_title: "Erreur nom d'utilisateur",
-    thumbnail: "Aperçu de "
+    thumbnail: "Aperçu de ",
+    edit: "Editer",
+    edit_profile: "Modifier mon profil",
+    change_password: "Modifier mot de passe"
 };
