@@ -1,19 +1,24 @@
+var hash = new Array();
+var arrayColorfp = new Array();
+var nRowResult = 0;
+var loggedIN = false;
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
+    var manageCriteriaForm, saveCriteriaForm;
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
         success: function (response) {
+            loggedIN = response !== "";
             if (response !== "") {
                 $("#logInCommand").addClass('displayNone');
                 $("#logOutCommand").removeClass('displayNone');
                 $("#registerCommand").addClass('displayNone');
                 $("#profileCommand").removeClass('displayNone');
-                $("#saveCriteria").removeClass('displayNone');
                 $("#manageCriteria").removeClass('displayNone');
-                $("#liSaveCriteria").removeClass('backgroundNone');
                 $("#liManageCriteria").removeClass('backgroundNone');
-            } else {
+            }
+            else {
                 $("#logOutCommand").addClass('displayNone');
                 $("#logInCommand").removeClass('displayNone');
                 $("#profileCommand").addClass('displayNone');
@@ -73,7 +78,6 @@ $(function () {
             primary: "ui-icon-gear"
         }
     });
-
     $("#passwordForgot").button({
     });
     $("#logInCommand").button({
@@ -96,13 +100,118 @@ $(function () {
             primary: "ui-icon-home"
         }
     });
-    $("#homeCommandProfile").button().on("click", function () {
-        window.location = "../index.php";
-    });
     $("#registerCommand").button({
         icons: {
             primary: "ui-icon-key"
         }
+    });
+
+    $("#saveCriteria").button().on("click", function () {
+        saveCriteriaForm = $("#dialog-saveCriteria").dialog({
+            resizable: false,
+            height: 160,
+            width: 350,
+            modal: true,
+            buttons: [
+                {
+                    text: lang.ok,
+                    icons: {
+                        primary: "ui-icon-check"
+                    },
+                    click: function () {
+                        var criteria = $('#criteria-name').val();
+                        var parameters = "";
+                        if (criteria === "") {
+                            $.blockUI({
+                                theme: true,
+                                title: lang.some_required_field_empty_title,
+                                message: '<p>' + lang.some_required_field_empty + '</p>',
+                                timeout: 4000
+                            });
+                            return;
+                        } else {
+                            $('#loaderSaveCriteria').removeClass('displayNone');
+                            $.ajax({
+                                type: 'POST',
+                                url: 'criteria/save_criteria.php',
+                                data: '&criteria=' + criteria + '&parameters=' + parameters,
+                                success: function (response) {
+                                    $('#loaderSaveCriteria').addClass('displayNone');
+                                    if (response === "save_success") {
+                                        saveCriteriaForm.dialog("close");
+                                        $(this).dialog("close");                                        
+                                        $.blockUI({
+                                            theme: true,
+                                            title: 'Fatal error',
+                                            message: '<p>An error occured while saving your criteria</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    } else {
+                                        $.blockUI({
+                                            theme: true,
+                                            title: 'Fatal error',
+                                            message: '<p>An error occured while saving your criteria</p>',
+                                            timeout: 4000
+                                        });
+                                        return;
+                                    }
+                                }
+                            });
+                        }
+                    }
+                },
+                {
+                    text: lang.cancel,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $(this).dialog('destroy');
+            }
+        });
+    });
+    $("#manageCriteria").button().on("click", function () {
+        $('#manageCriteriasFormBox').removeClass('displayNone');
+//        $('#loaderMCriteria').removeClass('displayNone');
+
+        manageCriteriaForm = $("#manage-Criterias-form").dialog({
+            autoOpen: false,
+            width: 500,
+            modal: true,
+            title: "Saved Criteria",
+            buttons: [
+                {
+                    text: lang.close,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $('#manageCriteriasFormBox').addClass('displayNone');
+                        $('#loaderMCriteria').addClass('displayNone');
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $('#manageCriteriasFormBox').addClass('displayNone');
+                $('#loaderMCriteria').addClass('displayNone');
+                $(this).dialog('destroy');
+            }
+        }).dialog("open");
+        $.ajax({
+            type: 'POST',
+            url: 'criteria/manage_criteria.php',
+            success: function (response) {
+                $('#manageCriteriasFormBox').html(response);
+            }
+        });
+    });
+    $("#homeCommandProfile").button().on("click", function () {
+        window.location = "../index.php";
     });
     $("#registerCommand").button().on("click", function () {
         $('#registerFormBox').removeClass('displayNone');
@@ -327,7 +436,8 @@ $(function () {
                     timeout: 4000
                 });
                 return;
-            } else {
+            }
+            else {
                 $('#loaderConnection').removeClass('displayNone');
                 $.ajax({
                     type: 'POST',
@@ -343,7 +453,8 @@ $(function () {
                                 timeout: 4000
                             });
                             return;
-                        } else if (response === "username_does_not_match") {
+                        }
+                        else if (response === "username_does_not_match") {
                             $.blockUI({
                                 theme: true,
                                 title: "Username incorrect",
@@ -462,6 +573,7 @@ $(function () {
                                                         });
                                                         return;
                                                     } else {
+                                                        $(this).dialog("close");
                                                         pcForm.dialog("close");
                                                         $.blockUI({
                                                             theme: true,
@@ -808,4 +920,91 @@ function quickLook(name, preview) {
         }
     });
     $('#quickLookDialogArea').dialog('open');
+}
+function pagination(nr, pn) {
+    $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
+    var itemsPerPage = 10;
+    var lastPage = Math.ceil(nr / itemsPerPage);
+    if (pn < 1) {
+        pn = 1;
+    }
+    else if (pn > lastPage) {
+        pn = lastPage;
+    }
+    var centerPages = "";
+    var sub1 = pn - 1;
+    var sub2 = pn - 2;
+    var add1 = pn + 1;
+    var add2 = pn + 2;
+    if (pn === 1) {
+        centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
+    }
+    else if (pn === lastPage) {
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')>' + sub1 + '</span> &nbsp;';
+        centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
+    }
+    else if (pn > 2 && pn < (lastPage - 1)) {
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub2 + ')">' + sub2 + '</span> &nbsp;';
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')">' + sub1 + '</span> &nbsp;';
+        centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
+        centerPages += '&nbsp; <span " onClick="pagination(' + nr + ',' + add2 + ')">' + add2 + '</span> &nbsp;';
+    }
+    else if (pn > 1 && pn < lastPage) {
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')">' + sub1 + '</span> &nbsp;';
+        centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
+        centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
+    }
+    var limit = ' LIMIT ' + (pn - 1) * itemsPerPage + ', ' + itemsPerPage;
+    var start = (pn - 1) * itemsPerPage;
+    var paginationDisplay = "";
+    if (lastPage !== "1") {
+        paginationDisplay += '' + lang.page + ' <strong>' + pn + '</strong> ' + lang.of + ' ' + lastPage + ' ';
+        if (pn !== 1) {
+            var previous = pn - 1;
+            paginationDisplay += '&nbsp; <span class="resultOther" onClick="pagination(' + nr + ',' + previous + ')"> ' + lang.back + '</span> ';
+        }
+        paginationDisplay += '<span class="paginationNumbers">' + centerPages + '</span>';
+        if (pn !== lastPage) {
+            var nextPage = pn + 1;
+            paginationDisplay += '&nbsp; <span class="resultOther" onclick="pagination(' + nr + ',' + nextPage + ')"> ' + lang.next + '</span> ';
+        }
+    }
+    if (nr === 0) {
+        $('#catResult').hide();
+        $('#pagingResultHeader, #pagingResultFooter').html('');
+    } else {
+        $('#catResult').show();
+        $('#pagingResultHeader, #pagingResultFooter').html(paginationDisplay);
+    }
+    $.ajax({
+        type: 'POST',
+        url: 'script/searchImages.php',
+        data: '&limit=' + limit + '&start=' + start + items,
+        success: function (response) {
+            $('#search-results-container').html(response);
+            var t = 0;
+            for (var id in hash) {
+                if (hash[id] === true) {
+                    t++;
+                }
+            }
+            if (nRowResult >= 2) {
+                t = t - 2;
+            } else {
+                t = t - 1;
+            }
+            if (t > 0) {
+                $('#submitButton').removeClass('disabled');
+            }
+            else {
+                $('#submitButton').addClass('disabled');
+            }
+            if (loggedIN) {
+                $("#saveCriteria").removeClass('displayNone');
+                $("#liSaveCriteria").removeClass('backgroundNone');
+            }
+        }
+    });
 }

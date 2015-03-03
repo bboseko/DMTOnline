@@ -23,13 +23,12 @@
         <li><a href="pages/faq.php"><?php echo $lang['faq']; ?></a></li>
         <li><a href="pages/help.php"><?php echo $lang['help-text']; ?></a></li>-->
 
-        <li id="liSaveCriteria" class="backgroundNone">
-            <button id="saveCriteria" class="displayNone" style="margin-top: -5px;">Save Criteria</button>
-        </li>
         <li id="liManageCriteria" class="backgroundNone">
             <button id="manageCriteria" class="displayNone" style="margin-top: -5px;">Manage Criteria</button>
         </li>
-             
+        <li id="liSaveCriteria" class="backgroundNone">
+            <button id="saveCriteria" class="displayNone" style="margin-top: -5px;">Save Criteria</button>
+        </li>     
 
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="index.php?lang=fr"><img src="images/fr.gif" /> <?php echo $lang['french']; ?></a>

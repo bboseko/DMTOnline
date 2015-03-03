@@ -211,8 +211,8 @@ function isLandsat($id) {
         $row = $Connex->f("row");
     }
     echo "<strong>Path:</strong> $path &nbsp;&nbsp; <strong>Row:</strong> $row&nbsp;&nbsp;";
-    return;
     $Connex->free();
+    return;
 }
 
 function randomColor() {
@@ -242,9 +242,8 @@ function getFootprint($id, $num) {
             0.5 * (0xff & (hexdec($color) >> 0x8)) +
             0.16 * (0xff & hexdec($color));
     echo $id . ";" . $shape . ";" . $num . ";" . $color . ";" . $luma . ";" . "polygon";
-    return;
     $Connex->free();
+    return;
 }
 
 $Connex->free();
-?>

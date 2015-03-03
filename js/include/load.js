@@ -48,7 +48,7 @@ DMT.load = {
         function isContain(item) {
             var category = $('#categorySelector span.text').html();
             if (category === '(all)') {
-                category = 'ASTER, ASTER GDEM, LANDSAT, MOSAIC LANDSAT, SPOT, SRTM';
+                return true;
             }
             var catTab = category.split(', ');
             for (var i = 0; i < catTab.length; i++) {
@@ -59,6 +59,8 @@ DMT.load = {
             return false;
         }
         $('#seachButton').click(function () {
+            $("#saveCriteria").addClass('displayNone');
+            $("#liSaveCriteria").addClass('backgroundNone');
             $('#submitButton').addClass('disabled');
             $('#categoryResult').find('option').remove().end();
             $('#pagingResultHeader, #pagingResultFooter').html('');
@@ -307,7 +309,7 @@ DMT.load = {
                                             arrayColorfp[tab[i]] = 'transparent';
                                         }
                                     }
-                                });
+                                });                                
                                 var pn = 1;
                                 pagination(nr, pn);
                             }
@@ -317,6 +319,8 @@ DMT.load = {
             });
         });
         $('#resetButton').click(function () {
+            $("#saveCriteria").addClass('displayNone');
+            $("#liSaveCriteria").addClass('backgroundNone');
             if ($(this).hasClass('disabled')) {
                 return;
             }
@@ -358,6 +362,8 @@ DMT.load = {
 
         });
         $('#categoryResult').change(function () {
+            $("#saveCriteria").addClass('displayNone');
+            $("#liSaveCriteria").addClass('backgroundNone');
             $('#pagingResultHeader, #pagingResultFooter').html('');
             var selected = $('#categoryResult').val();
             if (selected !== '') {
@@ -386,7 +392,6 @@ DMT.load = {
                     success: function (response) {
                         var nr = parseInt(response);
                         var pn = 1;
-                        alert(pn + " " + nr);
                         pagination(nr, pn);
                     }
                 });

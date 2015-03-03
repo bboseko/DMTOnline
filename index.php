@@ -42,94 +42,6 @@ include("./languages/langConfig.php");
         <script type="text/javascript" src="js/include/tabs.js"></script>     
         <script type="text/javascript" src="js/include/custom.js"></script>
         <script type="text/javascript" src="languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
-        <script type="text/javascript">
-            var hash = new Array();
-            var arrayColorfp = new Array();
-            var nRowResult = 0;            
-            function pagination(nr, pn) {
-                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
-                var itemsPerPage = 10;
-                var lastPage = Math.ceil(nr / itemsPerPage);
-                if (pn < 1) {
-                    pn = 1;
-                }
-                else if (pn > lastPage) {
-                    pn = lastPage;
-                }
-                var centerPages = "";
-                var sub1 = pn - 1;
-                var sub2 = pn - 2;
-                var add1 = pn + 1;
-                var add2 = pn + 2;
-                if (pn === 1) {
-                    centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
-                }
-                else if (pn === lastPage) {
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')>' + sub1 + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
-                }
-                else if (pn > 2 && pn < (lastPage - 1)) {
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub2 + ')">' + sub2 + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')">' + sub1 + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span " onClick="pagination(' + nr + ',' + add2 + ')">' + add2 + '</span> &nbsp;';
-                }
-                else if (pn > 1 && pn < lastPage) {
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + sub1 + ')">' + sub1 + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span class="pagNumActive">' + pn + '</span> &nbsp;';
-                    centerPages += '&nbsp; <span onClick="pagination(' + nr + ',' + add1 + ')">' + add1 + '</span> &nbsp;';
-                }
-                var limit = ' LIMIT ' + (pn - 1) * itemsPerPage + ', ' + itemsPerPage;
-                var start = (pn - 1) * itemsPerPage;
-                var paginationDisplay = "";
-                if (lastPage !== "1") {
-                    paginationDisplay += '' + lang.page + ' <strong>' + pn + '</strong> ' + lang.of + ' ' + lastPage + ' ';
-                    if (pn !== 1) {
-                        var previous = pn - 1;
-                        paginationDisplay += '&nbsp; <span class="resultOther" onClick="pagination(' + nr + ',' + previous + ')"> ' + lang.back + '</span> ';
-                    }
-                    paginationDisplay += '<span class="paginationNumbers">' + centerPages + '</span>';
-                    if (pn !== lastPage) {
-                        var nextPage = pn + 1;
-                        paginationDisplay += '&nbsp; <span class="resultOther" onclick="pagination(' + nr + ',' + nextPage + ')"> ' + lang.next + '</span> ';
-                    }
-                }
-                if (nr === 0) {
-                    $('#catResult').hide();
-                    $('#pagingResultHeader, #pagingResultFooter').html('');
-                } else {
-                    $('#catResult').show();
-                    $('#pagingResultHeader, #pagingResultFooter').html(paginationDisplay);
-                }
-                $.ajax({
-                    type: 'POST',
-                    url: 'script/searchImages.php',
-                    data: '&limit=' + limit + '&start=' + start + items,
-                    success: function (response) {
-                        $('#search-results-container').html(response);
-                        var t = 0;
-                        for (var id in hash) {
-                            if (hash[id] === true) {
-                                t++;
-                            }
-                        }
-                        if (nRowResult >= 2) {
-                            t = t - 2;
-                        } else {
-                            t = t - 1;
-                        }
-                        if (t > 0) {
-                            $('#submitButton').removeClass('disabled');
-                        }
-                        else {
-                            $('#submitButton').addClass('disabled');
-                        }
-                    }
-                });
-            }
-        </script>
     </head>
     <body>        
         <?php
@@ -534,7 +446,7 @@ include("./languages/langConfig.php");
                             <div style="float: right;margin-top: 2px;">
                                 <input type="checkbox" id="checkAllResult" checked />
                                 <label for="checkAllResult"><?php echo $lang['check-uncheck-text']; ?></label>
-                            </div> 
+                            </div>
                         </div>
 
                         <div id="pagingResultHeader"></div>

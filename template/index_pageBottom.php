@@ -223,6 +223,30 @@
         </table>        
     </div>
 </div>
+<div id="dialog-saveCriteria" title="Save criteria" class="displayNone">
+    <table>
+        <tr>
+            <td>
+                <label for="criteria-name">Criteria name</label><span style="color: #ff0000;">*</span>
+            </td>
+            <td>
+                <input id="criteria-name" style="width: 200px;margin-left: 10px;" type="text" 
+                       class="text ui-widget-content ui-corner-all"/> 
+            </td>
+        </tr>
+    </table>
+    <span id="loaderSaveCriteria" class="displayNone" 
+          style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+        Saving your criteria ... <img alt="loading" src="./images/loader.gif" /> 
+    </span>
+</div>
+<div id="manage-Criterias-form">
+    <div id="manageCriteriasFormBox" class="displayNone">
+        <span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">
+            Loading data ... <img alt="loading" src="./images/loader.gif" />
+        </span>
+    </div>
+</div>
 <div id="register-form-edit" title="Edit my profile">
     <form name="signupform-edit" id="signupform-edit" onsubmit="return false;">
         <div id="registerFormBox-edit" class="requestFormBox displayNone" style="width: 360px;">
