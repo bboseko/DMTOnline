@@ -1,8 +1,13 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+include_once ("../script/mysqlclass.php");
+$idCriteria = $_POST['idCriteria'];
+$Connex = new db(0);
+$Connex->connect();
+$Connex->query("select parameters from dmt_criteria where id_criteria ='$idCriteria' limit 1");
+$numRow = $Connex->num_rows();
 
+while ($Connex->next_record()) {
+    $parameters = $Connex->f("parameters");
+}
+echo $parameters;

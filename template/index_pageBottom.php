@@ -150,6 +150,17 @@
         </span>
     </form>
 </div>
+<div id="dialog-delete-criteria-confirm" title="Delete criteria" class="displayNone">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
+        </span>
+        Are you sure to delete this criteria?
+        <span id="loaderDeleteCriteria" class="displayNone" 
+              style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+            <img alt="loading" src="./images/loader.gif" /> 
+        </span>
+    </p>
+</div>
 <div id="dialog-confirm" title="Log out" class="displayNone">
     <p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            

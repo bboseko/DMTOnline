@@ -13,29 +13,34 @@ if (isset($_COOKIE["id"])) {
             <thead>
                 <tr class="ui-widget-header ">
                     <th>Date</th>
-                    <th>Saved Criteria Name</th>
+                    <th>Criteria name</th>
                     <th></th>
                     <th></th>
                 </tr>
             </thead>
             <?php
             while ($Connex->next_record()) {
+                $id = $Connex->f("id_criteria");
                 $criteria_name = $Connex->f("criteria_name");
-                $register_date = strftime("%b %d, %Y", strtotime($Connex->f("register_date")));
+                $register_date = strftime("%b %d, %Y %I:%M:%S", strtotime($Connex->f("register_date")));
                 ?>
                 <tbody>
                     <tr>
-                        <td style="width: 100px;">
+                        <td style="width: 150px;">
                             <label><?php echo $register_date; ?></label>
                         </td>
                         <td>
                             <label><?php echo $criteria_name; ?></label>
                         </td>
                         <td style="text-align: center;">
-                            <a href="#" title="Load results"><div class="ee-icon ee-icon-load"></div></a>
+                            <a href="#" title="Load results" onclick="loadCriteria(<?php echo $id ?>)">
+                                <div class="ee-icon ee-icon-load"></div>
+                            </a>
                         </td>
                         <td style="text-align: center;">
-                            <a href="#" title="Delete this saved criteria"><div class="ee-icon ee-icon-delete"></div></a>
+                            <a href="#" title="Delete this saved criteria" onclick="deleteCriteria(<?php echo $id ?>)">
+                                <div class="ee-icon ee-icon-delete"></div>
+                            </a>
                         </td>
                     </tr>
                 </tbody>

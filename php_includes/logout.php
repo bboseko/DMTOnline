@@ -1,6 +1,6 @@
 <?php
 
-session_start();
+//session_start();
 // Set Session data to an empty array
 $_SESSION = array();
 // Expire their cookie files

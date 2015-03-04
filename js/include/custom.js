@@ -1,10 +1,12 @@
+//Global variables
 var hash = new Array();
 var arrayColorfp = new Array();
 var nRowResult = 0;
 var loggedIN = false;
+var manageCriteriaForm, showSaveButton = false;
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
-    var manageCriteriaForm, saveCriteriaForm;
+    var saveCriteriaForm;
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
@@ -120,7 +122,72 @@ $(function () {
                     },
                     click: function () {
                         var criteria = $('#criteria-name').val();
-                        var parameters = "";
+                        //Gathering parameters
+                        var category = $('#categorySelector span.text').html();//categories of images
+                        var coordinates = "";//coordinates
+                        for (var i = 0; i < DMT.gmaps.coordinateList.length; i++) {
+                            var longitude = DMT.gmaps.coordinateList[i].lng().toFixed(DMT.coordinatePrecision);
+                            var latitude = DMT.gmaps.coordinateList[i].lat().toFixed(DMT.coordinatePrecision);
+                            coordinates += longitude + ',' + latitude + ' ';
+                        }
+                        coordinates = coordinates.substring(0, coordinates.length - 1);
+                        var format = DMT.gmaps.settings.format;//format of coordinates
+                        var active = $("#accordion").accordion("option", "active");//Active tab in accordion
+                        var period = $('input:radio[name=dateType]:checked').val();//Period of images
+                        var dateProp = $('#datepickerFrom').val() + ',' + $('#datepickerTo').val();
+                        var yearProp = $('#yearFrom').val() + ',' + $('#yearTo').val();
+
+                        var landsatSection = 0, spotSection = 0, srtmSection = 0;
+
+                        if (category === '(all)') {
+                            landsatSection = 1;
+                            spotSection = 1;
+                            srtmSection = 1;
+                        }
+                        else if (category === '(none)') {
+                            landsatSection = 0;
+                            spotSection = 0;
+                            srtmSection = 0;
+                        }
+                        else {
+                            if (category.indexOf("LANDSAT") >= 0) {
+                                landsatSection = 1;
+                            }
+                            else {
+                                landsatSection = 0;
+                            }
+                            if (category.indexOf("SRTM") >= 0) {
+                                srtmSection = 1;
+                            }
+                            else {
+                                srtmSection = 0;
+                            }
+                            if (category.indexOf("SPOT") >= 0) {
+                                spotSection = 1;
+                            }
+                            else {
+                                spotSection = 0;
+                            }
+                        }
+                        var landsatProp = $('#missionLandsat').val() + ',' + $('#slc').val() + ',' + $('#orthorectified').val() + ',' + $('#stack').val();
+                        var srtmProp = $('#missionSRTM').val() + ',' + $('#resolutionSRTM').val();
+                        var spotProp = $('#verionSPOT').val();
+                        var cloudCover = $('#cloudCover').val();
+
+                        var parameters = "categorySelector:" + category + ";"
+                                + "coordinates:" + coordinates + ";"
+                                + "format:" + format + ";"
+                                + "accordion:" + active + ";"
+                                + "period:" + period + ";"
+                                + "DateProperties:" + dateProp + ";"
+                                + "YearProperties:" + yearProp + ";"
+                                + "landsat:" + landsatSection + ";"
+                                + "srtm:" + srtmSection + ";"
+                                + "spot:" + spotSection + ";"
+                                + "landsatProperties:" + landsatProp + ";"
+                                + "srtmProperties:" + srtmProp + ";"
+                                + "spotProperties:" + spotProp + ";"
+                                + "cloudCoverProperties:" + cloudCover + ";";
                         if (criteria === "") {
                             $.blockUI({
                                 theme: true,
@@ -139,19 +206,13 @@ $(function () {
                                     $('#loaderSaveCriteria').addClass('displayNone');
                                     if (response === "save_success") {
                                         saveCriteriaForm.dialog("close");
-                                        $(this).dialog("close");                                        
-                                        $.blockUI({
-                                            theme: true,
-                                            title: 'Fatal error',
-                                            message: '<p>An error occured while saving your criteria</p>',
-                                            timeout: 4000
-                                        });
-                                        return;
+                                        $("#saveCriteria").addClass('displayNone');
+                                        $("#liSaveCriteria").addClass('backgroundNone');
                                     } else {
                                         $.blockUI({
                                             theme: true,
                                             title: 'Fatal error',
-                                            message: '<p>An error occured while saving your criteria</p>',
+                                            message: '<p>This criteria name already exists in the database !!!</p>',
                                             timeout: 4000
                                         });
                                         return;
@@ -177,7 +238,6 @@ $(function () {
     });
     $("#manageCriteria").button().on("click", function () {
         $('#manageCriteriasFormBox').removeClass('displayNone');
-//        $('#loaderMCriteria').removeClass('displayNone');
 
         manageCriteriaForm = $("#manage-Criterias-form").dialog({
             autoOpen: false,
@@ -850,6 +910,133 @@ $(function () {
         }).dialog("open");
     });
 });
+
+function loadCriteria(idCriteria) {
+    $.ajax({
+        type: 'POST',
+        url: 'criteria/load_criteria.php',
+        data: '&idCriteria=' + idCriteria,
+        success: function (response) {
+            var tab = response.split(';');
+            $('#tabs').tabs({active: 0});//Active the first tab
+            //Setting up categories : tab[0]
+            var category = tab[0].split(':');
+            $('#' + category[0] + ' span.text').html(category[1]);
+
+            if (category[1] === "(all)") {
+                for (var i = 0; i < document.categoryForm.categoryBoxes.length; i++) {
+                    document.categoryForm.categoryBoxes[i].checked = true;
+                }
+            }
+            //Setting up coordinates : tab[1]
+            DMT.gmaps.coordinates.clear();
+            var coordinates = tab[1].split(':')[1].split(' ');
+
+            for (var i = 0; i < coordinates.length; i++) {
+                var latLong = coordinates[i].split(',');
+                DMT.gmaps.coordinates.add(new google.maps.LatLng(parseFloat(latLong[1]), parseFloat(latLong[0])));
+            }
+            //Setting up latlong format : tab[2]
+            var format = tab[2].split(':');
+            DMT.gmaps.settings.format = format[1];
+            var showFormat = format[1];
+            var hideFormat = (format[1] === 'dd') ? 'dms' : 'dd';
+            $('#coordEntryArea').find('div.format_' + hideFormat).hide();
+            $('#coordEntryArea').find('div.format_' + showFormat).show();
+            if (format[1] === 'dd') {
+                $('#latlonfmtdec').prop("checked", true);
+//                $('input:radio[name=latlonfmt]:nth(1)').attr('checked',true);
+            } else {
+                $('#latlonfmtdeg').prop("checked", true);
+//                $('input:radio[name=latlonfmt]:nth(0)').attr('checked',true);
+            }
+            //Setting up accordion : tab[3]
+            $("#accordion").accordion("option", "active", parseInt(tab[3].split(':')[1]));
+            //Setting up period section : tab[4,5,6]
+            $('#tabs').tabs({active: 1});//Active the second tab
+            var showFeatureType = tab[4].split(':')[1];
+            var hideFeatureType = (tab[4].split(':')[1] === 'Date') ? 'Year' : 'Date';
+            $('#period' + hideFeatureType).hide();
+            $('#period' + showFeatureType).show();
+            var dateprop = tab[5].split(':')[1].split(',');
+            $('#datepickerFrom').val(dateprop[0]);
+            $('#datepickerTo').val(dateprop[1]);
+            var yearprop = tab[6].split(':')[1].split(',');
+            $('#yearFrom').val(yearprop[0]);
+            $('#yearTo').val(yearprop[1]);
+            //Setting up categories of images panel (show or hide) : tab[7,8,9]
+            tab[7].split(':')[1] === '1' ? $('#MLandsat').show() : $('#MLandsat').hide();//landsat panel
+            tab[8].split(':')[1] === '1' ? $('#MSRTM').show() : $('#MSRTM').hide();//srtm panel
+            tab[9].split(':')[1] === '1' ? $('#MSPOT').show() : $('#MSPOT').hide();//spot panel
+            //Setting up landsat properties tab[8]
+            var lprop = tab[10].split(':')[1].split(',');
+            $('#missionLandsat').val(lprop[0]);
+            $('#slc').val(lprop[1]);
+            $('#orthorectified').val(lprop[2]);
+            $('#stack').val(lprop[3]);
+            //Setting up srtm properties tab[9]
+            var srtmprop = tab[11].split(':')[1].split(',');
+            $('#missionSRTM').val(srtmprop[0]);
+            $('#resolutionSRTM').val(srtmprop[1]);
+            //Setting up spot properties tab[10]
+            var spotprop = tab[12].split(':')[1].split(',');
+            $('#verionSPOT').val(spotprop[0]);
+            //Setting up cloud cover properties tab[11]
+            var ccprop = tab[13].split(':')[1].split(',');
+            $('#cloudCover').val(ccprop[0]);
+
+            $('#seachButton').click();
+            showSaveButton = false;
+            manageCriteriaForm.dialog("close");
+        }
+    });
+}
+function deleteCriteria(idCriteria) {
+    var deleteCriteriaConfirm = $("#dialog-delete-criteria-confirm").dialog({
+        resizable: false,
+        height: 140,
+        modal: true,
+        buttons: [
+            {
+                text: lang.yes,
+                icons: {
+                    primary: "ui-icon-check"
+                },
+                click: function () {
+                    $('#loaderDeleteCriteria').removeClass('displayNone');
+                    $.ajax({
+                        type: 'POST',
+                        url: 'criteria/delete_criteria.php',
+                        data: '&idCriteria=' + idCriteria,
+                        success: function () {
+                            deleteCriteriaConfirm.dialog("close");
+                            $('#loaderDeleteCriteria').addClass('displayNone');
+                            $('#manageCriteriasFormBox').html('<span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">Loading data ... <img alt="loading" src="./images/loader.gif" /></span>');
+                            $.ajax({
+                                type: 'POST',
+                                url: 'criteria/manage_criteria.php',
+                                success: function (response) {
+                                    $('#manageCriteriasFormBox').html(response);
+                                }
+                            });
+                        }
+                    });
+                }
+            },
+            {
+                text: lang.no,
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function () {
+                    $(this).dialog("close");
+                }
+            }
+        ], close: function () {
+            $(this).dialog('destroy');
+        }
+    });
+}
 function isValidEmail(email) {
     var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
     return pattern.test(email);
@@ -1001,7 +1188,7 @@ function pagination(nr, pn) {
             else {
                 $('#submitButton').addClass('disabled');
             }
-            if (loggedIN) {
+            if (loggedIN && showSaveButton) {
                 $("#saveCriteria").removeClass('displayNone');
                 $("#liSaveCriteria").removeClass('backgroundNone');
             }

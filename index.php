@@ -333,9 +333,9 @@ include("./languages/langConfig.php");
                             </div>
                             <div id="periodDate" class="additionalCriteriaBox">
                                 <label for="datepickerFrom"><?php echo $lang['search-form-text']; ?> </label>
-                                <input size="10" type="text" id="datepickerFrom" name="datepickerFrom" value="07/27/1972" />
+                                <input size="10" type="text" id="datepickerFrom" name="datepickerFrom" value="07/27/1972" readonly="true"/>
                                 <label for="datepickerTo">&nbsp;&nbsp;&nbsp;<?php echo $lang['search-to-text']; ?> </label>
-                                <input size="10" type="text" id="datepickerTo" name="datepickerTo" value="06/11/2012" />
+                                <input size="10" type="text" id="datepickerTo" name="datepickerTo" value="06/11/2012" readonly="true"/>
                             </div>
                             <div id="periodYear" class="additionalCriteriaBox">
                                 <label for="start_year"><?php echo $lang['search-form-text']; ?> </label>

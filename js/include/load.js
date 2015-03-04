@@ -1,5 +1,4 @@
-var categories, items, landsat = '', srtm = '', spot = '', aster = '', asterdem = '', other = '';
-
+var categories, items, landsat = '', srtm = '', spot = '', aster = '', asterdem = '', other = '', globalCriteria;
 DMT.load = {
     load: function () {
         $.get("script/getCategories.php", function (response) {
@@ -251,11 +250,11 @@ DMT.load = {
             $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
 
             $('#tabs').tabs({active: 2});
-            var criteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
+            globalCriteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
             $.ajax({
                 type: 'POST',
                 url: 'script/getCategoriesResult.php',
-                data: criteria,
+                data: globalCriteria,
                 success: function (response) {
                     $('#categoryResult').find('option').remove().end().append(response);
                     var selected = $('#categoryResult').val();
@@ -301,7 +300,7 @@ DMT.load = {
                                 $.ajax({
                                     type: 'POST',
                                     url: 'script/getIDs.php',
-                                    data: criteria,
+                                    data: globalCriteria,
                                     success: function (response) {
                                         var tab = response.split(';');
                                         for (var i = 0; i < tab.length; i++) {
@@ -309,7 +308,8 @@ DMT.load = {
                                             arrayColorfp[tab[i]] = 'transparent';
                                         }
                                     }
-                                });                                
+                                });
+                                showSaveButton = true;
                                 var pn = 1;
                                 pagination(nr, pn);
                             }
