@@ -14,3 +14,4 @@ if ($Connex->num_rows() >= 1) {
 $category{ strlen($category) - 1 } = '';
 echo $category;
 $Connex->free();
+?>

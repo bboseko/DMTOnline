@@ -3,16 +3,18 @@ var hash = new Array();
 var arrayColorfp = new Array();
 var nRowResult = 0;
 var loggedIN = false;
-var manageCriteriaForm, showSaveButton = false;
+var manageCriteriaForm;
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
     var saveCriteriaForm;
+    $.sticky('<b>The page has loaded !</b>');
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
         success: function (response) {
-            loggedIN = response !== "";
+            loggedIN = (response !== "");
             if (response !== "") {
+                $("#cartCommand").removeClass('displayNone');
                 $("#logInCommand").addClass('displayNone');
                 $("#logOutCommand").removeClass('displayNone');
                 $("#registerCommand").addClass('displayNone');
@@ -21,6 +23,7 @@ $(function () {
                 $("#liManageCriteria").removeClass('backgroundNone');
             }
             else {
+                $("#cartCommand").addClass('displayNone');
                 $("#logOutCommand").addClass('displayNone');
                 $("#logInCommand").removeClass('displayNone');
                 $("#profileCommand").addClass('displayNone');
@@ -73,6 +76,11 @@ $(function () {
     $("#saveCriteria").button({
         icons: {
             primary: "ui-icon-circle-check"
+        }
+    });
+    $("#cartCommand").button({
+        icons: {
+            primary: "ui-icon-cart"
         }
     });
     $("#manageCriteria").button({
@@ -951,6 +959,7 @@ function loadCriteria(idCriteria) {
 //                $('input:radio[name=latlonfmt]:nth(0)').attr('checked',true);
             }
             //Setting up accordion : tab[3]
+            DMT.gmaps.featureCoder.clear();
             $("#accordion").accordion("option", "active", parseInt(tab[3].split(':')[1]));
             //Setting up period section : tab[4,5,6]
             $('#tabs').tabs({active: 1});//Active the second tab
@@ -986,7 +995,6 @@ function loadCriteria(idCriteria) {
             $('#cloudCover').val(ccprop[0]);
 
             $('#seachButton').click();
-            showSaveButton = false;
             manageCriteriaForm.dialog("close");
         }
     });
@@ -1187,10 +1195,6 @@ function pagination(nr, pn) {
             }
             else {
                 $('#submitButton').addClass('disabled');
-            }
-            if (loggedIN && showSaveButton) {
-                $("#saveCriteria").removeClass('displayNone');
-                $("#liSaveCriteria").removeClass('backgroundNone');
             }
         }
     });

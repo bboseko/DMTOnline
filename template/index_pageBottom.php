@@ -161,11 +161,11 @@
         </span>
     </p>
 </div>
-<div id="dialog-confirm" title="Log out" class="displayNone">
+<div id="dialog-confirm" title="Logout" class="displayNone">
     <p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
         </span>
-        Are you sure you want to log out?
+        Are you sure to logout?
         <span id="loaderLogout" class="displayNone" 
               style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
             <img alt="loading" src="./images/loader.gif" /> 

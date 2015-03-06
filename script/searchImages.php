@@ -107,6 +107,7 @@ function loadRecord($Connex, $host) {
         $id = $Connex->f("id_image");
         $name = $Connex->f("image_name");
         $date = $Connex->f("date");
+        $cc = $Connex->f("cloud_cover");
         $size = $Connex->f("size") . ' MB';
         $preview = $Connex->f("preview_path");
         if ($preview == '') {
@@ -127,6 +128,7 @@ function loadRecord($Connex, $host) {
                     <li></li>
                     <li><strong>Entity ID:</strong> <?php echo $name; ?></li>
                     <li><strong>Acquisition date:</strong> <?php echo date("F d, Y", strtotime($date)); ?></li>
+                    <li><strong>Could cover:</strong> <?php echo $cloudcover = ($cc <= 100) ? $cc . '%' : "N/A"; ?></li>
                     <li><?php ($idCategory == 2) ? isLandsat($id) : '' ?> <strong>Size:</strong> <?php echo $size; ?> </li>
                     <li>
                         <div class="iconContainer">
@@ -247,3 +249,4 @@ function getFootprint($id, $num) {
 }
 
 $Connex->free();
+?>

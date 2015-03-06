@@ -64,6 +64,7 @@ $lang['spatial-resolution-text'] = 'Résolution Spatiale';
 $lang['meters-text'] = 'Mètres';
 $lang['spot-version-text'] = 'SPOT Version';
 $lang['cloud-cover'] = 'Couverture nuageuse';
+$lang['max-cloud-cover'] = 'Couverture nuageuse Max';
 $lang['category-text'] = 'Catégorie';
 $lang['check-uncheck-text'] = 'Cocher/Décocher Tout';
 $lang['use-dropdown-text'] = 'Utilisez la liste déroulante pour voir les résultats de la recherche pour chaque catégorie d\'images spécifique.';

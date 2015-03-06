@@ -64,6 +64,7 @@ $lang['spatial-resolution-text'] = 'Spatial Resolution';
 $lang['meters-text'] = 'Meters';
 $lang['spot-version-text'] = 'SPOT Version';
 $lang['cloud-cover'] = 'Cloud cover';
+$lang['max-cloud-cover'] = 'Max cloud cover';
 $lang['category-text'] = 'Category';
 $lang['check-uncheck-text'] = 'Check/Uncheck All';
 $lang['use-dropdown-text'] = 'Use the dropdown to see the search results for each specific category.';

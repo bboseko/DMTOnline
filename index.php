@@ -25,6 +25,7 @@ include("./languages/langConfig.php");
         <link type="image/vnd.microsoft.icon" rel="shortcut icon" href="images/favicon.ico"></link>        
         <link type="text/css" href="css/jquery-ui-1.10.3.custom.css" rel="stylesheet" ></link>
         <link type="text/css" href="css/custom.css" rel="stylesheet"></link>
+        <link type="text/css" href="css/sticky.full.css" rel="stylesheet"></link>
 
         <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBx0xuNg12W0_nx2QjT1MlZgpP18pgOlQA&sensor=false"></script>
         <script type="text/javascript" src="http://www.google.com/jsapi"></script>
@@ -32,6 +33,7 @@ include("./languages/langConfig.php");
         <script type="text/javascript" src="js/library/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="js/library/jquery-ui.js"></script>
         <script type="text/javascript" src="js/library/jquery.blockui.js"></script>
+        <script type="text/javascript" src="js/library/sticky.full.js"></script>
 
         <script type="text/javascript" src="js/include/DMT.js"></script>
         <script type="text/javascript" src="js/include/map.js"></script>
@@ -422,10 +424,11 @@ include("./languages/langConfig.php");
                             <div id="MCloudCover">
                                 <div class="labelText"><?php echo $lang['cloud-cover']; ?></div>
                                 <div class="additionalCriteriaBox">
-                                    <div class="acleft"><label for="cloudCover"><?php echo $lang['cloud-cover']; ?></label></div>
+                                    <div class="acleft"><label for="cloudCover" ><?php echo $lang['max-cloud-cover']; ?></label></div>
                                     <div class="acright">
-                                        <select id="cloudCover" name="cloudCover" disabled>
+                                        <select id="cloudCover" name="cloudCover">
                                             <option value="all">(all)</option>
+                                            <?php loadComboboxCloudCover(); ?>
                                         </select> 
                                     </div>
                                 </div> 

@@ -181,6 +181,12 @@ DMT.load = {
             else {
                 period = ' and (date BETWEEN DATE(\'' + dateFrom + '\') and DATE(\'' + dateTo + '\'))';
             }
+            var cloud_cover = '';
+            if ($('#cloudCover').val() === 'all') {
+                cloud_cover = '';
+            } else {
+                cloud_cover = ' and (cloud_cover <= ' + parseInt($('#cloudCover').val()) + ')';
+            }
             if (landsat !== '') {
                 var mission = '', slc = '', ortho = '', stack = '';
                 if (isContain('LANDSAT')) {
@@ -205,7 +211,7 @@ DMT.load = {
                         stack = ' and (stack = \'' + $('#stack').val() + '\')';
                     }
                 }
-                landsat += coordinates + period + mission + slc + ortho + stack;
+                landsat += coordinates + period + cloud_cover + mission + slc + ortho + stack;
             }
             if (srtm !== '') {
                 var version = '', resolution = '';
@@ -223,7 +229,7 @@ DMT.load = {
                         resolution = ' and (format <> \'DT2\')';
                     }
                 }
-                srtm += coordinates + period + version + resolution;
+                srtm += coordinates + period + cloud_cover + version + resolution;
             }
             if (spot !== '') {
                 var versionSpot = '';
@@ -235,22 +241,25 @@ DMT.load = {
                         versionSpot = ' and (mission = \'' + $('#verionSPOT').val() + '\')';
                     }
                 }
-                spot += coordinates + period + versionSpot;
+                spot += coordinates + period + cloud_cover + versionSpot;
             }
             if (aster !== '') {
-                aster += coordinates + period;
+                aster += coordinates + period + cloud_cover;
             }
             if (asterdem !== '') {
-                asterdem += coordinates + period;
+                asterdem += coordinates + period + cloud_cover;
             }
             if (other !== '') {
-                other += coordinates + period;
+                other += coordinates + period + cloud_cover;
             }
 
-            $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
-
+            $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
+                    + lang.loading + '" src="images/loader.gif" /><span> '
+                    + lang.searching_images_loading + ' ...</span>');
+            
             $('#tabs').tabs({active: 2});
             globalCriteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
+
             $.ajax({
                 type: 'POST',
                 url: 'script/getCategoriesResult.php',
@@ -309,7 +318,10 @@ DMT.load = {
                                         }
                                     }
                                 });
-                                showSaveButton = true;
+                                if (loggedIN) {
+                                    $("#saveCriteria").removeClass('displayNone');
+                                    $("#liSaveCriteria").removeClass('backgroundNone');
+                                }
                                 var pn = 1;
                                 pagination(nr, pn);
                             }

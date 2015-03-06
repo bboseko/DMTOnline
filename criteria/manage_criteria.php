@@ -33,12 +33,12 @@ if (isset($_COOKIE["id"])) {
                             <label><?php echo $criteria_name; ?></label>
                         </td>
                         <td style="text-align: center;">
-                            <a href="#" title="Load results" onclick="loadCriteria(<?php echo $id ?>)">
+                            <a title="Load results" onclick="loadCriteria(<?php echo $id ?>)">
                                 <div class="ee-icon ee-icon-load"></div>
                             </a>
                         </td>
                         <td style="text-align: center;">
-                            <a href="#" title="Delete this saved criteria" onclick="deleteCriteria(<?php echo $id ?>)">
+                            <a title="Delete this saved criteria" onclick="deleteCriteria(<?php echo $id ?>)">
                                 <div class="ee-icon ee-icon-delete"></div>
                             </a>
                         </td>

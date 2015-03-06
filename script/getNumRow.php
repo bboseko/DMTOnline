@@ -55,3 +55,4 @@ if ($asterdem != '') {
 echo $totalRecord;
 //echo $result;
 $Connex->free();
+?>
