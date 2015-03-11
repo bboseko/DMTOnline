@@ -2,12 +2,12 @@
 var hash = new Array();
 var arrayColorfp = new Array();
 var nRowResult = 0;
-var loggedIN = false;
+var loggedIN = false, searchFromManager = false;
 var manageCriteriaForm;
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
     var saveCriteriaForm;
-    $.sticky('<b>The page has loaded !</b>');
+    $.sticky(lang.welcome_message);
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
@@ -21,6 +21,7 @@ $(function () {
                 $("#profileCommand").removeClass('displayNone');
                 $("#manageCriteria").removeClass('displayNone');
                 $("#liManageCriteria").removeClass('backgroundNone');
+                $.sticky('<span style = "font-size: 14px;color: #ff0000;">' + lang.hello + response + '</span>');
             }
             else {
                 $("#cartCommand").addClass('displayNone');
@@ -115,6 +116,7 @@ $(function () {
             primary: "ui-icon-key"
         }
     });
+    $("#applications").buttonset();
 
     $("#saveCriteria").button().on("click", function () {
         saveCriteriaForm = $("#dialog-saveCriteria").dialog({
@@ -204,7 +206,8 @@ $(function () {
                                 timeout: 4000
                             });
                             return;
-                        } else {
+                        }
+                        else {
                             $('#loaderSaveCriteria').removeClass('displayNone');
                             $.ajax({
                                 type: 'POST',
@@ -216,7 +219,8 @@ $(function () {
                                         saveCriteriaForm.dialog("close");
                                         $("#saveCriteria").addClass('displayNone');
                                         $("#liSaveCriteria").addClass('backgroundNone');
-                                    } else {
+                                    } 
+                                    else {
                                         $.blockUI({
                                             theme: true,
                                             title: 'Fatal error',
@@ -338,7 +342,8 @@ $(function () {
                                 timeout: 4000
                             });
                             return;
-                        } else {
+                        }
+                        else {
                             $('#loaderRegistration').removeClass('displayNone');
                             $.ajax({
                                 type: 'POST',
@@ -393,7 +398,7 @@ $(function () {
             }
         }).dialog("open");
     });
-    $("#logInCommand").button().on("click", function () {
+    $("#logInCommand").click(function () {
         $('#loginFormBox').removeClass('displayNone');
         $('#loaderConnection').addClass('displayNone');
         loginForm = $("#login-form").dialog({
@@ -494,73 +499,7 @@ $(function () {
     });
     $('#password').keypress(function (e) {
         if (e.which === 13) {
-            var username = $('#username').val();
-            var password = $('#password').val();
-            if (username === "" || password === "") {
-                $.blockUI({
-                    theme: true,
-                    title: lang.some_required_field_empty_title,
-                    message: '<p>' + lang.some_required_field_empty + '</p>',
-                    timeout: 4000
-                });
-                return;
-            }
-            else {
-                $('#loaderConnection').removeClass('displayNone');
-                $.ajax({
-                    type: 'POST',
-                    url: 'php_includes/login.php',
-                    data: '&username=' + username + '&password=' + password,
-                    success: function (response) {
-                        $('#loaderConnection').addClass('displayNone');
-                        if (response === "required_fields_empty") {
-                            $.blockUI({
-                                theme: true,
-                                title: lang.some_required_field_empty_title,
-                                message: '<p>' + lang.some_required_field_empty + '</p>',
-                                timeout: 4000
-                            });
-                            return;
-                        }
-                        else if (response === "username_does_not_match") {
-                            $.blockUI({
-                                theme: true,
-                                title: "Username incorrect",
-                                message: '<p>The username entered does not exist in the system</p>',
-                                timeout: 4000
-                            });
-                            return;
-                        } else if (response === "passwords_do_not_match") {
-                            $.blockUI({
-                                theme: true,
-                                title: "Password incorrect",
-                                message: '<p>The password entered is not correct</p>',
-                                timeout: 4000
-                            });
-                            return;
-                        } else if (response === "account_not_activated_yet") {
-                            $.blockUI({
-                                theme: true,
-                                title: "Account not activated",
-                                message: '<p>Your account has not been activated yet</p>',
-                                timeout: 4000
-                            });
-                            return;
-                        } else {
-                            loginForm.dialog("close");
-                            $("#logInCommand").addClass('displayNone');
-                            $("#logOutCommand").removeClass('displayNone');
-                            $("#registerCommand").addClass('displayNone');
-                            $("#profileCommand").removeClass('displayNone');
-                            $("#saveCriteria").removeClass('displayNone');
-                            $("#manageCriteria").removeClass('displayNone');
-                            $("#liSaveCriteria").removeClass('backgroundNone');
-                            $("#liManageCriteria").removeClass('backgroundNone');
-                            window.location = response;
-                        }
-                    }
-                });
-            }
+            $('#logInCommand').click();
             return false;
         }
     });
@@ -953,11 +892,11 @@ function loadCriteria(idCriteria) {
             $('#coordEntryArea').find('div.format_' + showFormat).show();
             if (format[1] === 'dd') {
                 $('#latlonfmtdec').prop("checked", true);
-//                $('input:radio[name=latlonfmt]:nth(1)').attr('checked',true);
-            } else {
-                $('#latlonfmtdeg').prop("checked", true);
-//                $('input:radio[name=latlonfmt]:nth(0)').attr('checked',true);
             }
+            else {
+                $('#latlonfmtdeg').prop("checked", true);
+            }
+            $('#lat_lon_section').buttonset("refresh");
             //Setting up accordion : tab[3]
             DMT.gmaps.featureCoder.clear();
             $("#accordion").accordion("option", "active", parseInt(tab[3].split(':')[1]));
@@ -973,6 +912,13 @@ function loadCriteria(idCriteria) {
             var yearprop = tab[6].split(':')[1].split(',');
             $('#yearFrom').val(yearprop[0]);
             $('#yearTo').val(yearprop[1]);
+            if (tab[4].split(':')[1] === 'Date') {
+                $('#dateDate').prop("checked", true);
+            }
+            else {
+                $('#dateYear').prop("checked", true);
+            }
+            $('#dateSection').buttonset("refresh");
             //Setting up categories of images panel (show or hide) : tab[7,8,9]
             tab[7].split(':')[1] === '1' ? $('#MLandsat').show() : $('#MLandsat').hide();//landsat panel
             tab[8].split(':')[1] === '1' ? $('#MSRTM').show() : $('#MSRTM').hide();//srtm panel
@@ -993,7 +939,7 @@ function loadCriteria(idCriteria) {
             //Setting up cloud cover properties tab[11]
             var ccprop = tab[13].split(':')[1].split(',');
             $('#cloudCover').val(ccprop[0]);
-
+            searchFromManager = true;
             $('#seachButton').click();
             manageCriteriaForm.dialog("close");
         }
@@ -1187,7 +1133,8 @@ function pagination(nr, pn) {
             }
             if (nRowResult >= 2) {
                 t = t - 2;
-            } else {
+            }
+            else {
                 t = t - 1;
             }
             if (t > 0) {
@@ -1196,6 +1143,14 @@ function pagination(nr, pn) {
             else {
                 $('#submitButton').addClass('disabled');
             }
+            if (loggedIN === true && searchFromManager === false) {
+                $("#saveCriteria").removeClass('displayNone');
+                $("#liSaveCriteria").removeClass('backgroundNone');
+            } else {
+                $("#saveCriteria").addClass('displayNone');
+                $("#liSaveCriteria").addClass('backgroundNone');
+            }
+            searchFromManager = false;
         }
     });
 }

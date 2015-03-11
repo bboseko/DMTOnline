@@ -107,3 +107,6 @@ $lang['new-password'] = 'Nouveau mot de passe';
 $lang['repeat-new-password'] = 'Répéter mot de passe';
 $lang['register-date'] = 'Enregistrement';
 $lang['last-visit-date'] = 'Dernière visite';
+$lang['cart'] = 'Panier';
+$lang['manager-criteria'] ='Gérer Critère';
+$lang['save-criteria'] ='Conserver Critère';

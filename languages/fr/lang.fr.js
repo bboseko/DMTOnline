@@ -68,5 +68,7 @@ lang = {
     thumbnail: "Aperçu de ",
     edit: "Editer",
     edit_profile: "Modifier mon profil",
-    change_password: "Modifier mot de passe"
+    change_password: "Modifier mot de passe",
+    welcome_message: "<p>Bienvenu à OSFAC-DMT 2.1</p>",
+    hello: "Bonjour "
 };

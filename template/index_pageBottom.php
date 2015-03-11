@@ -181,6 +181,70 @@
         You will not be able to do anything on the site until <b>you successfully activate your account</b>.
     </p>
 </div>
+<div id="dialog-not-logged-in" title="User not logged in" class="requestFormBox displayNone" style="width: 400px;">
+    <p style="font-size:13px;">
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
+        You must be logged in before submitting your data request. 
+        If you don't yet have an account, please <b>register</b> to create from OSFAC-DMT.
+    </p>
+</div>
+<div id="dialog-dataRequestForm" title="Request form of satellite images" class="displayNone">
+    <div class="requestFormBox" style="margin-bottom: 1px;width: 460px;">
+        <table>
+            <tr>
+                <td>
+                    <label for="applications" style="margin-left:15px;">Applications</label><span style="color: #ff0000;">*</span>
+                </td>
+                <td>
+                    <div id="applications" style="margin-left:15px;">
+                        <label for="academic">Academic</label>
+                        <input type="radio" id="academic" name="applications" value="1" checked="checked">
+                        <label for="profesionnal">Professional</label>
+                        <input type="radio" id="profesionnal" name="applications" value="2">
+                        <label for="other">Other</label>
+                        <input type="radio" id="other" name="applications" value="3">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="interestArea" style="margin-left:15px;">Area of interest</label>
+                    <span style="color: #ff0000;">*</span>
+                </td>
+                <td>
+                    <input class="text ui-widget-content ui-corner-all" 
+                           style="width: 310px;margin-left:15px;margin-top: 5px;margin-bottom: 5px;" 
+                           id="interestArea" type="text">
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tbody>
+
+                <tr>
+                    <td><label id="descriptionLabel" for="description" style="margin-left:15px;">Brief description of proposed application</label><span style="color: #ff0000;">*</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="text ui-widget-content ui-corner-all" style="margin-left:15px;margin-bottom: 5px;" id="description" name="description" rows="5" cols="68"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label id="commentLabel" for="comment" style="margin-left:15px;">How you did learn about satellite images distribution at OSFAC ?</label><span style="color: #ff0000;">*</span></td>
+                </tr>
+                <tr>
+                    <td>
+                        <textarea class="text ui-widget-content ui-corner-all" style="margin-left:15px;margin-bottom: 5px;" id="comment" name="comment" rows="5" cols="68"></textarea>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <span id="loaderSaveRequester" class="displayNone" 
+          style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+        Saving your data ... <img alt="loading" src="./images/loader.gif" /> 
+    </span>
+</div>
 <div id="dialog-message-forgot-password" title="Password forgotten" class="requestFormBox displayNone" style="width: 400px;">
     <p style="font-size:13px;">
         <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>

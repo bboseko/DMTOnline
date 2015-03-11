@@ -256,7 +256,7 @@ DMT.load = {
             $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
                     + lang.loading + '" src="images/loader.gif" /><span> '
                     + lang.searching_images_loading + ' ...</span>');
-            
+
             $('#tabs').tabs({active: 2});
             globalCriteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
 
@@ -318,10 +318,7 @@ DMT.load = {
                                         }
                                     }
                                 });
-                                if (loggedIN) {
-                                    $("#saveCriteria").removeClass('displayNone');
-                                    $("#liSaveCriteria").removeClass('backgroundNone');
-                                }
+
                                 var pn = 1;
                                 pagination(nr, pn);
                             }
@@ -346,32 +343,92 @@ DMT.load = {
             if ($(this).hasClass('disabled')) {
                 return;
             }
-            $.ajax({
-                type: 'POST',
-                url: 'php_includes/check_login_status.php',
-                success: function (response) {
-                    if (response === "") {
-                        $.blockUI({
-                            theme: true,
-                            title: 'Warning',
-                            message: '<p>You must log in before submitting your data request</p>',
-                            timeout: 4000
-                        });
-                        return;
-                    } else {
-                        var tabID = ReturnIdsChecked().split(';');
-                        var idss = '';
-                        var limit;
-                        tabID.length >= 1 ? limit = tabID.length - 1 : limit = tabID.length;
-                        for (var i = 0; i < limit; i++) {
-                            idss += tabID[i] + ';';
+            if (loggedIN === false) {
+                $("#dialog-not-logged-in").dialog({
+                    modal: true,
+                    hide: {
+                        effect: "explode",
+                        duration: 1000
+                    },
+                    buttons: {
+                        OK: function () {
+                            $(this).dialog("close");
                         }
-                        idss = idss.substring(0, idss.length - 1);
-                        document.location.href = 'pages/requestForm.php?' + idss;
                     }
-                }
-            });
-
+                });
+                return;
+            }
+            else {
+                var dialogDataRequest = $("#dialog-dataRequestForm").dialog({
+                    modal: true,
+                    width: 500,
+                    buttons: [
+                        {
+                            text: lang.ok,
+                            icons: {
+                                primary: "ui-icon-check"
+                            },
+                            click: function () {
+                                var application = $('input:radio[name=applications]:checked').val();
+                                var interest = $('#interestArea').val();
+                                var description = $('#description').val();
+                                var comment = $('#comment').val();
+                                var tabID = ReturnIdsChecked().split(';');
+                                var idss = '';
+                                var limit;
+                                tabID.length >= 1 ? limit = tabID.length - 1 : limit = tabID.length;
+                                for (var i = 0; i < limit; i++) {
+                                    idss += tabID[i] + ';';
+                                }
+                                idss = idss.substring(0, idss.length - 1);
+                                if (application === "" || interest === "" || description === "" || comment === "") {
+                                    $.blockUI({
+                                        theme: true,
+                                        title: lang.some_required_field_empty_title,
+                                        message: '<p>' + lang.some_required_field_empty + '</p>',
+                                        timeout: 4000
+                                    });
+                                    return;
+                                }
+                                else {
+                                    $('#loaderSaveRequester').removeClass('displayNone');
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'delivery/save_request.php',
+                                        data: '&id_usage=' + application + '&interest=' + interest + '&idss=' + idss
+                                                + '&description=' + description + '&comment=' + comment,
+                                        success: function (response) {
+                                            $('#loaderSaveRequester').addClass('displayNone');
+                                            if (response === "save_success") {
+                                                $('#submitButton').addClass('disabled');
+                                                dialogDataRequest.dialog("close");
+                                                $.sticky('<p>Your data request has been sent to OSFAC successfully.</p>');
+                                            } else {
+                                                $.blockUI({
+                                                    theme: true,
+                                                    title: 'Fatal error',
+                                                    message: '<p>An error occured while saving into database.</p>',
+                                                    timeout: 4000
+                                                });
+                                                return;
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        },
+                        {
+                            text: lang.close,
+                            icons: {
+                                primary: "ui-icon-close"
+                            },
+                            click: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    ]
+                });
+            }
         });
         $('#categoryResult').change(function () {
             $("#saveCriteria").addClass('displayNone');

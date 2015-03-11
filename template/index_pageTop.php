@@ -24,10 +24,10 @@
         <li><a href="pages/help.php"><?php echo $lang['help-text']; ?></a></li>-->
 
         <li id="liManageCriteria" class="backgroundNone">
-            <button id="manageCriteria" class="displayNone" style="margin-top: -5px;">Manage Criteria</button>
+            <button id="manageCriteria" class="displayNone" style="margin-top: -5px;"><?php echo $lang['manager-criteria']; ?></button>
         </li>
         <li id="liSaveCriteria" class="backgroundNone">
-            <button id="saveCriteria" class="displayNone" style="margin-top: -5px;">Save Criteria</button>
+            <button id="saveCriteria" class="displayNone" style="margin-top: -5px;"><?php echo $lang['save-criteria']; ?></button>
         </li>     
 
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;margin-left: -10px;">
@@ -49,7 +49,7 @@
             <button class="displayNone" id="logOutCommand" style="margin-top: -5px;"><?php echo $lang['logout']; ?></button>
         </li>
         <li class="displayNone" style="float:right !important; background: none;">
-            <button id="cartCommand" style="margin-top: -5px;">Cart</button>
+            <button id="cartCommand" style="margin-top: -5px;"><?php echo $lang['cart']; ?></button>
         </li>
     </ul>
 </div>

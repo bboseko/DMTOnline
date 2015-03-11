@@ -106,9 +106,9 @@ if (!mysql_query($query)) {
             die('Error: ' . mysql_error());
             echo "An error occured while saving into database";
         } else {
-            for ($index = 0; $index < count($idss); $index++) {
-                if ($idss[$index] != "") {
-                    mysql_query("insert into dmt_deliver values ($idss[$index], $iddelivery)");
+            for ($i = 0; $i < count($idss); $i++) {
+                if ($idss[$i] != "") {
+                    mysql_query("insert into dmt_deliver values ($idss[$i], $iddelivery)");
                 }
             }
             mysql_close();

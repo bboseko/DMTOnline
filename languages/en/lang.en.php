@@ -107,3 +107,6 @@ $lang['new-password'] = 'New password';
 $lang['repeat-new-password'] = 'Repeat new password';
 $lang['register-date'] = 'Register date';
 $lang['last-visit-date'] = 'Last visit date';
+$lang['cart'] = 'Cart';
+$lang['manager-criteria'] ='Manage Criteria';
+$lang['save-criteria'] ='Save Criteria';
