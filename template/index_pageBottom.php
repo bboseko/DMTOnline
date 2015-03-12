@@ -328,6 +328,13 @@ include('./php_includes/profile.php');
         Saving your criteria ... <img alt="loading" src="./images/loader.gif" /> 
     </span>
 </div>
+<div id="metadata-image-form">
+    <div id="metadataFormBox" class="displayNone">
+        <span id="loaderMetadata" style="color: #660000;margin-top: 2px;">
+            Loading data ... <img alt="loading" src="./images/loader.gif" />
+        </span>
+    </div>
+</div>
 <div id="cart-images-form">
     <div id="cartImagesFormBox" class="displayNone">
         <span id="loaderCartImages" style="color: #660000;margin-top: 2px;">

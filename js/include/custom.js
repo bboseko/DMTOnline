@@ -894,11 +894,50 @@ $(function () {
         }).dialog("open");
     });
 });
-function loadMetadata(idImage) {
-    alert(idImage);
+function loadMetadata(idImage, entity_name) {
+    $('#metadataFormBox').removeClass('displayNone');
+
+    $("#metadata-image-form").dialog({
+        autoOpen: false,
+        width: 390,
+        height: 445,
+        modal: true,
+        title: "Metadata of " + entity_name,
+        buttons: [
+            {
+                text: lang.close,
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function () {
+                    $('#metadataFormBox').addClass('displayNone');
+                    $('#loaderMetadata').addClass('displayNone');
+                    $(this).dialog("close");
+                }
+            }
+        ], close: function () {
+            $('#metadataFormBox').addClass('displayNone');
+            $('#loaderMetadata').addClass('displayNone');
+            $(this).dialog('destroy');
+        }
+    }).dialog("open");
+    $.ajax({
+        type: 'POST',
+        url: 'delivery/load_metadata.php',
+        data: '&idImage=' + idImage,
+        success: function (response) {
+            $('#metadataFormBox').html(response);
+        }
+    });
 }
 function downloadImage(idImage) {
-    alert(idImage);
+    $.blockUI({
+        theme: true,
+        title: 'Under construction',
+        message: '<p>This feature is under construction ...</p>',
+        timeout: 3000
+    });
+    return;
 }
 function deleteImage(idImage, delivery) {
     var deleteImageInCartConfirm = $("#dialog-delete-image-in-cart-confirm").dialog({

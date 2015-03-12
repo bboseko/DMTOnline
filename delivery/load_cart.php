@@ -4,7 +4,7 @@ if (isset($_COOKIE["id"])) {
     $id_user = $_COOKIE['id'];
     $Connex = new db(0);
     $Connex->connect();
-    $Connex->query("SELECT `dmt_image`.*, dmt_deliver.id_delivery as delivery,`dmt_support`.`preview_path` FROM `dbosfacdmt`.`dmt_deliver` "
+    $Connex->query("SELECT `dmt_image`.*, dmt_deliver.id_delivery as delivery,`dmt_support`.* FROM `dbosfacdmt`.`dmt_deliver` "
             . "INNER JOIN `dbosfacdmt`.`dmt_image` ON (`dmt_deliver`.`id_image` = `dmt_image`.`id_image`) "
             . "INNER JOIN `dbosfacdmt`.`dmt_delivery` "
             . "ON (`dmt_deliver`.`id_delivery` = `dmt_delivery`.`id_delivery`) INNER JOIN `dbosfacdmt`.`dmt_support` "
@@ -38,6 +38,7 @@ if (isset($_COOKIE["id"])) {
                 $size = $Connex->f("size");
                 $cc = $Connex->f("cloud_cover");
                 $delivery = $Connex->f("delivery");
+                $download_link = $Connex->f('download_link');
                 $preview = $Connex->f("preview_path");
                 if ($preview == '') {
                     $preview = '/preview/nobrowse_small.png';
@@ -62,10 +63,10 @@ if (isset($_COOKIE["id"])) {
                             <label><?php echo $size; ?></label>
                         </td>
                         <td class="<?php echo $evenOdd; ?>">
-                            <label><?php echo $cloudcover = ($cc <= 100) ? $cc . '%' : "N/A"; ?></label>
+                            <label><?php echo $cloudcover = ($cc > 0) ? $cc . '%' : "N/A"; ?></label>
                         </td>
                         <td class="<?php echo $evenOdd; ?>" style="text-align: center;">
-                            <a title="Show metadata" onclick="loadMetadata(<?php echo $id ?>)">
+                            <a title="Show metadata" onclick="loadMetadata('<?php echo $id ?>','<?php echo $entity_name; ?>')">
                                 <div class="ee-icon ee-icon-info"></div>
                             </a>
                         </td>

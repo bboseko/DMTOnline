@@ -185,7 +185,7 @@ DMT.load = {
             if ($('#cloudCover').val() === 'all') {
                 cloud_cover = '';
             } else {
-                cloud_cover = ' and (cloud_cover <= ' + parseInt($('#cloudCover').val()) + ')';
+                cloud_cover = ' and (cloud_cover > 0 and cloud_cover <= ' + parseInt($('#cloudCover').val()) + ')';
             }
             if (landsat !== '') {
                 var mission = '', slc = '', ortho = '', stack = '';

@@ -250,7 +250,7 @@ function loadComboboxYear() {
     function loadComboboxCloudCover() {
         $Connex = new db(0);
         $Connex->connect();
-        $Connex->query("SELECT distinct cloud_cover FROM dmt_image where cloud_cover <> '' and cloud_cover <=100 order by cloud_cover desc");
+        $Connex->query("SELECT distinct cloud_cover FROM dmt_image where cloud_cover <> '' and cloud_cover > 0 order by cloud_cover desc");
         if ($Connex->num_rows() >= 1) {
             while ($Connex->next_record()) {
                 $value = $Connex->f("cloud_cover");

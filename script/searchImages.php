@@ -128,7 +128,7 @@ function loadRecord($Connex, $host) {
                     <li></li>
                     <li><strong>Entity ID:</strong> <?php echo $name; ?></li>
                     <li><strong>Acquisition date:</strong> <?php echo date("F d, Y", strtotime($date)); ?></li>
-                    <li><strong>Could cover:</strong> <?php echo $cloudcover = ($cc <= 100) ? $cc . '%' : "N/A"; ?></li>
+                    <li><strong>Could cover:</strong> <?php echo $cloudcover = ($cc > 0) ? $cc . '%' : "N/A"; ?></li>
                     <li><?php ($idCategory == 2) ? isLandsat($id) : '' ?> <strong>Size:</strong> <?php echo $size; ?> </li>
                     <li>
                         <div class="iconContainer">
