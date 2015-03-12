@@ -70,5 +70,6 @@ lang = {
     edit_profile: "Edit my profile",
     change_password: "Change password",
     welcome_message: "<p>Welcome to OSFAC-DMT 2.1</p>",
-    hello: "Hello "
+    hello: "Hello ",
+    cart: "Cart"
 };

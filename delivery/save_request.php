@@ -39,12 +39,15 @@ if ($numberAct > 0) {
             }
         }
         sendEmail($email, $firstname, $familyname);
-        echo "save_success";
+
+        $Connex->query("select id_image from dmt_deliver inner join dmt_delivery on dmt_deliver.id_delivery = "
+                . "dmt_delivery.id_delivery where id_user = '$idUser' and dmt_deliver.downloaded = '0'");
+        echo $Connex->num_rows();
         mysql_close();
         exit();
     }
 } else {
-    echo "An_error_occured";
+    echo "user_not_found";
     exit();
 }
 

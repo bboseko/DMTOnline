@@ -84,7 +84,8 @@ body {
 #top-menu ul li {
     background: url(../images/template/icon-menu-footer.png) no-repeat scroll 0 4px transparent;
     display: inline;
-    padding: 0 10px;
+    padding: 0 3px;
+    padding-left: 7px !important;
 }
 
 #top-menu ul li:first-child {
@@ -339,14 +340,14 @@ input.disabled {
     text-align: left;
     vertical-align: middle;    
 }
-#coordEntryArea li.even, #search-results-container td.even, #metadataTable td.even {
+#coordEntryArea li.even, #search-results-container td.even, #metadataTable td.even, #cartImagesShow td.even{
     background-color: #F5F3E5;
 
 }
 ul.mapPointContainer {
     text-decoration: none; 
 }
-#coordEntryArea li.odd, #search-results-container td.odd, #metadataTable td.odd {
+#coordEntryArea li.odd, #search-results-container td.odd, #metadataTable td.odd , #cartImagesShow td.odd{
     background-color: #BEDB9F;
 }
 #search-results-container {

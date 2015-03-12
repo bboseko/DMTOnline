@@ -256,7 +256,7 @@ DMT.load = {
             $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
                     + lang.loading + '" src="images/loader.gif" /><span> '
                     + lang.searching_images_loading + ' ...</span>');
-
+            $("#tabs").tabs("enable", 2);
             $('#tabs').tabs({active: 2});
             globalCriteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
 
@@ -334,6 +334,9 @@ DMT.load = {
                 return;
             }
             DMT.tabs.clearAll();
+            $("#tabs").tabs({
+                disabled: [2]
+            });
         });
         function isValidEmailAddress(emailAddress) {
             var pattern = new RegExp(/^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i);
@@ -399,11 +402,7 @@ DMT.load = {
                                                 + '&description=' + description + '&comment=' + comment,
                                         success: function (response) {
                                             $('#loaderSaveRequester').addClass('displayNone');
-                                            if (response === "save_success") {
-                                                $('#submitButton').addClass('disabled');
-                                                dialogDataRequest.dialog("close");
-                                                $.sticky('<p>Your data request has been sent to OSFAC successfully.</p>');
-                                            } else {
+                                            if (response === "An_error_occured") {
                                                 $.blockUI({
                                                     theme: true,
                                                     title: 'Fatal error',
@@ -411,6 +410,19 @@ DMT.load = {
                                                     timeout: 4000
                                                 });
                                                 return;
+                                            } else if (response === "user_not_found") {
+                                                $.blockUI({
+                                                    theme: true,
+                                                    title: 'Fatal error',
+                                                    message: '<p>User has not been found in the database.</p>',
+                                                    timeout: 4000
+                                                });
+                                                return;
+                                            } else {
+                                                $('#submitButton').addClass('disabled');
+                                                dialogDataRequest.dialog("close");
+                                                $.sticky('<p>Your data request has been sent to OSFAC successfully.</p>');
+                                                $("#cartCommand > .ui-button-text").text(lang.cart + ' (' + response + ')');
                                             }
                                         }
                                     });

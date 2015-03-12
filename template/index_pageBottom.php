@@ -1,4 +1,6 @@
-<?php include('./php_includes/profile.php'); ?>
+<?php
+include('./php_includes/profile.php');
+?>
 <div id="dialog-myProfile" title="My profile" class="requestFormBox displayNone">
     <div class="requestFormBox" style="width: 450px; margin: 5px;">
         <table>
@@ -149,6 +151,17 @@
             Connecting ... <img alt="loading" src="./images/loader.gif" /> 
         </span>
     </form>
+</div>
+<div id="dialog-delete-image-in-cart-confirm" title="Delete image in my cart" class="displayNone">
+    <p>
+        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
+        </span>
+        Are you sure to delete this image in your cart?
+        <span id="loaderDeleteImageInCart" class="displayNone" 
+              style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+            <img alt="loading" src="./images/loader.gif" /> 
+        </span>
+    </p>
 </div>
 <div id="dialog-delete-criteria-confirm" title="Delete criteria" class="displayNone">
     <p>
@@ -314,6 +327,13 @@
           style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
         Saving your criteria ... <img alt="loading" src="./images/loader.gif" /> 
     </span>
+</div>
+<div id="cart-images-form">
+    <div id="cartImagesFormBox" class="displayNone">
+        <span id="loaderCartImages" style="color: #660000;margin-top: 2px;">
+            Loading satellite images ... <img alt="loading" src="./images/loader.gif" />
+        </span>
+    </div>
 </div>
 <div id="manage-Criterias-form">
     <div id="manageCriteriasFormBox" class="displayNone">

@@ -1,3 +1,6 @@
+<?php
+include('./delivery/count_cart.php');
+?>
 <div id="header">
     <div id="header-left">
         <map name="Map">
@@ -30,26 +33,26 @@
             <button id="saveCriteria" class="displayNone" style="margin-top: -5px;"><?php echo $lang['save-criteria']; ?></button>
         </li>     
 
-        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;margin-left: -10px;">
+        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="index.php?lang=fr"><img src="images/fr.gif" /> <?php echo $lang['french']; ?></a>
         </li>
-        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;margin-left: -10px;">
+        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="index.php?lang=en"><img src="images/en.gif" /> <?php echo $lang['english']; ?></a>
         </li>
         <li style="float:right !important;">
             <button class="displayNone" id="profileCommand" style="margin-top: -5px;"><?php echo $_COOKIE["user"]; ?></button>
         </li>
         <li style="float:right !important;">
-            <button id="registerCommand" style="margin-top: -5px;"><?php echo $lang['register']; ?></button>
+            <button class="displayNone" id="registerCommand" style="margin-top: -5px;"><?php echo $lang['register']; ?></button>
         </li>
         <li style="float:right !important; background: none;">
-            <button id="logInCommand" style="margin-top: -5px;"><?php echo $lang['login']; ?></button>
+            <button class="displayNone" id="logInCommand" style="margin-top: -5px;"><?php echo $lang['login']; ?></button>
         </li>
         <li style="float:right !important;">
             <button class="displayNone" id="logOutCommand" style="margin-top: -5px;"><?php echo $lang['logout']; ?></button>
         </li>
         <li class="displayNone" style="float:right !important; background: none;">
-            <button id="cartCommand" style="margin-top: -5px;"><?php echo $lang['cart']; ?></button>
+            <button class="displayNone" id="cartCommand" style="margin-top: -5px;"><?php echo $lang['cart'] . ' (' . $numCart . ')'; ?></button>
         </li>
     </ul>
 </div>

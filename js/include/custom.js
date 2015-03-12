@@ -7,7 +7,6 @@ var manageCriteriaForm;
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
     var saveCriteriaForm;
-    $.sticky(lang.welcome_message);
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
@@ -33,10 +32,13 @@ $(function () {
                 $("#manageCriteria").addClass('displayNone');
                 $("#liSaveCriteria").addClass('backgroundNone');
                 $("#liManageCriteria").addClass('backgroundNone');
+                $.sticky(lang.welcome_message);
             }
         }
     });
-    $("#tabs").tabs();
+    $("#tabs").tabs({
+        disabled: [2]
+    });
     $("#accordion").accordion({
         heightStyle: "content",
         collapsible: true
@@ -81,7 +83,7 @@ $(function () {
     });
     $("#cartCommand").button({
         icons: {
-            primary: "ui-icon-cart"
+            primary: "ui-icon-cart",
         }
     });
     $("#manageCriteria").button({
@@ -118,6 +120,41 @@ $(function () {
     });
     $("#applications").buttonset();
 
+    $("#cartCommand").button().on("click", function () {
+        $('#cartImagesFormBox').removeClass('displayNone');
+
+        var cartImagesForm = $("#cart-images-form").dialog({
+            autoOpen: false,
+            width: 800,
+            height: 500,
+            modal: true,
+            title: "Satellite images available in your cart",
+            buttons: [
+                {
+                    text: lang.close,
+                    icons: {
+                        primary: "ui-icon-close"
+                    },
+                    click: function () {
+                        $('#cartImagesFormBox').addClass('displayNone');
+                        $('#loaderCartImages').addClass('displayNone');
+                        $(this).dialog("close");
+                    }
+                }
+            ], close: function () {
+                $('#cartImagesFormBox').addClass('displayNone');
+                $('#loaderCartImages').addClass('displayNone');
+                $(this).dialog('destroy');
+            }
+        }).dialog("open");
+        $.ajax({
+            type: 'POST',
+            url: 'delivery/load_cart.php',
+            success: function (response) {
+                $('#cartImagesFormBox').html(response);
+            }
+        });
+    });
     $("#saveCriteria").button().on("click", function () {
         saveCriteriaForm = $("#dialog-saveCriteria").dialog({
             resizable: false,
@@ -219,7 +256,7 @@ $(function () {
                                         saveCriteriaForm.dialog("close");
                                         $("#saveCriteria").addClass('displayNone');
                                         $("#liSaveCriteria").addClass('backgroundNone');
-                                    } 
+                                    }
                                     else {
                                         $.blockUI({
                                             theme: true,
@@ -580,7 +617,6 @@ $(function () {
                                                         });
                                                         return;
                                                     } else {
-                                                        $(this).dialog("close");
                                                         pcForm.dialog("close");
                                                         $.blockUI({
                                                             theme: true,
@@ -743,6 +779,7 @@ $(function () {
                                 $("#manageCriteria").addClass('displayNone');
                                 $("#liSaveCriteria").addClass('backgroundNone');
                                 $("#liManageCriteria").addClass('backgroundNone');
+                                $("#cartCommand").addClass('displayNone');
                             }
                         });
                     }
@@ -857,7 +894,59 @@ $(function () {
         }).dialog("open");
     });
 });
-
+function loadMetadata(idImage) {
+    alert(idImage);
+}
+function downloadImage(idImage) {
+    alert(idImage);
+}
+function deleteImage(idImage, delivery) {
+    var deleteImageInCartConfirm = $("#dialog-delete-image-in-cart-confirm").dialog({
+        resizable: false,
+        height: 150,
+        modal: true,
+        buttons: [
+            {
+                text: lang.yes,
+                icons: {
+                    primary: "ui-icon-check"
+                },
+                click: function () {
+                    $('#loaderDeleteImageInCart').removeClass('displayNone');
+                    $.ajax({
+                        type: 'POST',
+                        url: 'delivery/delete_image_in_cart.php',
+                        data: '&idImage=' + idImage + '&idDelivery=' + delivery,
+                        success: function (response) {
+                            $("#cartCommand > .ui-button-text").text(lang.cart + ' (' + response + ')');
+                            deleteImageInCartConfirm.dialog("close");
+                            $('#loaderDeleteImageInCart').addClass('displayNone');
+                            $('#cartImagesFormBox').html('<span id="loaderCartImages" style="color: #660000;margin-top: 2px;">Loading satellite images ... <img alt="loading" src="./images/loader.gif" /></span>');
+                            $.ajax({
+                                type: 'POST',
+                                url: 'delivery/load_cart.php',
+                                success: function (response) {
+                                    $('#cartImagesFormBox').html(response);
+                                }
+                            });
+                        }
+                    });
+                }
+            },
+            {
+                text: lang.no,
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function () {
+                    $(this).dialog("close");
+                }
+            }
+        ], close: function () {
+            $(this).dialog('destroy');
+        }
+    });
+}
 function loadCriteria(idCriteria) {
     $.ajax({
         type: 'POST',
