@@ -1,5 +1,6 @@
 <?php
 
+include ("../languages/include_lang_file.php");
 include_once ("../script/mysqlclass.php");
 $u = preg_replace('#[^a-z0-9]#i', '', $_GET['u']);
 $temppasshash = preg_replace('#[^a-z0-9]#i', '', $_GET['p']);
@@ -12,7 +13,7 @@ $Connex->query("SELECT id_user FROM dmt_user WHERE username='$u' AND temp_pass='
 $numrows = $Connex->num_rows();
 
 if ($numrows == 0) {
-    header("location: message.php?msg=There is no match for that username with that temporary password in the system. We cannot proceed.");
+    header("location: message.php?msg=".$lang['temporary-password-error']);
     exit();
 } else {
     while ($Connex->next_record()) {

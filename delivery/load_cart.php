@@ -1,4 +1,5 @@
 <?php
+include ("../languages/include_lang_file.php");
 include_once ("../script/mysqlclass.php");
 if (isset($_COOKIE["id"])) {
     $id_user = $_COOKIE['id'];
@@ -17,12 +18,12 @@ if (isset($_COOKIE["id"])) {
         <table id="cartImagesShow" class="ui-widget ui-widget-content" style="width: 100%;">
             <thead>
                 <tr class="ui-widget-header ">
-                    <th>ID</th>
-                    <th>Entity name</th>   
-                    <th>Version</th>
-                    <th>Acquisition date</th>
-                    <th>Size (MB)</th>
-                    <th>Cloud cover</th>
+                    <th><?php echo $lang['id'];?></th>
+                    <th><?php echo $lang['entity-name'];?></th>   
+                    <th><?php echo $lang['version'];?></th>
+                    <th><?php echo $lang['acquisition-date'];?></th>
+                    <th><?php echo $lang['size'];?></th>
+                    <th><?php echo $lang['cloud-cover'];?></th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -66,22 +67,22 @@ if (isset($_COOKIE["id"])) {
                             <label><?php echo $cloudcover = ($cc > 0) ? $cc . '%' : "N/A"; ?></label>
                         </td>
                         <td class="<?php echo $evenOdd; ?>" style="text-align: center;">
-                            <a title="Show metadata" onclick="loadMetadata('<?php echo $id ?>','<?php echo $entity_name; ?>')">
+                            <a title="<?php echo $lang['show-metadata'];?>" onclick="loadMetadata('<?php echo $id ?>', '<?php echo $entity_name; ?>')">
                                 <div class="ee-icon ee-icon-info"></div>
                             </a>
                         </td>
                         <td class="<?php echo $evenOdd; ?>" style="text-align: center;">
-                            <a title="Show browse" onclick="quickLook('<?php echo $entity_name; ?>', '<?php echo $preview; ?>');">
+                            <a title="<?php echo $lang['show-browse'];?>" onclick="quickLook('<?php echo $entity_name; ?>', '<?php echo $preview; ?>');">
                                 <div class="ee-icon ee-icon-image"></div>
                             </a>
                         </td>
                         <td class="<?php echo $evenOdd; ?>" style="text-align: center;">
-                            <a title="Download this image" onclick="downloadImage(<?php echo $id ?>)">
+                            <a title="<?php echo $lang['download-image'];?>" onclick="downloadImage(<?php echo $id ?>)">
                                 <div class="ee-icon ee-icon-download"></div>
                             </a>
                         </td>
                         <td class="<?php echo $evenOdd; ?>" style="text-align: center;">
-                            <a title="Delete this image in my cart" onclick="deleteImage('<?php echo $id; ?>','<?php echo $delivery; ?>')">
+                            <a title="<?php echo $lang['delete-image-in-cart'];?>" onclick="deleteImage('<?php echo $id; ?>', '<?php echo $delivery; ?>')">
                                 <div class="ee-icon ee-icon-delete"></div>
                             </a>
                         </td>
@@ -93,7 +94,7 @@ if (isset($_COOKIE["id"])) {
         </table><?php
     } else {
         ?>
-        <label style="color: #660000;margin-top: 2px;">Your cart is empty ...</label>
+        <label style="color: #660000;margin-top: 2px;font-size: 18px;"><?php echo $lang['cart-empty-message']; ?></label>
         <?php
     }
     ?>

@@ -1,5 +1,6 @@
 <?php
 
+include ("../languages/include_lang_file.php");
 // Connect to database and sanitize incoming $_GET variables
 include_once ("../script/mysqlclass.php");
 $id = preg_replace('#[^0-9]#i', '', $_GET['id']);
@@ -9,7 +10,7 @@ $p = $_GET['p'];
 // Evaluate the lengths of the incoming $_GET variable
 if ($id == "" || strlen($u) < 3 || strlen($e) < 5 || $p == "") {
     // Log this issue into a text file and email details to yourself
-    header("location: message.php?msg=activation_string_length_issues");
+    header("location: message.php?msg=" . $lang['activation-string-length-issues']);
     exit();
 }
 $Connex = new db(0);
@@ -20,7 +21,7 @@ $numberAct = $Connex->num_rows();
 // Evaluate for a match in the system (0 = no match, 1 = match)
 if ($numberAct == 0) {
     // Log this potential hack attempt to text file and email details to yourself
-    header("location: message.php?msg=Your credentials are not matching anything in our system");
+    header("location: message.php?msg=" . $lang['credentials-problem']);
     exit();
 }
 // Match was found, you can activate them

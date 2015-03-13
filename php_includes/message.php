@@ -1,15 +1,13 @@
 <?php
-include("../languages/langConfig.php");
-?>
-<?php
+include ("../languages/include_lang_file.php");
 $message = "";
 $msg = preg_replace('#[^a-z 0-9.:_()]#i', '', $_GET['msg']);
 if ($msg == "activation_failure") {
-    $message = '<div style="margin-bottom: 10px;font-size: 16px;">Activation Error</div> Sorry there seems to have been an issue activating your account at this time. We have already notified ourselves of this issue and we will contact you via email when we have identified the issue.';
+    $message = $lang['activation-failure'];
 } else if ($msg == "activation_success") {
-    $message = '<div style="margin-bottom: 10px;font-size: 16px;">Activation Success</div> Your account is now activated. <a href="../index.php">Click here to go home and login</a>';
+    $message = $lang['activation-success1'] . "../index.php?lang=" . $_SESSION['lang'] . $lang['activation-success2'];
 } else if ($msg == "password_reset_success") {
-    $message = '<div style="margin-bottom: 10px;font-size: 16px;">Password reset Success</div> Your password is now reset. <a href="../index.php">Click here to go home and login</a>';
+    $message = $lang['password-reset-success1'] . "../index.php?lang=" . $_SESSION['lang'] . $lang['password-reset-success2'];
 } else {
     $message = $msg;
 }
@@ -18,7 +16,7 @@ if ($msg == "activation_failure") {
 <html lang="en" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
-        <title>OSFAC-DMT Online 2.0.1</title>
+        <title><?php echo $lang['app-title'];?></title>
         <meta content="Request satellite images and products through OSFAC" name="description"></meta>
         <meta content="Observatoire Satellital des Forêts d'Afrique Centrale,OSFAC,satellite images,congo basin,DMT,osfacdmt,OSFAC-DMT,satellite data,
               central africa,comifac,cartographic,cartography,geographic,geography,geospatial data,geographic information system,GIS,mapping,maps,
@@ -38,7 +36,6 @@ if ($msg == "activation_failure") {
         <link type="text/css" href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" ></link>
         <link type="text/css" href="../css/custom.css" rel="stylesheet"></link>
 
-        <script type="text/javascript" src="../js/library/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="../languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
     </head>
     <body>
@@ -58,7 +55,7 @@ if ($msg == "activation_failure") {
             </div>
             <div id="top-menu">
                 <ul>
-                    <li><a href="../index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['home']; ?></a></li>
+                    <li style="font-weight: bold;"><a href="../index.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['back-to-osfac-dmt']; ?></a></li>
                 </ul>
             </div>
             <div class="content">
@@ -66,7 +63,7 @@ if ($msg == "activation_failure") {
                     <div style="font-size: 14px;"><?php echo $message; ?></div>
                 </p>
             </div> 
-            <?php include_once("../template/index_pageBottom.php"); ?>
+            <?php include_once("../template/template_pageBottom.php"); ?>
         </div>       
     </body>
 </html>

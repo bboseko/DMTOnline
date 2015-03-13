@@ -1,4 +1,5 @@
 <?php
+include ("../languages/include_lang_file.php");
 include_once ("../script/mysqlclass.php");
 if (isset($_COOKIE["id"])) {
     $id_user = $_COOKIE['id'];
@@ -12,8 +13,8 @@ if (isset($_COOKIE["id"])) {
         <table class="ui-widget ui-widget-content" style="width: 100%;">
             <thead>
                 <tr class="ui-widget-header ">
-                    <th>Date</th>
-                    <th>Criteria name</th>
+                    <th><?php echo $lang['date']; ?></th>
+                    <th><?php echo $lang['criteria-name']; ?></th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -33,12 +34,12 @@ if (isset($_COOKIE["id"])) {
                             <label><?php echo $criteria_name; ?></label>
                         </td>
                         <td style="text-align: center;">
-                            <a title="Load results" onclick="loadCriteria(<?php echo $id ?>)">
+                            <a title="<?php echo $lang['load-result']; ?>" onclick="loadCriteria(<?php echo $id ?>)">
                                 <div class="ee-icon ee-icon-load"></div>
                             </a>
                         </td>
                         <td style="text-align: center;">
-                            <a title="Delete this saved criteria" onclick="deleteCriteria(<?php echo $id ?>)">
+                            <a title="<?php echo $lang['delete-saved-criteria']; ?>" onclick="deleteCriteria(<?php echo $id ?>)">
                                 <div class="ee-icon ee-icon-delete"></div>
                             </a>
                         </td>
@@ -49,8 +50,8 @@ if (isset($_COOKIE["id"])) {
             ?>
         </table><?php
     } else {
-        ?>
-        <label style="color: #660000;margin-top: 2px;">No criteria were found ...</label>
+            ?>
+        <label style="color: #660000;margin-top: 2px;"><?php echo $lang['no-criteria-found']; ?></label>
         <?php
     }
     ?>

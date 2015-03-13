@@ -3,10 +3,17 @@ var hash = new Array();
 var arrayColorfp = new Array();
 var nRowResult = 0;
 var loggedIN = false, searchFromManager = false;
-var manageCriteriaForm;
+var manageCriteriaForm, language = 'en';
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
     var saveCriteriaForm;
+    $.ajax({
+        type: 'POST',
+        url: 'languages/session_lang.php',
+        success: function (response) {
+            language = response;
+        }
+    });
     $.ajax({
         type: 'POST',
         url: 'php_includes/check_login_status.php',
@@ -56,7 +63,7 @@ $(function () {
         }
     });
     $("#homeCommand").button().on("click", function () {
-        window.location = "index.php";
+        window.location = "index.php?lang=" + language;
     });
     $("#aboutCommand").button({
         icons: {
@@ -64,7 +71,7 @@ $(function () {
         }
     });
     $("#aboutCommand").button().on("click", function () {
-        window.location = "pages/about.php";
+        window.location = "pages/about.php?lang=" + language;
     });
     $("#desktopCommand").button({
         icons: {
@@ -83,7 +90,7 @@ $(function () {
     });
     $("#cartCommand").button({
         icons: {
-            primary: "ui-icon-cart",
+            primary: "ui-icon-cart"
         }
     });
     $("#manageCriteria").button({
@@ -128,7 +135,7 @@ $(function () {
             width: 800,
             height: 500,
             modal: true,
-            title: "Satellite images available in your cart",
+            title: lang.satellite_images_in_cart,
             buttons: [
                 {
                     text: lang.close,
@@ -261,7 +268,7 @@ $(function () {
                                         $.blockUI({
                                             theme: true,
                                             title: 'Fatal error',
-                                            message: '<p>This criteria name already exists in the database !!!</p>',
+                                            message: lang.criteria_already_exists,
                                             timeout: 4000
                                         });
                                         return;
@@ -292,7 +299,7 @@ $(function () {
             autoOpen: false,
             width: 500,
             modal: true,
-            title: "Saved Criteria",
+            title: lang.saved_criteria,
             buttons: [
                 {
                     text: lang.close,
@@ -320,7 +327,7 @@ $(function () {
         });
     });
     $("#homeCommandProfile").button().on("click", function () {
-        window.location = "../index.php";
+        window.location = "../index.php?lang=" + language;
     });
     $("#registerCommand").button().on("click", function () {
         $('#registerFormBox').removeClass('displayNone');
@@ -366,8 +373,8 @@ $(function () {
                         } else if (!isValidEmail(email)) {
                             $.blockUI({
                                 theme: true,
-                                title: 'Email address error',
-                                message: '<p>This email address is not correct</p>',
+                                title: lang.email_error_title,
+                                message: lang.email_error_message,
                                 timeout: 4000
                             });
                             return;
@@ -405,7 +412,7 @@ $(function () {
                                                 duration: 1000
                                             },
                                             buttons: {
-                                                Ok: function () {
+                                                OK: function () {
                                                     $(this).dialog("close");
                                                 }
                                             }
@@ -480,24 +487,24 @@ $(function () {
                                     } else if (response === "username_does_not_match") {
                                         $.blockUI({
                                             theme: true,
-                                            title: "Username incorrect",
-                                            message: '<p>The username entered does not exist in the system</p>',
+                                            title: lang.username_incorrect,
+                                            message: lang.username_incorrect_message,
                                             timeout: 4000
                                         });
                                         return;
                                     } else if (response === "passwords_do_not_match") {
                                         $.blockUI({
                                             theme: true,
-                                            title: "Password incorrect",
-                                            message: '<p>The password entered is not correct</p>',
+                                            title: lang.password_incorrect,
+                                            message: lang.password_incorrect_message,
                                             timeout: 4000
                                         });
                                         return;
                                     } else if (response === "account_not_activated_yet") {
                                         $.blockUI({
                                             theme: true,
-                                            title: "Account not activated",
-                                            message: '<p>Your account has not been activated yet</p>',
+                                            title: lang.account_not_activated,
+                                            message: lang.account_not_activated_message,
                                             timeout: 4000
                                         });
                                         return;
@@ -511,7 +518,7 @@ $(function () {
                                         $("#manageCriteria").removeClass('displayNone');
                                         $("#liSaveCriteria").removeClass('backgroundNone');
                                         $("#liManageCriteria").removeClass('backgroundNone');
-                                        window.location = response;
+                                        window.location = "index.php?lang=" + language;
                                     }
                                 }
                             });
@@ -579,8 +586,8 @@ $(function () {
                                         } else if (np !== rp) {
                                             $.blockUI({
                                                 theme: true,
-                                                title: "Passwords do not match",
-                                                message: '<p>Your new password and the repeat one do not match</p>',
+                                                title: lang.password_do_not_match_title,
+                                                message: lang.password_do_not_match,
                                                 timeout: 4000
                                             });
                                             return;
@@ -595,24 +602,24 @@ $(function () {
                                                     if (response === "Old_password_error") {
                                                         $.blockUI({
                                                             theme: true,
-                                                            title: "Old password error",
-                                                            message: '<p>The old password entered is not correct</p>',
+                                                            title: lang.old_password_error_title,
+                                                            message: lang.old_password_error_message,
                                                             timeout: 4000
                                                         });
                                                         return;
                                                     } else if (response === "Password_must_have_at_least_5_characters") {
                                                         $.blockUI({
                                                             theme: true,
-                                                            title: "Password error",
-                                                            message: '<p>New password must have at least 5 characters</p>',
+                                                            title: lang.password_error_title,
+                                                            message: lang.password_error_length,
                                                             timeout: 4000
                                                         });
                                                         return;
                                                     } else if (response === "New_password_can_not_be_the_same_to_old_one") {
                                                         $.blockUI({
                                                             theme: true,
-                                                            title: "Password error",
-                                                            message: '<p>New password can not be the same to the old one</p>',
+                                                            title: lang.password_error_title,
+                                                            message: lang.password_error_same,
                                                             timeout: 4000
                                                         });
                                                         return;
@@ -620,8 +627,8 @@ $(function () {
                                                         pcForm.dialog("close");
                                                         $.blockUI({
                                                             theme: true,
-                                                            title: "Passwords changed successfully",
-                                                            message: "Your password has been changed successfully",
+                                                            title: lang.confirmation_title,
+                                                            message: lang.password_changed_success_message,
                                                             timeout: 4000
                                                         });
                                                         return;
@@ -689,8 +696,8 @@ $(function () {
                                         } else if (!isValidEmail(email)) {
                                             $.blockUI({
                                                 theme: true,
-                                                title: 'Email address error',
-                                                message: '<p>This email address is not correct</p>',
+                                                title: lang.email_error_title,
+                                                message: lang.email_error_message,
                                                 timeout: 4000
                                             });
                                             return;
@@ -712,7 +719,7 @@ $(function () {
                                                         return;
                                                     } else {
                                                         editProfileForm.dialog("close");
-                                                        window.location = "index.php";
+                                                        window.location = "index.php?lang=" + language;
                                                     }
                                                 }
                                             });
@@ -755,7 +762,7 @@ $(function () {
     $("#logOutCommand").button().on("click", function () {
         logoutForm = $("#dialog-confirm").dialog({
             resizable: false,
-            height: 140,
+            height: 150,
             modal: true,
             buttons: [
                 {
@@ -769,6 +776,7 @@ $(function () {
                             type: 'POST',
                             url: 'php_includes/logout.php',
                             success: function () {
+                                loggedIN = false;
                                 logoutForm.dialog("close");
                                 $('#loaderLogout').addClass('displayNone');
                                 $("#logOutCommand").addClass('displayNone');
@@ -806,7 +814,7 @@ $(function () {
             height: 190,
             width: 300,
             modal: true,
-            title: "Password forgotten",
+            title: lang.password_forgotten,
             buttons: [
                 {
                     text: lang.ok,
@@ -818,16 +826,16 @@ $(function () {
                         if (emailPF === "") {
                             $.blockUI({
                                 theme: true,
-                                title: 'Empty email',
-                                message: '<p>Email field is empty</p>',
+                                title: lang.email_error_title,
+                                message: lang.email_error_message,
                                 timeout: 4000
                             });
                             return;
                         } else if (!isValidEmail(emailPF)) {
                             $.blockUI({
                                 theme: true,
-                                title: 'Email address error',
-                                message: '<p>This email address is not correct</p>',
+                                title: lang.email_error_title,
+                                message: lang.email_error_message,
                                 timeout: 4000
                             });
                             return;
@@ -842,8 +850,8 @@ $(function () {
                                         $('#loaderPF').addClass('displayNone');
                                         $.blockUI({
                                             theme: true,
-                                            title: 'Email address error',
-                                            message: '<p>This email address does not exist in the system</p>',
+                                            title: lang.email_error_title,
+                                            message: lang.email_not_in_system,
                                             timeout: 4000
                                         });
                                         return;
@@ -852,7 +860,7 @@ $(function () {
                                         $.blockUI({
                                             theme: true,
                                             title: lang.error_occured,
-                                            message: '<p>An error occured while sending an email to </p>' + emailPF,
+                                            message: lang.email_error_sending + emailPF,
                                             timeout: 4000
                                         });
                                         return;
@@ -899,10 +907,10 @@ function loadMetadata(idImage, entity_name) {
 
     $("#metadata-image-form").dialog({
         autoOpen: false,
-        width: 390,
+        width: 400,
         height: 445,
         modal: true,
-        title: "Metadata of " + entity_name,
+        title: lang.metadata_of + entity_name,
         buttons: [
             {
                 text: lang.close,
@@ -933,8 +941,8 @@ function loadMetadata(idImage, entity_name) {
 function downloadImage(idImage) {
     $.blockUI({
         theme: true,
-        title: 'Under construction',
-        message: '<p>This feature is under construction ...</p>',
+        title: lang.under_construction_title,
+        message: lang.under_construction_message,
         timeout: 3000
     });
     return;
@@ -960,7 +968,9 @@ function deleteImage(idImage, delivery) {
                             $("#cartCommand > .ui-button-text").text(lang.cart + ' (' + response + ')');
                             deleteImageInCartConfirm.dialog("close");
                             $('#loaderDeleteImageInCart').addClass('displayNone');
-                            $('#cartImagesFormBox').html('<span id="loaderCartImages" style="color: #660000;margin-top: 2px;">Loading satellite images ... <img alt="loading" src="./images/loader.gif" /></span>');
+                            $('#cartImagesFormBox').html('<span id="loaderCartImages" style="color: #660000;margin-top: 2px;">'
+                                    + lang.loading_images + '<img alt="'
+                                    + lang.loading + '" src="./images/loader.gif" /></span>');
                             $.ajax({
                                 type: 'POST',
                                 url: 'delivery/load_cart.php',
@@ -1076,7 +1086,7 @@ function loadCriteria(idCriteria) {
 function deleteCriteria(idCriteria) {
     var deleteCriteriaConfirm = $("#dialog-delete-criteria-confirm").dialog({
         resizable: false,
-        height: 140,
+        height: 150,
         modal: true,
         buttons: [
             {
@@ -1093,7 +1103,9 @@ function deleteCriteria(idCriteria) {
                         success: function () {
                             deleteCriteriaConfirm.dialog("close");
                             $('#loaderDeleteCriteria').addClass('displayNone');
-                            $('#manageCriteriasFormBox').html('<span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">Loading data ... <img alt="loading" src="./images/loader.gif" /></span>');
+                            $('#manageCriteriasFormBox').html('<span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">'
+                                    + lang.loading_data + '<img alt="'
+                                    + lang.loading + '" src="./images/loader.gif" /></span>');
                             $.ajax({
                                 type: 'POST',
                                 url: 'criteria/manage_criteria.php',
@@ -1191,7 +1203,9 @@ function quickLook(name, preview) {
     $('#quickLookDialogArea').dialog('open');
 }
 function pagination(nr, pn) {
-    $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
+    $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
+            + lang.loading + '" src="images/loader.gif" /><span> '
+            + lang.searching_images_loading + ' ...</span>');
     var itemsPerPage = 10;
     var lastPage = Math.ceil(nr / itemsPerPage);
     if (pn < 1) {

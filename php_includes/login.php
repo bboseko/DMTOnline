@@ -44,7 +44,6 @@ if ($username == "" || $password == "") {
         setcookie("pass", $db_pass_str, strtotime('+30 days'), "/", "", "", TRUE);
         // UPDATE THEIR "IP" AND "LASTLOGIN" FIELDS
         $Connex->query("UPDATE dmt_user SET ip_address='$ip', last_visit_date=now() WHERE username='$db_username' LIMIT 1");
-        echo "index.php?lang=" . $_SESSION['lang'];
         exit();
     }
 }

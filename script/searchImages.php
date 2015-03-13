@@ -1,5 +1,5 @@
 <?php
-header("content-type: text/html; charset=ISO-8859-1");
+include ("../languages/include_lang_file.php");
 include_once ("mysqlclass.php");
 $Connex = new db(0);
 $Connex->connect();
@@ -67,7 +67,9 @@ if ($other != '') {
 <table border="0" style="width: 100%; display: table;border-collapse:collapse;" class="resultPageTable" cellspacing="5">
     <thead>
         <tr>
-            <th colspan="3" style="padding: 5px;color: #000000;">&laquo;&nbsp;&nbsp;<?php echo $totalRecord; ?>&nbsp;<?php echo $category_name; ?> image(s) were found&nbsp;&nbsp;&raquo;</th>
+            <th colspan="3" style="padding: 5px;color: #000000;">&laquo;&nbsp;&nbsp;
+                <?php echo $totalRecord; ?>&nbsp;
+                <?php echo ($totalRecord == 1) ? $lang['images-has-been-found'] : $lang['images-were-found']; ?>&nbsp;&nbsp;&raquo;</th>
         </tr>
     </thead>
     <tbody>
@@ -120,16 +122,20 @@ function loadRecord($Connex, $host) {
                 <span class="include"><?php echo ++$GLOBALS['num']; ?><br></span>
             </td>
             <td class="resultRowContent <?php echo $evenOdd; ?>">
-                <img title="Show Browse" id="preview_<?php echo $id; ?>" style="cursor: pointer;padding-left:4px;padding-right:4px;" alt="No Browse" src="<?php echo $host . $preview; ?>" 
+                <?php include('../languages/' . $_SESSION['lang'] . '/lang.' . $_SESSION['lang'] . '.php');?>
+                <img title="<?php echo $lang['show-browse'];?>" id="preview_<?php echo $id; ?>" 
+                     style="cursor: pointer;padding-left:4px;padding-right:4px;" 
+                     alt="<?php echo $lang['no-browse'];?>" src="<?php echo $host . $preview; ?>" 
                      width="80px" height="80px" onclick="quickLook('<?php echo $name; ?>', '<?php echo $preview; ?>');" />
             </td>
             <td nowrap="nowrap" class="resultRowContent <?php echo $evenOdd; ?>">
+                <?php include('../languages/' . $_SESSION['lang'] . '/lang.' . $_SESSION['lang'] . '.php');?>
                 <ul style="list-style-type: none;">
                     <li></li>
-                    <li><strong>Entity ID:</strong> <?php echo $name; ?></li>
-                    <li><strong>Acquisition date:</strong> <?php echo date("F d, Y", strtotime($date)); ?></li>
-                    <li><strong>Could cover:</strong> <?php echo $cloudcover = ($cc > 0) ? $cc . '%' : "N/A"; ?></li>
-                    <li><?php ($idCategory == 2) ? isLandsat($id) : '' ?> <strong>Size:</strong> <?php echo $size; ?> </li>
+                    <li><strong><?php echo $lang['entity-id'];?> :</strong> <?php echo $name; ?></li>
+                    <li><strong><?php echo $lang['acquisition-date'];?> :</strong> <?php echo date("F d, Y", strtotime($date)); ?></li>
+                    <li><strong><?php echo $lang['cloud-cover'];?> :</strong> <?php echo $cloudcover = ($cc > 0) ? $cc . '%' : "N/A"; ?></li>
+                    <li><?php ($idCategory == 2) ? isLandsat($id) : '' ?> <strong><?php echo $lang['size-text'];?>:</strong> <?php echo $size; ?> </li>
                     <li>
                         <div class="iconContainer">
 
@@ -140,11 +146,11 @@ function loadRecord($Connex, $host) {
                                     hash[idEntity] = true;
                                 }
                                 if (hash[idEntity] === true) {
-                                    $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" checked />');
+                                    $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="'+lang.inclure_exclure+'" checked />');
                                     resultRow.removeClass('excludedResultRow');
                                 }
                                 else {
-                                    $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="Include/Exclude this image from results" />');
+                                    $('#entity_' + idEntity).html('<input id="<?php echo $id; ?>" class="resultCheckBox" type="checkbox" title="'+lang.inclure_exclure+'" />');
                                     resultRow.addClass('excludedResultRow');
                                 }
                                 if (arrayColorfp[idEntity] === undefined) {
@@ -153,11 +159,11 @@ function loadRecord($Connex, $host) {
                                 $('#fp_' + idEntity).css('background-color', arrayColorfp[idEntity]);
                             </script>
                             <span id="entity_<?php echo $id; ?>"></span>
-                            <a id="fp_<?php echo $id; ?>" title="Show Footprint" class="footprint">
+                            <a id="fp_<?php echo $id; ?>" title="<?php echo $lang['show-footprint'];?>" class="footprint">
                                 <span class="<?php getFootprint($id, $GLOBALS['num']) ?>"></span>
                                 <div class="ee-icon ee-icon-footprint"></div>
                             </a>
-                            <a title="Show Browse" onclick="quickLook('<?php echo $name; ?>', '<?php echo $preview; ?>');">
+                            <a title="<?php echo $lang['show-browse'];?>" onclick="quickLook('<?php echo $name; ?>', '<?php echo $preview; ?>');">
                                 <div class="ee-icon ee-icon-image"></div>
                             </a>
                         </div>

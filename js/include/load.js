@@ -405,23 +405,23 @@ DMT.load = {
                                             if (response === "An_error_occured") {
                                                 $.blockUI({
                                                     theme: true,
-                                                    title: 'Fatal error',
-                                                    message: '<p>An error occured while saving into database.</p>',
+                                                    title: lang.fatal_error,
+                                                    message: lang.error_while_saving_database,
                                                     timeout: 4000
                                                 });
                                                 return;
                                             } else if (response === "user_not_found") {
                                                 $.blockUI({
                                                     theme: true,
-                                                    title: 'Fatal error',
-                                                    message: '<p>User has not been found in the database.</p>',
+                                                    title: lang.fatal_error,
+                                                    message: lang.user_not_found,
                                                     timeout: 4000
                                                 });
                                                 return;
                                             } else {
                                                 $('#submitButton').addClass('disabled');
                                                 dialogDataRequest.dialog("close");
-                                                $.sticky('<p>Your data request has been sent to OSFAC successfully.</p>');
+                                                $.sticky(lang.request_confirmation);
                                                 $("#cartCommand > .ui-button-text").text(lang.cart + ' (' + response + ')');
                                             }
                                         }
@@ -448,7 +448,9 @@ DMT.load = {
             $('#pagingResultHeader, #pagingResultFooter').html('');
             var selected = $('#categoryResult').val();
             if (selected !== '') {
-                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="' + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
+                $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
+                        + lang.loading + '" src="images/loader.gif" /><span> '
+                        + lang.searching_images_loading + ' ...</span>');
                 if (selected === 'LANDSAT') {
                     items = '&landsat=' + landsat;
                 }

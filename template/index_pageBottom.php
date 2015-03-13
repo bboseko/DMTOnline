@@ -1,7 +1,7 @@
 <?php
 include('./php_includes/profile.php');
 ?>
-<div id="dialog-myProfile" title="My profile" class="requestFormBox displayNone">
+<div id="dialog-myProfile" title="<?php echo $lang['my-profile']; ?>" class="requestFormBox displayNone">
     <div class="requestFormBox" style="width: 450px; margin: 5px;">
         <table>
             <tr>
@@ -123,7 +123,7 @@ include('./php_includes/profile.php');
         </div>
     </div>
 </div>
-<div id="dialog-changePassword" title="Change password" class="requestFormBox displayNone">
+<div id="dialog-changePassword" title="<?php echo $lang['change-password-text']; ?>" class="requestFormBox displayNone">
     <form id="change-password-Form" onsubmit="return false;" >
         <table>
             <tr>
@@ -148,80 +148,79 @@ include('./php_includes/profile.php');
         </table>
         <span id="loaderChangePassword" class="displayNone" 
               style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
-            Connecting ... <img alt="loading" src="./images/loader.gif" /> 
+            <?php echo $lang['connecting-text']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
         </span>
     </form>
 </div>
-<div id="dialog-delete-image-in-cart-confirm" title="Delete image in my cart" class="displayNone">
+<div id="dialog-delete-image-in-cart-confirm" title="<?php echo $lang['delete-image-in-cart']; ?>" class="displayNone">
     <p>
-        <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
+        <span class="ui-icon ui-icon-alert" style="text-align: justify;float:left; margin:0 7px 5px 0;">            
         </span>
-        Are you sure to delete this image in your cart?
+        <?php echo $lang['delete-image-in-cart-message']; ?>
         <span id="loaderDeleteImageInCart" class="displayNone" 
-              style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
-            <img alt="loading" src="./images/loader.gif" /> 
+              style="text-align: justify;float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+            <img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
         </span>
     </p>
 </div>
-<div id="dialog-delete-criteria-confirm" title="Delete criteria" class="displayNone">
+<div id="dialog-delete-criteria-confirm" title="<?php echo $lang['delete-criteria']; ?>" class="displayNone">
     <p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
         </span>
-        Are you sure to delete this criteria?
+        <?php echo $lang['delete-criteria-message']; ?>
         <span id="loaderDeleteCriteria" class="displayNone" 
-              style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
-            <img alt="loading" src="./images/loader.gif" /> 
+              style="text-align: justify;float: right;margin-left: 10px;font-size: 11px;color: #660000;">
+            <img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
         </span>
     </p>
 </div>
-<div id="dialog-confirm" title="Logout" class="displayNone">
+<div id="dialog-confirm" title="<?php echo $lang['logout']; ?>" class="displayNone">
     <p>
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 5px 0;">            
         </span>
-        Are you sure to logout?
+        <?php echo $lang['logout-text']; ?>
         <span id="loaderLogout" class="displayNone" 
               style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
-            <img alt="loading" src="./images/loader.gif" /> 
+            <img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
         </span>
     </p>
 </div>
-<div id="dialog-message" title="Sign up success" class="requestFormBox displayNone" style="width: 400px;">
+<div id="dialog-message" title="<?php echo $lang['sign-up-success']; ?>" class="requestFormBox displayNone" style="width: 400px;">
     <p style="font-size:13px;">
         <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-        Check your email inbox and junk mail box in a moment to complete the sign up process by activating your account. 
+        <?php echo $lang['sign-up-success-message1']; ?>
     </p><br/>
     <p>
-        You will not be able to do anything on the site until <b>you successfully activate your account</b>.
+        <?php echo $lang['sign-up-success-message2']; ?>
     </p>
 </div>
-<div id="dialog-not-logged-in" title="User not logged in" class="requestFormBox displayNone" style="width: 400px;">
-    <p style="font-size:13px;">
+<div id="dialog-not-logged-in" title="<?php echo $lang['user-not-logged-in']; ?>" class="requestFormBox displayNone" style="width: 400px;">
+    <p style="font-size:13px;text-align: justify;">
         <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>
-        You must be logged in before submitting your data request. 
-        If you don't yet have an account, please <b>register</b> to create from OSFAC-DMT.
+        <?php echo $lang['user-not-logged-in-message']; ?>
     </p>
 </div>
-<div id="dialog-dataRequestForm" title="Request form of satellite images" class="displayNone">
+<div id="dialog-dataRequestForm" title="<?php echo $lang['request-form-title']; ?>" class="displayNone">
     <div class="requestFormBox" style="margin-bottom: 1px;width: 460px;">
         <table>
             <tr>
                 <td>
-                    <label for="applications" style="margin-left:15px;">Applications</label><span style="color: #ff0000;">*</span>
+                    <label for="applications" style="margin-left:15px;"><?php echo $lang['request-form-usage']; ?></label><span style="color: #ff0000;">*</span>
                 </td>
                 <td>
                     <div id="applications" style="margin-left:15px;">
-                        <label for="academic">Academic</label>
+                        <label for="academic"><?php echo $lang['academic']; ?></label>
                         <input type="radio" id="academic" name="applications" value="1" checked="checked">
-                        <label for="profesionnal">Professional</label>
+                        <label for="profesionnal"><?php echo $lang['professional']; ?></label>
                         <input type="radio" id="profesionnal" name="applications" value="2">
-                        <label for="other">Other</label>
+                        <label for="other"><?php echo $lang['other']; ?></label>
                         <input type="radio" id="other" name="applications" value="3">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <label for="interestArea" style="margin-left:15px;">Area of interest</label>
+                    <label for="interestArea" style="margin-left:15px;"><?php echo $lang['interest-area']; ?></label>
                     <span style="color: #ff0000;">*</span>
                 </td>
                 <td>
@@ -235,7 +234,7 @@ include('./php_includes/profile.php');
             <tbody>
 
                 <tr>
-                    <td><label id="descriptionLabel" for="description" style="margin-left:15px;">Brief description of proposed application</label><span style="color: #ff0000;">*</span></td>
+                    <td><label id="descriptionLabel" for="description" style="margin-left:15px;"><?php echo $lang['description-application']; ?></label><span style="color: #ff0000;">*</span></td>
                 </tr>
                 <tr>
                     <td>
@@ -243,7 +242,7 @@ include('./php_includes/profile.php');
                     </td>
                 </tr>
                 <tr>
-                    <td><label id="commentLabel" for="comment" style="margin-left:15px;">How you did learn about satellite images distribution at OSFAC ?</label><span style="color: #ff0000;">*</span></td>
+                    <td><label id="commentLabel" for="comment" style="margin-left:15px;"><?php echo $lang['how-about-distribution']; ?></label><span style="color: #ff0000;">*</span></td>
                 </tr>
                 <tr>
                     <td>
@@ -255,13 +254,13 @@ include('./php_includes/profile.php');
     </div>
     <span id="loaderSaveRequester" class="displayNone" 
           style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
-        Saving your data ... <img alt="loading" src="./images/loader.gif" /> 
+        <?php echo $lang['saving-your-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
     </span>
 </div>
-<div id="dialog-message-forgot-password" title="Password forgotten" class="requestFormBox displayNone" style="width: 400px;">
+<div id="dialog-message-forgot-password" title="<?php echo $lang['password-forgotten-title']; ?>" class="requestFormBox displayNone" style="width: 400px;">
     <p style="font-size:13px;">
         <span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>
-        Check your email inbox and junk mail box in a moment to complete the Forgot Password process by applying the temporary password . 
+        <?php echo $lang['forgot-password-process-message']; ?>
     </p>
 </div>
 <div id="login-form">
@@ -287,7 +286,7 @@ include('./php_includes/profile.php');
             </table>
             <span id="loaderConnection" class="displayNone" 
                   style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
-                Connecting ... <img alt="loading" src="./images/loader.gif" /> 
+                <?php echo $lang['connecting']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
             </span>
         </div>
     </form>
@@ -304,18 +303,18 @@ include('./php_includes/profile.php');
                            class="text ui-widget-content ui-corner-all"/>
                     <span id="loaderPF" class="displayNone" 
                           style="float: right;margin-right: 20px;font-size: 11px;color: #660000;margin-top: 2px;">
-                        Sending ... <img alt="loading" src="./images/loader.gif" /> 
+                        <?php echo $lang['sending']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
                     </span>
                 </td>
             </tr>
         </table>        
     </div>
 </div>
-<div id="dialog-saveCriteria" title="Save criteria" class="displayNone">
+<div id="dialog-saveCriteria" title="<?php echo $lang['save-criteria-title']; ?>" class="displayNone">
     <table>
         <tr>
-            <td>
-                <label for="criteria-name">Criteria name</label><span style="color: #ff0000;">*</span>
+            <td style="width: 200px;">
+                <label for="criteria-name"><?php echo $lang['criteria-name']; ?></label><span style="color: #ff0000;">*</span>
             </td>
             <td>
                 <input id="criteria-name" style="width: 200px;margin-left: 10px;" type="text" 
@@ -325,31 +324,31 @@ include('./php_includes/profile.php');
     </table>
     <span id="loaderSaveCriteria" class="displayNone" 
           style="float: right;margin-left: 10px;font-size: 11px;color: #660000;">
-        Saving your criteria ... <img alt="loading" src="./images/loader.gif" /> 
+        <?php echo $lang['saving-your-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
     </span>
 </div>
 <div id="metadata-image-form">
     <div id="metadataFormBox" class="displayNone">
         <span id="loaderMetadata" style="color: #660000;margin-top: 2px;">
-            Loading data ... <img alt="loading" src="./images/loader.gif" />
+            <?php echo $lang['loading-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" />
         </span>
     </div>
 </div>
 <div id="cart-images-form">
     <div id="cartImagesFormBox" class="displayNone">
         <span id="loaderCartImages" style="color: #660000;margin-top: 2px;">
-            Loading satellite images ... <img alt="loading" src="./images/loader.gif" />
+            <?php echo $lang['loading-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" />
         </span>
     </div>
 </div>
 <div id="manage-Criterias-form">
     <div id="manageCriteriasFormBox" class="displayNone">
         <span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">
-            Loading data ... <img alt="loading" src="./images/loader.gif" />
+            <?php echo $lang['loading-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" />
         </span>
     </div>
 </div>
-<div id="register-form-edit" title="Edit my profile">
+<div id="register-form-edit" title="<?php echo $lang['edit-my-profile']; ?>">
     <form name="signupform-edit" id="signupform-edit" onsubmit="return false;">
         <div id="registerFormBox-edit" class="requestFormBox displayNone" style="width: 360px;">
             <table>
@@ -410,7 +409,7 @@ include('./php_includes/profile.php');
             <span style="font-size: 11px;"> <?php echo $lang['required-field']; ?></span>-->
         </div>
         <span id="loaderRegistration-edit" class="displayNone" style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
-            Saving your data ... <img alt="loading" src="./images/loader.gif" /> 
+            <?php echo $lang['saving-your-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
         </span>
 
     </form>
@@ -493,7 +492,7 @@ include('./php_includes/profile.php');
             <span style="color: #ff0000;">*</span>
             <span style="font-size: 11px;"> <?php echo $lang['required-field']; ?></span>
             <span id="loaderRegistration" class="displayNone" style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
-                Saving your data ... <img alt="loading" src="./images/loader.gif" /> 
+                <?php echo $lang['saving-your-data']; ?> <img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
             </span>
         </div>        
     </form>

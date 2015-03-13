@@ -1,4 +1,5 @@
 <?php
+include ("../languages/include_lang_file.php");
 include_once ("../script/mysqlclass.php");
 $idImage = $_POST['idImage'];
 $Connex = new db(0);
@@ -15,8 +16,8 @@ if ($numRow > 0) {
     <table id="cartImagesShow" class="ui-widget ui-widget-content" style="width: 100%;">
         <thead>
             <tr class="ui-widget-header ">
-                <th>Entity Attribute</th>   
-                <th>Attribute Value</th>
+                <th><?php echo $lang['entity-attribute']; ?></th>   
+                <th><?php echo $lang['attribute-value']; ?></th>
             </tr>
         </thead>
         <?php
@@ -29,7 +30,7 @@ if ($numRow > 0) {
             <tbody>
                 <tr>
                     <td class="even">
-                        <label>Category name</label>
+                        <label><?php echo $lang['category-name']; ?></label>
                     </td>
                     <td class="even">
                         <label><?php echo $category_name; ?></label>
@@ -37,7 +38,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="odd">
-                        <label>ID</label>
+                        <label><?php echo $lang['id']; ?></label>
                     </td>
                     <td class="odd">
                         <label><?php echo $id; ?></label>
@@ -45,7 +46,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="even">
-                        <label>Entity name</label>
+                        <label><?php echo $lang['entity-name']; ?></label>
                     </td>
                     <td class="even">
                         <label><?php echo $entity_name; ?></label>
@@ -56,7 +57,7 @@ if ($numRow > 0) {
                     ?>
                     <tr>
                         <td class="odd">
-                            <label>Path</label>
+                            <label><?php echo $lang['path']; ?></label>
                         </td>
                         <td class="odd">
                             <label><?php echo $Connex->f("path"); ?></label>
@@ -64,7 +65,7 @@ if ($numRow > 0) {
                     </tr>
                     <tr>
                         <td class="even">
-                            <label>Row</label>
+                            <label><?php echo $lang['row']; ?></label>
                         </td>
                         <td class="even">
                             <label><?php echo $Connex->f("row"); ?></label>
@@ -72,7 +73,7 @@ if ($numRow > 0) {
                     </tr>
                     <tr>
                         <td class="odd">
-                            <label>Scan Line Corrector (SLC)</label>
+                            <label><?php echo $lang['slc-text']; ?></label>
                         </td>
                         <td class="odd">
                             <label><?php echo $Connex->f("slc"); ?></label>
@@ -80,7 +81,7 @@ if ($numRow > 0) {
                     </tr>
                     <tr>
                         <td class="even">
-                            <label>Pre-Stack (3 Bands RGB)</label>
+                            <label><?php echo $lang['pre-statck-text']; ?></label>
                         </td>
                         <td class="even">
                             <label><?php echo $Connex->f("stack"); ?></label>
@@ -91,7 +92,7 @@ if ($numRow > 0) {
                 ?>                
                 <tr>
                     <td class="odd">
-                        <label>Center Longitude</label>
+                        <label><?php echo $lang['center-longitude']; ?></label>
                     </td>
                     <td class="odd">
                         <label><?php echo $Connex->f("longitude"); ?></label>
@@ -99,7 +100,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="even">
-                        <label>Center Latitude</label>
+                        <label><?php echo $lang['center-latitude']; ?></label>
                     </td>
                     <td class="even">
                         <label><?php echo $Connex->f("latitude"); ?></label>
@@ -107,7 +108,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="odd">
-                        <label>Format</label>
+                        <label><?php echo $lang['format']; ?></label>
                     </td>
                     <td class="odd">
                         <label><?php echo $Connex->f("format"); ?></label>
@@ -115,15 +116,15 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="even">
-                        <label>Size</label>
+                        <label><?php echo $lang['size']; ?></label>
                     </td>
                     <td class="even">
-                        <label><?php echo $Connex->f("size"); ?> MB</label>
+                        <label><?php echo $Connex->f("size"); ?></label>
                     </td>
                 </tr>
                 <tr>
                     <td class="odd">
-                        <label>Mission / Version</label>
+                        <label><?php echo $lang['mission-version']; ?></label>
                     </td>
                     <td class="odd">
                         <label><?php echo $Connex->f("mission"); ?></label>
@@ -131,7 +132,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="even">
-                        <label>Ortho rectified</label>
+                        <label><?php echo $lang['ortho-rectified']; ?></label>
                     </td>
                     <td class="even">
                         <label><?php echo $Connex->f("ortho"); ?></label>
@@ -139,7 +140,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="odd">
-                        <label>Cloud cover</label>
+                        <label><?php echo $lang['cloud-cover']; ?></label>
                     </td>
                     <td class="odd">
                         <label><?php echo $cloudcover = ($cc > 0) ? $cc . '%' : "N/A"; ?></label>
@@ -147,7 +148,7 @@ if ($numRow > 0) {
                 </tr>
                 <tr>
                     <td class="even">
-                        <label>Acquisition date</label>
+                        <label><?php echo $lang['acquisition-date']; ?></label>
                     </td>
                     <td class="even">
                         <label><?php echo strftime("%b %d, %Y", strtotime($Connex->f("date"))); ?></label>
@@ -160,6 +161,6 @@ if ($numRow > 0) {
     </table><?php
 } else {
     ?>
-    <label style="color: #660000;margin-top: 2px;">No information were found ...</label>
+    <label style="color: #660000;margin-top: 2px;"><?php echo $lang['no-information-found']; ?></label>
     <?php
 }

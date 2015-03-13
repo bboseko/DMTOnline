@@ -5,7 +5,7 @@ include("./languages/langConfig.php");
 <html lang="en" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
-        <title>OSFAC-DMT Online 2.1 Bêta</title>
+        <title><?php echo $lang['app-title'];?></title>
         <meta content="Request satellite images and products through OSFAC" name="description"></meta>
         <meta content="Observatoire Satellital des Forêts d'Afrique Centrale,OSFAC,satellite images,congo basin,DMT,osfacdmt,OSFAC-DMT,satellite data,
               central africa,comifac,cartographic,cartography,geographic,geography,geospatial data,geographic information system,GIS,mapping,maps,
