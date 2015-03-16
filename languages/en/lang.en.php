@@ -208,3 +208,7 @@ $lang['save-criteria-title'] = 'Save criteria';
 $lang['criteria-name'] = 'Criteria name';
 $lang['loading-data'] = 'Loading data ... ';
 $lang['edit-my-profile'] = 'Edit my profile';
+$lang['yes'] = 'Yes';
+$lang['no'] = 'No';
+$lang['all'] = '(all)';
+$lang['download-image-in-cart'] = 'Download image';

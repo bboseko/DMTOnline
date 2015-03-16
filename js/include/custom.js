@@ -3,7 +3,7 @@ var hash = new Array();
 var arrayColorfp = new Array();
 var nRowResult = 0;
 var loggedIN = false, searchFromManager = false;
-var manageCriteriaForm, language = 'en';
+var manageCriteriaForm, language = 'en', downloadImageDialog;
 $(function () {
     var loginForm, registerForm, logoutForm, pfForm, pcForm, profileForm, editProfileForm;
     var saveCriteriaForm;
@@ -938,14 +938,65 @@ function loadMetadata(idImage, entity_name) {
         }
     });
 }
-function downloadImage(idImage) {
-    $.blockUI({
-        theme: true,
-        title: lang.under_construction_title,
-        message: lang.under_construction_message,
-        timeout: 3000
+function downloadImage(idImage, entity_name, idDelivery) {
+    $('#download-imageFormBox').removeClass('displayNone');
+    downloadImageDialog = $("#download-image-form").dialog({
+        autoOpen: false,
+        width: 400,
+        modal: true,
+        title: lang.download_image,
+        buttons: [
+            {
+                text: lang.close,
+                icons: {
+                    primary: "ui-icon-close"
+                },
+                click: function () {
+                    $('#download-imageFormBox').addClass('displayNone');
+                    $('#downloadCriteria').addClass('displayNone');
+                    $(this).dialog("close");
+                }
+            }
+        ], close: function () {
+            $('#download-imageFormBox').addClass('displayNone');
+            $('#downloadCriteria').addClass('displayNone');
+            $(this).dialog('destroy');
+        }
+    }).dialog("open");
+    $.ajax({
+        type: 'POST',
+        url: 'delivery/download_image.php',
+        data: '&idImage=' + idImage,
+        success: function (response) {
+            $('#download-imageFormBox').html('<div><label>' + entity_name
+                    + '</label><a style="margin-left:25px;color:red;" href="' + response + '" target="_blank" title="'
+                    + lang.download_image + '" onclick="confirmDownload(' + idImage + ', '
+                    + idDelivery + ')"><div style="margin-right: 5px;" class="ee-icon ee-icon-download"></div>'
+                    + lang.download + '</a></div>');
+        }
     });
-    return;
+}
+function confirmDownload(idImage, idDelivery) {
+    $.ajax({
+        type: 'POST',
+        url: 'delivery/confirm_download.php',
+        data: '&idImage=' + idImage + '&idDelivery=' + idDelivery,
+        success: function (response) {
+            downloadImageDialog.dialog('close');
+            $("#cartCommand > .ui-button-text").text(lang.cart + ' (' + response + ')');
+            $('#loaderDeleteImageInCart').addClass('displayNone');
+            $('#cartImagesFormBox').html('<span id="loaderCartImages" style="color: #660000;margin-top: 2px;">'
+                    + lang.loading_images + '<img alt="'
+                    + lang.loading + '" src="./images/loader.gif" /></span>');
+            $.ajax({
+                type: 'POST',
+                url: 'delivery/load_cart.php',
+                success: function (response) {
+                    $('#cartImagesFormBox').html(response);
+                }
+            });
+        }
+    });
 }
 function deleteImage(idImage, delivery) {
     var deleteImageInCartConfirm = $("#dialog-delete-image-in-cart-confirm").dialog({
@@ -1194,7 +1245,7 @@ function quickLook(name, preview) {
         title: lang.thumbnail + name,
         open: function () {
             var $dialogContent = $('#quickLookDialogArea');
-            $dialogContent.html('<img alt="No Browse" src = http://www.osfac.net' + preview + ' width="574px" height="485px" />');
+            $dialogContent.html('<img alt="' + lang.no_browse + '" src = http://www.osfac.net' + preview + ' width="574px" height="485px" />');
         },
         close: function () {
             $(this).dialog('destroy');

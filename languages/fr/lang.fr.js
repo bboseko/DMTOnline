@@ -102,5 +102,8 @@ lang = {
     error_while_saving_database: "<p>Une erreur s'est produite lors de l'enregistrement dans la base de données.</p>",
     user_not_found: "<p>L'utilisateur n'as pas été trouvé dans la base de données.</p>",
     request_confirmation: "<p>Votre demande d'images a été enregistrée avec succès à OSFAC.</p>",
-    inclure_exclure: "Inclure / Exclure cette image des résultats"
+    inclure_exclure: "Inclure / Exclure cette image des résultats",
+    no_browse: "Pas d'aperçu",
+    download_image: "Télécharger image",
+    download: "Télécharger"
 };

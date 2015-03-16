@@ -1,6 +1,13 @@
 <?php
 include('./php_includes/profile.php');
 ?>
+<div id="download-image-form">
+    <div id="download-imageFormBox" class="displayNone">
+        <span id="downloadCriteria" style="color: #660000;margin-top: 2px;">
+            <?php echo $lang['loading-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" />
+        </span>
+    </div>
+</div>
 <div id="dialog-myProfile" title="<?php echo $lang['my-profile']; ?>" class="requestFormBox displayNone">
     <div class="requestFormBox" style="width: 450px; margin: 5px;">
         <table>

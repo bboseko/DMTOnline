@@ -102,5 +102,8 @@ lang = {
     error_while_saving_database: "<p>An error occured while saving into database.</p>",
     user_not_found: "<p>User has not been found in the database.</p>",
     request_confirmation: "<p>Your data request has been sent to OSFAC successfully.</p>",
-    inclure_exclure: "Include/Exclude this image from results"
+    inclure_exclure: "Include/Exclude this image from results",
+    no_browse: "No browse",
+    download_image: "Download image",
+    download: "Download"
 };

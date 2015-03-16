@@ -24,7 +24,7 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 setTimeout(function() {
-                    window.location.href = "http://www.osfac.net/images/OSFAC-DMT/setup/OSFAC-DMT_2.0.1_Lite.zip";
+                    window.location.href = "http://www.osfac.net/dmt/download/OSFAC-DMT_2.0.1_Lite.zip";
                 }, 6000);
             });
         </script>
@@ -45,7 +45,7 @@
                     </div>
                     <p>
                         If the download does not being in a few seconds,
-                        click <a href="http://www.osfac.net/images/OSFAC-DMT/setup/OSFAC-DMT_2.0.1_Lite.zip">here</a>
+                        click <a href="http://www.osfac.net/dmt/download/OSFAC-DMT_2.0.1_Lite.zip">here</a>
                     </p>
                 </div>
                 <div style="font-size: 13px;text-align: justify;border:1px solid #71b24a;margin: 20px;padding: 20px;color: #000000;border-radius: 5px;">

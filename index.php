@@ -355,7 +355,7 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="missionLandsat"><?php echo $lang['mission-version']; ?></label></div>
                                     <div class="acright">
                                         <select id="missionLandsat" name="missionLandsat">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <?php loadComboboxMissionLandsat(); ?>
                                         </select> 
                                     </div>                              
@@ -363,7 +363,7 @@ include("./languages/langConfig.php");
                                     </div>
                                     <div class="acright">
                                         <select id="slc" name="slc" style = "width:120px">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <?php loadComboboxSLC(); ?>
                                         </select> 
                                         <a href="http://landsat.usgs.gov/products_slcoffbackground.php" target="_blank" 
@@ -376,7 +376,7 @@ include("./languages/langConfig.php");
                                     </div>                                
                                     <div class="acright">
                                         <select id="orthorectified" name="orthorectified">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <?php loadComboboxOrtho(); ?>
                                         </select>
                                     </div>
@@ -395,14 +395,14 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="missionSRTM"><?php echo $lang['srtm-version-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="missionSRTM" name="missionSRTM">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <?php loadComboboxMissionSRTM(); ?>
                                         </select> 
                                     </div>
                                     <div class="acleft"><label for="resolutionSRTM"><?php echo $lang['spatial-resolution-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="resolutionSRTM" name="resolutionSRTM">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <option value="30">30 <?php echo $lang['meters-text']; ?></option>
                                             <option value="90">90 <?php echo $lang['meters-text']; ?></option>
                                         </select> 
@@ -415,7 +415,7 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="verionSPOT"><?php echo $lang['spot-version-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="verionSPOT" name="verionSPOT">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <?php loadComboboxMissionSPOT(); ?>
                                         </select> 
                                     </div>
@@ -427,7 +427,7 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="cloudCover" ><?php echo $lang['max-cloud-cover']; ?></label></div>
                                     <div class="acright">
                                         <select id="cloudCover" name="cloudCover">
-                                            <option value="all">(all)</option>
+                                            <option value="all"><?php echo $lang['all'];?></option>
                                             <?php loadComboboxCloudCover(); ?>
                                         </select> 
                                     </div>

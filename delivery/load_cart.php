@@ -77,7 +77,7 @@ if (isset($_COOKIE["id"])) {
                             </a>
                         </td>
                         <td class="<?php echo $evenOdd; ?>" style="text-align: center;">
-                            <a title="<?php echo $lang['download-image'];?>" onclick="downloadImage(<?php echo $id ?>)">
+                            <a title="<?php echo $lang['download-image'];?>" onclick="downloadImage('<?php echo $id ?>', '<?php echo $entity_name; ?>', '<?php echo $delivery; ?>')">
                                 <div class="ee-icon ee-icon-download"></div>
                             </a>
                         </td>
