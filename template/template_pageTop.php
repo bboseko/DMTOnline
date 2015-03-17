@@ -27,12 +27,5 @@
         <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
             <a href="?lang=en"><img src="../images/en.gif" /> <?php echo $lang['english']; ?></a>
         </li>
-
-        <li style="float:right !important; font-weight: bold; 
-            text-transform: uppercase; margin-right: 50px; background: none; ">
-            <button id="registerCommand" style="margin-top: -5px;"><?php echo $lang['register']; ?></button></li>
-        <li style="float:right !important; background: none; font-weight: bold; text-transform: uppercase;">
-            <button id="logInCommand" style="margin-top: -5px;"><?php echo $lang['login']; ?></button>
-        </li>
     </ul>
 </div>

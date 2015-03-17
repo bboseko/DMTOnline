@@ -105,5 +105,6 @@ lang = {
     inclure_exclure: "Include/Exclude this image from results",
     no_browse: "No browse",
     download_image: "Download image",
-    download: "Download"
+    download: "Download",
+    sending_your_request: "Sending your request ..."
 };

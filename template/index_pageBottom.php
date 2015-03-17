@@ -155,7 +155,7 @@ include('./php_includes/profile.php');
         </table>
         <span id="loaderChangePassword" class="displayNone" 
               style="float: right;margin-right: 20px;font-size: 11px;color: #660000;">
-            <?php echo $lang['connecting-text']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
+            <?php echo $lang['saving-your-data']; ?><img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" /> 
         </span>
     </form>
 </div>

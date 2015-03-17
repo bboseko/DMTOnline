@@ -36,7 +36,7 @@ if ($numberAct > 0) {
         $iddelivery = @mysql_insert_id();
         for ($i = 0; $i < count($idss); $i++) {
             if ($idss[$i] != "") {
-                mysql_query("insert into dmt_deliver values ($idss[$i], $iddelivery, '0')");
+                mysql_query("insert into dmt_deliver values ($idss[$i], $iddelivery, '0', '0')");
             }
         }
         $subject = $lang['data-request-confirmation'];

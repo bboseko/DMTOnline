@@ -62,16 +62,15 @@ $(function () {
             primary: "ui-icon-home"
         }
     });
-    $("#homeCommand").button().on("click", function () {
-        window.location = "index.php?lang=" + language;
+    $("#homePagesCommand").button({
+        icons: {
+            primary: "ui-icon-home"
+        }
     });
     $("#aboutCommand").button({
         icons: {
             primary: "ui-icon-info"
         }
-    });
-    $("#aboutCommand").button().on("click", function () {
-        window.location = "pages/about.php?lang=" + language;
     });
     $("#desktopCommand").button({
         icons: {
@@ -127,6 +126,21 @@ $(function () {
     });
     $("#applications").buttonset();
 
+    $("#homeCommand").button().on("click", function () {
+        window.location = "index.php?lang=" + language;
+    });
+    $("#homePagesCommand").button().on("click", function () {
+        window.location = "../index.php?lang=" + language;
+    });
+    $("#aboutCommand").button().on("click", function () {
+        window.location = "pages/about.php?lang=" + language;
+    });
+    $("#desktopCommand").button().on("click", function () {
+        window.location = "pages/desktop.php?lang=" + language;
+    });
+    $("#helpCommand").button().on("click", function () {
+        window.location = "pages/help.php?lang=" + language;
+    });
     $("#cartCommand").button().on("click", function () {
         $('#cartImagesFormBox').removeClass('displayNone');
 
@@ -294,6 +308,9 @@ $(function () {
     });
     $("#manageCriteria").button().on("click", function () {
         $('#manageCriteriasFormBox').removeClass('displayNone');
+        $('#manageCriteriasFormBox').html('<span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">' +
+                lang.loading_data + '<img alt="'
+                + lang.loading + '" src="./images/loader.gif" /></span>');
 
         manageCriteriaForm = $("#manage-Criterias-form").dialog({
             autoOpen: false,
@@ -901,10 +918,52 @@ $(function () {
             }
         }).dialog("open");
     });
+    $('#emailDownload').blur(function () {
+        if ($(this).val() === '') {
+            $(this).addClass('errorInForm');
+            $('#emailDownloadLabel').addClass('errorMessageInFrom');
+            $('#DownloadNow').addClass('disabled');
+        } else if (!isValidEmail($(this).val())) {
+            $(this).addClass('errorInForm');
+            $('#emailDownloadLabel').addClass('errorMessageInFrom');
+            $('#DownloadNow').addClass('disabled');
+        } else {
+            $(this).removeClass('errorInForm');
+            $('#emailDownloadLabel').removeClass('errorMessageInFrom');
+            $('#DownloadNow').removeClass('disabled');
+        }
+    });
+    $('#DownloadNow').click(function () {
+        var emailD = $('#emailDownload').val();
+        if ($(this).hasClass('disabled')) {
+            if (emailD === '') {
+                $('#emailDownload').addClass('errorInForm');
+                $('#emailDownloadLabel').addClass('errorMessageInFrom');
+            } else if (!isValidEmail(emailD)) {
+                $('#emailDownload').addClass('errorInForm');
+                $('#emailDownloadLabel').addClass('errorMessageInFrom');
+            }
+            return;
+        } else {
+            $('#emailDownloadError').slideDown().html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
+                    + lang.loading + '" src="../images/loader.gif" /><span> '
+                    + lang.sending_your_request + '</span>');
+            $.ajax({
+                type: "POST",
+                url: "saveDownload.php",
+                data: '&email=' + emailD,
+                success: function (response) {
+                    document.location.href = 'download.php?lang=' + response;
+                }
+            });
+        }
+    });
 });
 function loadMetadata(idImage, entity_name) {
     $('#metadataFormBox').removeClass('displayNone');
-
+    $('#metadataFormBox').html('<span id="loaderMetadata" style="color: #660000;margin-top: 2px;">' +
+            lang.loading_data + '<img alt="' +
+            lang.loading + '" src="./images/loader.gif" /></span>');
     $("#metadata-image-form").dialog({
         autoOpen: false,
         width: 400,
@@ -940,6 +999,9 @@ function loadMetadata(idImage, entity_name) {
 }
 function downloadImage(idImage, entity_name, idDelivery) {
     $('#download-imageFormBox').removeClass('displayNone');
+    $('#download-imageFormBox').html('<span id="downloadCriteria" style="color: #660000;margin-top: 2px;">' +
+            lang.loading_data + '<img alt="' +
+            lang.loading + '" src="./images/loader.gif" /></span>');
     downloadImageDialog = $("#download-image-form").dialog({
         autoOpen: false,
         width: 400,
@@ -970,9 +1032,8 @@ function downloadImage(idImage, entity_name, idDelivery) {
         success: function (response) {
             $('#download-imageFormBox').html('<div><label>' + entity_name
                     + '</label><a style="margin-left:25px;color:red;" href="' + response + '" target="_blank" title="'
-                    + lang.download_image + '" onclick="confirmDownload(' + idImage + ', '
-                    + idDelivery + ')"><div style="margin-right: 5px;" class="ee-icon ee-icon-download"></div>'
-                    + lang.download + '</a></div>');
+                    + lang.download_image + '" onclick="confirmDownload(' + idImage + ', ' + idDelivery + ')">'
+                    + lang.download + '</a><div style="margin-left: 6px;" class="ee-icon ee-icon-download"></div></div>');
         }
     });
 }
@@ -1048,6 +1109,10 @@ function deleteImage(idImage, delivery) {
     });
 }
 function loadCriteria(idCriteria) {
+    $('#manageCriteriasFormBox').removeClass('displayNone');
+    $('#manageCriteriasFormBox').html('<span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">' +
+            lang.loading_data + '<img alt="'
+            + lang.loading + '" src="./images/loader.gif" /></span>');
     $.ajax({
         type: 'POST',
         url: 'criteria/load_criteria.php',

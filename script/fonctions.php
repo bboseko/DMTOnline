@@ -3,9 +3,9 @@ include_once ("mysqlclass.php");
 
 function connectdb() {
 //Remote database settings
-//    $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
-//    $databasename = "dbosfacdmt";
-//    $username = "dbosfacdmt";
+//    $hostname = "dbosfacdmtdev.db.8487892.hostedresource.com";
+//    $databasename = "dbosfacdmtdev";
+//    $username = "dbosfacdmtdev";
 //    $password = "Osf@cL@b01";
 //    Local database settings
     $hostname = "localhost";

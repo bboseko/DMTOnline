@@ -3,9 +3,9 @@
 class db {
 
 //Remote database settings
-//    var $hostname = "dbosfacdmt.db.8487892.hostedresource.com";
-//    var $databasename = "dbosfacdmt";
-//    var $username = "dbosfacdmt";
+//    var $hostname = "dbosfacdmtdev.db.8487892.hostedresource.com";
+//    var $databasename = "dbosfacdmtdev";
+//    var $username = "dbosfacdmtdev";
 //    var $password = "Osf@cL@b01";
 //    Local database settings
     var $hostname = "localhost";

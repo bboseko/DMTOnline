@@ -9,7 +9,7 @@ lang = {
     loading: "chargement",
     searching_images_loading: "En cours de recherche d'images disponible",
     no_image_found_title: "Aucune image trouvée",
-    no_image_found_message: "Aucune image correspondent à vos critères",
+    no_image_found_message: "Aucune image ne correspond à vos critères",
     shapefile_submit_title: "En construction",
     shapefile_submit_message: "<p>Cette fonctionnalité est en cours de construction</p>",
     error_occured: "Une erreur s'est produit",
@@ -105,5 +105,6 @@ lang = {
     inclure_exclure: "Inclure / Exclure cette image des résultats",
     no_browse: "Pas d'aperçu",
     download_image: "Télécharger image",
-    download: "Télécharger"
+    download: "Télécharger",
+    sending_your_request: "En cours d'envoi de votre requête ..."
 };

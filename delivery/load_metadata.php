@@ -4,10 +4,10 @@ include_once ("../script/mysqlclass.php");
 $idImage = $_POST['idImage'];
 $Connex = new db(0);
 $Connex->connect();
-$Connex->query("SELECT dmt_image.*,dmt_category.category_name,dmt_support.*,dmt_pathrow.* FROM `dbosfacdmt`.`dmt_image` INNER JOIN `dbosfacdmt`.`dmt_category` ON "
-        . "(`dmt_image`.`id_category` = `dmt_category`.`id_category`) INNER JOIN `dbosfacdmt`.`dmt_support` "
-        . "ON (`dmt_image`.`id_support` = `dmt_support`.`id_support`) INNER JOIN `dbosfacdmt`.`dmt_concern` "
-        . "ON (`dmt_concern`.`id_image` = `dmt_image`.`id_image`) INNER JOIN `dbosfacdmt`.`dmt_pathrow` "
+$Connex->query("SELECT dmt_image.*,dmt_category.category_name,dmt_support.*,dmt_pathrow.* FROM dmt_image INNER JOIN dmt_category ON "
+        . "(`dmt_image`.`id_category` = `dmt_category`.`id_category`) INNER JOIN dmt_support "
+        . "ON (`dmt_image`.`id_support` = `dmt_support`.`id_support`) INNER JOIN dmt_concern "
+        . "ON (`dmt_concern`.`id_image` = `dmt_image`.`id_image`) INNER JOIN dmt_pathrow "
         . "ON (`dmt_concern`.`path_row` = `dmt_pathrow`.`path_row`) "
         . "WHERE (`dmt_image`.`id_image` = '$idImage') limit 1");
 $numRow = $Connex->num_rows();

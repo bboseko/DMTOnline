@@ -5,12 +5,11 @@ if (isset($_COOKIE["id"])) {
     $id_user = $_COOKIE['id'];
     $Connex = new db(0);
     $Connex->connect();
-    $Connex->query("SELECT `dmt_image`.*, dmt_deliver.id_delivery as delivery,`dmt_support`.* FROM `dbosfacdmt`.`dmt_deliver` "
-            . "INNER JOIN `dbosfacdmt`.`dmt_image` ON (`dmt_deliver`.`id_image` = `dmt_image`.`id_image`) "
-            . "INNER JOIN `dbosfacdmt`.`dmt_delivery` "
-            . "ON (`dmt_deliver`.`id_delivery` = `dmt_delivery`.`id_delivery`) INNER JOIN `dbosfacdmt`.`dmt_support` "
-            . "ON (`dmt_image`.`id_support` = `dmt_support`.`id_support`) WHERE "
-            . "(`dmt_delivery`.`id_user` = '$id_user') and dmt_deliver.downloaded = '0';");
+    $Connex->query("SELECT `dmt_image`.*, dmt_deliver.id_delivery as delivery,`dmt_support`.* FROM dmt_deliver "
+            . "INNER JOIN dmt_image ON (`dmt_deliver`.`id_image` = `dmt_image`.`id_image`) "
+            . "INNER JOIN dmt_delivery ON (`dmt_deliver`.`id_delivery` = `dmt_delivery`.`id_delivery`) "
+            . "INNER JOIN dmt_support ON (`dmt_image`.`id_support` = `dmt_support`.`id_support`) "
+            . "WHERE (`dmt_delivery`.`id_user` = '$id_user') and dmt_deliver.deleted = '0'");
     $numRow = $Connex->num_rows();
     if ($numRow > 0) {
         $count = 0;
