@@ -5,7 +5,7 @@ include("../languages/langConfig.php");
 <html lang="en" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
-        <title>OSFAC-DMT Online 2.0.1</title>
+        <title><?php echo $lang['app-title']; ?></title>
         <meta content="Request satellite images and products through OSFAC" name="description"></meta>
         <meta content="Observatoire Satellital des Forêts d'Afrique Centrale,OSFAC,satellite images,congo basin,DMT,osfacdmt,OSFAC-DMT,satellite data,
               central africa,comifac,cartographic,cartography,geographic,geography,geospatial data,geographic information system,GIS,mapping,maps,
@@ -21,22 +21,30 @@ include("../languages/langConfig.php");
         <meta content="NGO" name="doc-type"></meta>
         <meta content="Living Document" name="doc-class"></meta>
         <meta content="Public Domain" name="doc-rights"></meta>
-        <link type="image/vnd.microsoft.icon" rel="shortcut icon" href="../images/favicon.ico"></link>
+
+        <link type="image/vnd.microsoft.icon" rel="shortcut icon" href="../images/favicon.ico"></link>        
         <link type="text/css" href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" ></link>
         <link type="text/css" href="../css/custom.css" rel="stylesheet"></link>
-        
+        <link type="text/css" href="../css/sticky.full.css" rel="stylesheet"></link>
+
         <script type="text/javascript" src="../js/library/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="../js/library/jquery-ui.js"></script>
         <script type="text/javascript" src="../languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
     </head>
     <body>
         <div id="container" class="clearfix">
             <?php include_once("../template/template_pageTop.php"); ?>
             <div class="content">
+                <div class="pageHeader">
+                    <div style="margin-left: 30px;padding-top: 6px;" >
+                        <a href="help.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['help-text']; ?></a>  
+                    </div>                    
+                </div>
                 <p align="justify">
                     This section will be available very soon
                 </p>
             </div> 
-            <?php include_once("../template/index_pageBottom.php"); ?>
-        </div>       
+        </div>
+        <?php include_once("../template/template_pageBottom.php"); ?>
     </body>
 </html>

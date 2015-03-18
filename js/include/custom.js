@@ -472,7 +472,7 @@ $(function () {
                 {
                     text: lang.login,
                     icons: {
-                        primary: "ui-icon-check"
+                        primary: "ui-icon-person"
                     },
                     click: function () {
                         var username = $('#username').val();
@@ -957,6 +957,61 @@ $(function () {
                 }
             });
         }
+    });
+    $('#full_nameContact').blur(function () {
+        if ($(this).val() === '') {
+            $(this).addClass('errorInForm');
+            $('#full_nameContactError').html(lang.full_name_required).slideDown(500);
+        } else {
+            $(this).removeClass('errorInForm');
+            $('#full_nameContactError').html('').slideUp(500);
+        }
+    });
+    $('#emailContact').blur(function () {
+        if ($(this).val() === '') {
+            $(this).addClass('errorInForm');
+            $('#emailContactError').html(lang.email_address_required).slideDown(500);
+        } else if (!isValidEmail($(this).val())) {
+            $(this).addClass('errorInForm');
+            $('#emailContactError').html(lang.not_valid_email).slideDown(500);
+        } else {
+            $(this).removeClass('errorInForm');
+            $('#emailContactError').html('').slideUp(500);
+        }
+    });
+    $('#messageContact').blur(function () {
+        if ($(this).val() === '') {
+            $(this).addClass('errorInForm');
+            $('#messageContactError').html(lang.your_message_required).slideDown(500);
+        } else {
+            $(this).removeClass('errorInForm');
+            $('#messageContactError').html('').slideUp(500);
+        }
+    });
+    $('#submitContact').click(function () {
+        var full_name = $('#full_nameContact').val();
+        var email = $('#emailContact').val();
+        var message = $('#messageContact').val();
+        if (full_name !== '' && isValidEmail(email) && message !== '' &&
+                !$('#full_nameContact').hasClass('errorInForm') &&
+                !$('#emailContact').hasClass('errorInForm') &&
+                !$('#messageContact').hasClass('errorInForm')) {
+            var items = '&full_name=' + full_name + '&email=' + email + '&message=' + message;
+            $.ajax({
+                type: "POST",
+                url: "email_script.php",
+                data: items,
+                success: function (response) {
+                    alert(response);
+                    document.location.href = '../index.php?lang=' + language;
+                }
+            });
+        } else {
+            $('#messageContactError').slideDown(500).html(lang.error_message_contact);
+        }
+    });
+    $('#cancelContact').click(function () {
+        document.location.href = '../index.php?lang=' + language;
     });
 });
 function loadMetadata(idImage, entity_name) {

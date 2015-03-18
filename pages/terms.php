@@ -1,8 +1,11 @@
+<?php
+include("../languages/langConfig.php");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="en" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
-        <title>OSFAC-DMT Online 2.0.1</title>
+        <title><?php echo $lang['app-title']; ?></title>
         <meta content="Request satellite images and products through OSFAC" name="description"></meta>
         <meta content="Observatoire Satellital des Forêts d'Afrique Centrale,OSFAC,satellite images,congo basin,DMT,osfacdmt,OSFAC-DMT,satellite data,
               central africa,comifac,cartographic,cartography,geographic,geography,geospatial data,geographic information system,GIS,mapping,maps,
@@ -18,18 +21,22 @@
         <meta content="NGO" name="doc-type"></meta>
         <meta content="Living Document" name="doc-class"></meta>
         <meta content="Public Domain" name="doc-rights"></meta>
-        <link type="image/vnd.microsoft.icon" rel="shortcut icon" href="../images/favicon.ico"></link>
+
+        <link type="image/vnd.microsoft.icon" rel="shortcut icon" href="../images/favicon.ico"></link>        
+        <link type="text/css" href="../css/jquery-ui-1.10.3.custom.css" rel="stylesheet" ></link>
         <link type="text/css" href="../css/custom.css" rel="stylesheet"></link>
-        <script type="text/javascript" src="../js/library/jquery-1.10.2.min.js"></script>
+
+        <script type="text/javascript" src="../js/library/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="../js/library/jquery-ui.js"></script>
+        <script type="text/javascript" src="../languages/<?php echo $_SESSION['lang']; ?>/lang.<?php echo $_SESSION['lang']; ?>.js"></script>
     </head>
     <body>
-        <?php include("./scripts/HeaderFooter.php"); ?>
-        <?php headerPage(); ?>
         <div id="container" class="clearfix">
+            <?php include_once("../template/template_pageTop.php"); ?>
             <div class="content">
                 <div class="pageHeader">
                     <div style="margin-left: 30px;padding-top: 6px;" >
-                        <a href="terms.php">Terms of use</a>  
+                        <a href="terms.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['terms-of-use']; ?></a>  
                     </div>                    
                 </div>
                 <p align="justify">
@@ -49,7 +56,7 @@
                 <p><strong>THE MATERIAL YOU SUBMIT ONLINE</strong></p><br/>
                 <p align="justify">
                     You are liable and responsible for any submission you send to OSFAC-DMT. 
-                    With the exception of personally identifiable information we agree to protect in our <a href="privacy.php">Privacy Policy</a>, 
+                    With the exception of personally identifiable information we agree to protect in our <a href="privacy.php?lang=<?php echo $_SESSION['lang']; ?>">Privacy Policy</a>, 
                     any other suggestion, material or information that you send to OSFAC-DMT. through this tool will be 
                     considered non-confidential and non-proprietary. If we reproduce and/or adapt these suggestions, 
                     material or information for any purpose we deem appropriate to OSFAC-DMT, we are under no obligation to
@@ -63,7 +70,6 @@
                     terminate all or any part of this tool’s contents, without prior notice to you.
                 </p>
             </div> 
-        </div>       
-        <?php footerPage(); ?>
+            <?php include_once("../template/template_pageBottom.php"); ?>
     </body>
 </html>

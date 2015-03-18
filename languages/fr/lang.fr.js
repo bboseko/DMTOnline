@@ -106,5 +106,10 @@ lang = {
     no_browse: "Pas d'aperçu",
     download_image: "Télécharger image",
     download: "Télécharger",
-    sending_your_request: "En cours d'envoi de votre requête ..."
+    sending_your_request: "En cours d'envoi de votre requête ...",
+    full_name_required: "Le nom complet est obligatoire",
+    email_address_required: "L'adresse E-mail est obligatoire",
+    not_valid_email: "Cet adresse E-mail n'est pas valide ...",
+    your_message_required: "Votre message est obligatoire",
+    error_message_contact: "S'il vous plait, veuillez remplir tous les champs obligatoire avec des informations valides ..."
 };

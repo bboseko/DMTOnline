@@ -106,5 +106,10 @@ lang = {
     no_browse: "No browse",
     download_image: "Download image",
     download: "Download",
-    sending_your_request: "Sending your request ..."
+    sending_your_request: "Sending your request ...",
+    full_name_required: "Full name is required",
+    email_address_required: "Email address is required",
+    not_valid_email: "This email address is not valid ...",
+    your_message_required: "Your message is required",
+    error_message_contact: "Please fill all required fields with valid information ..."
 };
