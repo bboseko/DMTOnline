@@ -180,7 +180,13 @@ include("./languages/langConfig.php");
                             </div>
                             <h3 id="accordion3"><?php echo $lang['search-predefined-area']; ?></h3>
                             <div class="tabAccordion">
-                                <div id="wrsInputs">
+                                <div id="bounderies_button" style="margin-bottom: 7px;font-size: 12px;">
+                                    <label for="adminBoundary"><?php echo $lang['admin-boundaries-drc']; ?></label>
+                                    <input type="radio" id="adminBoundary" name="boundaries" value="1" checked="checked"/>
+                                    <label for="redd"><?php echo $lang['redd-project']; ?></label>
+                                    <input type="radio" id="redd" name="boundaries" value="2"/>
+                                </div>
+                                <div id="wrsInputs1">
                                     <table>
                                         <tbody>
                                             <tr>
@@ -229,6 +235,24 @@ include("./languages/langConfig.php");
                                                     </span>
                                                 </td>
                                             </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="wrsInputs2" style="display: none;">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <label for="reddProject"><?php echo $lang['redd-project']; ?></label>
+                                                </td>
+                                                <td>
+                                                    <span style="margin-left: 10px">
+                                                        <select id="reddProject" name="reddProject" style = "margin-bottom: 3px;width:170px">
+                                                            <?php loadComboboxReddProject() ?>
+                                                        </select>
+                                                    </span>
+                                                </td>
+                                            </tr>                                            
                                         </tbody>
                                     </table>
                                 </div>

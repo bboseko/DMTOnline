@@ -116,5 +116,9 @@ lang = {
     dbf_file_format_error: "Vous devez sélectionner un fichier de format DBF",
     file_name_error: "Les fichiers SHP et DBF uploadés ne concernent pas le même shapefile",
     max_point_exced: "Votre shapefile ne peut pas avoir plus de 20 points",
-    type_of_feature: "Votre shapefile ne doit contenir que un Point, une Ligne ou une Polygone"
+    type_of_feature: "Votre shapefile ne doit contenir que un Point, une Ligne ou une Polygone",
+    upload_shapefile_error: "Une erreur s'est produit pendant l'upload de vos fichiers ...",
+    upload_please_wait: "% uploadé... Veuillez patienter",
+    uploaded: "Uploadé ",
+    upload_bytes_of: " bytes sur "
 };

@@ -258,3 +258,6 @@ $lang['male'] = 'Masculin';
 $lang['female'] = 'Féminin';
 $lang['on'] = 'On';
 $lang['off'] = 'Off';
+$lang['admin-boundaries-drc'] = 'Limites administratives (RDC)';
+$lang['cbfp-landscape'] = 'CBFP paysages';
+$lang['redd-project'] = 'Projets REDD+';

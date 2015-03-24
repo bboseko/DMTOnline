@@ -1107,11 +1107,17 @@ DMT.gmaps = {
             $('#territory').attr('disabled', true);
             $('#sector').attr('disabled', true);
             $('#locality').attr('disabled', true);
+            $('#wrsInputs1').show();
+            $('#wrsInputs2').hide();
+            $('#reddProject').val('');
+            $('#adminBoundary').prop("checked", true);
+            $('#bounderies_button').buttonset("refresh");
             $('#featureLoader').hide();
             $('#featureResults').stop(true, true).hide();
             $('#geoErrorMessageFeature').stop(true, true).hide();
         },
         codeAddress: function () {
+            var boundaries = $('#wrsInputs1').is(":visible") === true;
             var dbTable = '';
             var dbID = '';
             var province = $("#province").val();
@@ -1119,46 +1125,76 @@ DMT.gmaps = {
             var territory = $("#territory").val();
             var sector = $("#sector").val();
             var locality = $("#locality").val();
-            if (province === null && district === null && territory === null && sector === null && locality === null) {
-                $.blockUI({
-                    theme: true,
-                    title: lang.empty_predefined_area_title,
-                    message: lang.empty_predefined_area_message,
-                    timeout: 4000
-                });
-            }
-            else {
-                if (province !== null) {
-                    dbTable = 'province';
-                    dbID = province;
+            var redd = $("#reddProject").val();
+            if (boundaries) {
+                if (province === null && district === null && territory === null && sector === null && locality === null) {
+                    $.blockUI({
+                        theme: true,
+                        title: lang.empty_predefined_area_title,
+                        message: lang.empty_predefined_area_message,
+                        timeout: 4000
+                    });
                 }
-                if (district !== null) {
-                    dbTable = 'district';
-                    dbID = district;
-                }
-                if (territory !== null) {
-                    dbTable = 'territory';
-                    dbID = territory;
-                }
-                if (sector !== null) {
-                    dbTable = 'sector';
-                    dbID = sector;
-                }
-                if (locality !== null) {
-                    dbTable = 'locality';
-                    dbID = locality;
-                }
-                DMT.gmaps.coordinates.clear();
-                var query = 'select coordinates from dmt_' + dbTable + ' where id_' + dbTable + '=' + dbID;
-                $.ajax({
-                    type: "POST",
-                    url: "script/getCoordinates.php",
-                    data: 'query=' + query,
-                    success: function (response) {
-                        var tabCoord = response.split(" ");
-                        DMT.gmaps.coordinates.add(new google.maps.LatLng(parseFloat(tabCoord[0]), parseFloat(tabCoord[1])));
+                else {
+                    if (province !== null) {
+                        dbTable = 'province';
+                        dbID = province;
                     }
-                });
+                    if (district !== null) {
+                        dbTable = 'district';
+                        dbID = district;
+                    }
+                    if (territory !== null) {
+                        dbTable = 'territory';
+                        dbID = territory;
+                    }
+                    if (sector !== null) {
+                        dbTable = 'sector';
+                        dbID = sector;
+                    }
+                    if (locality !== null) {
+                        dbTable = 'locality';
+                        dbID = locality;
+                    }
+                    DMT.gmaps.coordinates.clear();
+                    var query = 'select coordinates from dmt_' + dbTable + ' where id_' + dbTable + '=' + dbID;
+                    $.ajax({
+                        type: "POST",
+                        url: "script/getCoordinates.php",
+                        data: 'query=' + query,
+                        success: function (response) {
+                            var tabCoord = response.split(" ");
+                            DMT.gmaps.coordinates.add(new google.maps.LatLng(parseFloat(tabCoord[0]), parseFloat(tabCoord[1])));
+                        }
+                    });
+                }
+            } 
+            else {
+                if (redd === null) {
+                    $.blockUI({
+                        theme: true,
+                        title: lang.empty_predefined_area_title,
+                        message: lang.empty_predefined_area_message,
+                        timeout: 4000
+                    });
+                }
+                else {
+                    if (redd !== null) {
+                        dbTable = 'redd';
+                        dbID = redd;
+                    }
+                    DMT.gmaps.coordinates.clear();
+                    var query = 'select coordinates from dmt_' + dbTable + ' where id_' + dbTable + '=' + dbID;
+                    $.ajax({
+                        type: "POST",
+                        url: "script/getCoordinates.php",
+                        data: 'query=' + query,
+                        success: function (response) {
+                            var tabCoord = response.split(" ");
+                            DMT.gmaps.coordinates.add(new google.maps.LatLng(parseFloat(tabCoord[0]), parseFloat(tabCoord[1])));
+                        }
+                    });
+                }
             }
         }
     },

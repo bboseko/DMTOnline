@@ -180,6 +180,20 @@ function loadComboboxYear() {
         $Connex->free();
     }
 
+    function loadComboboxReddProject() {
+        $Connex = new db(0);
+        $Connex->connect();
+        $Connex->query("SELECT id_redd,redd_name FROM dmt_redd order by redd_name");
+        if ($Connex->num_rows() >= 1) {
+            while ($Connex->next_record()) {
+                $id = $Connex->f("id_redd");
+                $value = $Connex->f("redd_name");
+                ?><option value="<?php echo $id; ?>"><?php echo $value; ?></option><?php
+            }
+        }
+        $Connex->free();
+    }
+
     function loadComboboxProvince() {
         $Connex = new db(0);
         $Connex->connect();
