@@ -1052,10 +1052,10 @@ function fileUpload() {
     ajax.send(formdata);
 }
 function progressHandler(event) {
-    $("#loaded_n_total").html("Uploaded " + event.loaded + " bytes of " + event.total);
+    $("#loaded_n_total").html(lang.uploaded + event.loaded + lang.upload_bytes_of + event.total);
     var percent = (event.loaded / event.total) * 100;
     $("#progressbar").progressbar("value", Math.round(percent));
-    $("#status").html(Math.round(percent) + "% uploaded... please wait");
+    $("#status").html(Math.round(percent) + lang.upload_please_wait);
 }
 function completeHandler(event) {
     var response = event.target.responseText;
@@ -1068,7 +1068,13 @@ function completeHandler(event) {
     } else if (response === 'Type_not_allowed') {
         $.sticky(lang.type_of_feature);
     } else if (response === 'move_uploaded_file_function_failed') {
-        $.sticky("An error occured while uploading your files ...");
+        $.sticky(lang.upload_shapefile_error);
+//        $.blockUI({
+//            theme: true, title: lang.error_occured,
+//            message: response,
+//            timeout: 4000
+//        });
+//        return;
     } else {
         var coordinates = response.split(', ');
         var size = coordinates.length;
@@ -1173,13 +1179,11 @@ function confirmDownload(idImage, idDelivery) {
     $.ajax({
         type: 'POST',
         url: 'delivery/confirm_download.php',
-        data: '&idImage=' + idImage + '&idDelivery=' + idDelivery,
-        success: function (response) {
+        data: '&idImage=' + idImage + '&idDelivery=' + idDelivery, success: function (response) {
             downloadImageDialog.dialog('close');
             $("#cartCommand > .ui-button-text").text(lang.cart + ' (' + response + ')');
             $('#loaderDeleteImageInCart').addClass('displayNone');
-            $('#cartImagesFormBox').html('<span id="loaderCartImages" style="color: #660000;margin-top: 2px;">'
-                    + lang.loading_images + '<img alt="'
+            $('#cartImagesFormBox').html('<span id="loaderCartImages" style="color: #660000;margin-top: 2px;">' + lang.loading_images + '<img alt="'
                     + lang.loading + '" src="./images/loader.gif" /></span>');
             $.ajax({
                 type: 'POST',
@@ -1196,11 +1200,9 @@ function deleteImage(idImage, delivery) {
         resizable: false,
         height: 150,
         modal: true,
-        buttons: [
-            {
+        buttons: [{
                 text: lang.yes,
-                icons: {
-                    primary: "ui-icon-check"
+                icons: {primary: "ui-icon-check"
                 },
                 click: function () {
                     $('#loaderDeleteImageInCart').removeClass('displayNone');
@@ -1319,7 +1321,7 @@ function loadCriteria(idCriteria) {
             var srtmprop = tab[11].split(':')[1].split(',');
             $('#missionSRTM').val(srtmprop[0]);
             $('#resolutionSRTM').val(srtmprop[1]);
-            //Setting up spot properties tab[10]
+//Setting up spot properties tab[10]
             var spotprop = tab[12].split(':')[1].split(',');
             $('#verionSPOT').val(spotprop[0]);
             //Setting up cloud cover properties tab[11]
@@ -1347,8 +1349,7 @@ function deleteCriteria(idCriteria) {
                     $.ajax({
                         type: 'POST',
                         url: 'criteria/delete_criteria.php',
-                        data: '&idCriteria=' + idCriteria,
-                        success: function () {
+                        data: '&idCriteria=' + idCriteria, success: function () {
                             deleteCriteriaConfirm.dialog("close");
                             $('#loaderDeleteCriteria').addClass('displayNone');
                             $('#manageCriteriasFormBox').html('<span id="loaderMCriteria" style="color: #660000;margin-top: 2px;">'
@@ -1361,8 +1362,7 @@ function deleteCriteria(idCriteria) {
                                     $('#manageCriteriasFormBox').html(response);
                                 }
                             });
-                        }
-                    });
+                        }});
                 }
             },
             {
@@ -1409,8 +1409,7 @@ function checkusername() {
                         theme: true,
                         title: lang.username_error_title,
                         message: response,
-                        timeout: 4000
-                    });
+                        timeout: 4000});
                     return;
                 }
             }
@@ -1421,20 +1420,16 @@ function quickLook(name, preview) {
     if (preview === '/preview/nobrowse_small.png') {
         preview = '/preview/nobrowse.png';
     }
-    $('#quickLookDialogArea').dialog({
-        bgiframe: true,
-        autoOpen: false,
-        resizable: false,
+    $('#quickLookDialogArea').dialog({bgiframe: true,
+        autoOpen: false, resizable: false,
         height: 600,
         width: 600,
         modal: true,
-        buttons: [
-            {
+        buttons: [{
                 text: lang.close,
                 icons: {
                     primary: "ui-icon-close"
-                },
-                click: function () {
+                }, click: function () {
                     $(this).dialog('destroy');
                 }
             }
@@ -1452,8 +1447,7 @@ function quickLook(name, preview) {
 }
 function pagination(nr, pn) {
     $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
-            + lang.loading + '" src="images/loader.gif" /><span> '
-            + lang.searching_images_loading + ' ...</span>');
+            + lang.loading + '" src="images/loader.gif" /><span> ' + lang.searching_images_loading + ' ...</span>');
     var itemsPerPage = 10;
     var lastPage = Math.ceil(nr / itemsPerPage);
     if (pn < 1) {

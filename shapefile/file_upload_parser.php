@@ -40,6 +40,8 @@ if (move_uploaded_file($fileTmpLoc, "../tmp/$fileName")) {
                     echo 'Type_not_allowed';
                 }
             }
+//            unlink('../tmp/' . $fileName);
+//            unlink('../tmp/' . $fileNameDbf);
         } catch (ShapeFileException $e) {
             exit('Error ' . $e->getCode() . ': ' . $e->getMessage());
         }
