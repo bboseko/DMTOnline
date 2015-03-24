@@ -711,3 +711,14 @@ table.resultPageTable tr.excludedResultRow td {
     position: absolute; 
     width: 100px; 
 }
+.ui-progressbar {
+    position: relative;
+}
+.progress-label {
+    position: absolute;
+    left: 40%;
+    text-align: center;
+    top: 4px;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #fff;
+}

@@ -125,6 +125,27 @@ $(function () {
         }
     });
     $("#applications").buttonset();
+    var progressbar = $("#progressbar");
+    var progressLabel = $(".progress-label");
+    progressbar.progressbar({
+        value: false,
+        change: function () {
+            progressLabel.text(progressbar.progressbar("value") + "%");
+        },
+        complete: function () {
+            progressLabel.text("Complete!");
+        }
+    });
+//    function progress() {
+//        var val = progressbar.progressbar("value") || 0;
+//
+//        progressbar.progressbar("value", val + 2);
+//
+//        if (val < 99) {
+//            setTimeout(progress, 80);
+//        }
+//    }
+//    setTimeout(progress, 2000);
 
     $("#homeCommand").button().on("click", function () {
         window.location = "index.php?lang=" + language;
@@ -1014,6 +1035,62 @@ $(function () {
         document.location.href = '../index.php?lang=' + language;
     });
 });
+function fileUpload() {
+    $("#progressPanel").removeClass('displayNone');
+    var fileShp = document.getElementById("shpFile").files[0];
+    var fileDbf = document.getElementById("dbfFile").files[0];
+//    alert(file.name + " | " + file.size + " | " + file.type + " | ");
+    var formdata = new FormData();
+    formdata.append("shpFile", fileShp);
+    formdata.append("dbfFile", fileDbf);
+    var ajax = new XMLHttpRequest();
+    ajax.upload.addEventListener("progress", progressHandler, false);
+    ajax.addEventListener("load", completeHandler, false);
+    ajax.addEventListener("error", errorHandler, false);
+    ajax.addEventListener("abort", abortHandler, false);
+    ajax.open("POST", "shapefile/file_upload_parser.php");
+    ajax.send(formdata);
+}
+function progressHandler(event) {
+    $("#loaded_n_total").html("Uploaded " + event.loaded + " bytes of " + event.total);
+    var percent = (event.loaded / event.total) * 100;
+    $("#progressbar").progressbar("value", Math.round(percent));
+    $("#status").html(Math.round(percent) + "% uploaded... please wait");
+}
+function completeHandler(event) {
+    var response = event.target.responseText;
+    $("#status").html(event.target.responseText);
+    $("#progressbar").progressbar("value", 0);
+    clearShapefile();
+    DMT.gmaps.coordinates.clear();
+    if (response === 'Max_of_points_reached') {
+        $.sticky(lang.max_point_exced);
+    } else if (response === 'Type_not_allowed') {
+        $.sticky(lang.type_of_feature);
+    } else if (response === 'move_uploaded_file_function_failed') {
+        $.sticky("An error occured while uploading your files ...");
+    } else {
+        var coordinates = response.split(', ');
+        var size = coordinates.length;
+        if (size > 2) {
+            size = size - 1;
+        }
+        for (var i = 0; i < size; i++) {
+            var latLong = coordinates[i].split(' ');
+            DMT.gmaps.coordinates.add(new google.maps.LatLng(parseFloat(latLong[1]), parseFloat(latLong[0])));
+        }
+    }
+}
+function errorHandler(event) {
+    $("#status").html("Upload failed");
+}
+function abortHandler(event) {
+    $("#status").html("Upload aborted");
+}
+function clearShapefile() {
+    $("#shapefileUploadForm")[0].reset();
+    $("#progressPanel").addClass('displayNone');
+}
 function loadMetadata(idImage, entity_name) {
     $('#metadataFormBox').removeClass('displayNone');
     $('#metadataFormBox').html('<span id="loaderMetadata" style="color: #660000;margin-top: 2px;">' +

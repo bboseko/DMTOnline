@@ -5,7 +5,7 @@ include("./languages/langConfig.php");
 <html lang="en" dir="ltr" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" ></meta>
-        <title><?php echo $lang['app-title'];?></title>
+        <title><?php echo $lang['app-title']; ?></title>
         <meta content="Request satellite images and products through OSFAC" name="description"></meta>
         <meta content="Observatoire Satellital des Forêts d'Afrique Centrale,OSFAC,satellite images,congo basin,DMT,osfacdmt,OSFAC-DMT,satellite data,
               central africa,comifac,cartographic,cartography,geographic,geography,geospatial data,geographic information system,GIS,mapping,maps,
@@ -244,33 +244,35 @@ include("./languages/langConfig.php");
                             </div>
                             <h3 id="accordion4"><?php echo $lang['search-shapefile']; ?></h3>
                             <div class="tabAccordion">
-                                <form id="shapefileUploadForm" action="#" method="">
-<!--                                    <span style="font-size: 12px;margin-bottom: 3px;">
+                                <form id="shapefileUploadForm" action="#" method="post" enctype="multipart/form-data">
+                                    <span style="font-size: 12px; color: #660000;">
                                         <em>
-                                            Shapefiles are limited to one record containing one polygon or line string with a maximum of 20 points.
+                                            <?php echo $lang['shapefile-limit']; ?>
                                         </em>
-                                    </span>-->
-                                    <div id="wrsInputs">
+                                    </span>
+                                    <div id="wrsInputs" style="margin-top: 5px;">
                                         <div class="row clearfix">
-                                            <label for="shpFile">.shp </label>
-                                            <input type="file" name="shpFile" id="shpFile" type="file" size="30" /><br />
-                                        </div>
-                                        <div class="row clearfix">
-                                            <label for="shxFile">.shx </label>
-                                            <input type="file" name="shxFile" id="shxFile" type="file" size="30" /><br />
-                                        </div>
-                                        <div class="row clearfix">
-                                            <label for="dbfFile">.dbf </label>
-                                            <input type="file" name="dbfFile" id="dbfFile" type="file" size="30" /><br />
-                                        </div>
-                                        <div class="row clearfix">
-                                            <label for="prjFile">.prj </label>
-                                            <input type="file" name="prjFile" id="prjFile" type="file" size="30" /><br />
-                                        </div>                                        
+                                            <label for="shpFile" style="font-size: 11px;font-weight: bold;">
+                                                <?php echo $lang['shp-file']; ?>
+                                            </label>
+                                            <input style="font-size: 11px;" id="shpFile" type="file" name="shpFile" type="file" size="30" /><br />
+                                            <label for="shpFile" style="font-size: 11px;font-weight: bold;">
+                                                <?php echo $lang['dbf-file']; ?>
+                                            </label>
+                                            <input style="font-size: 11px;margin-top: 5px;" id="dbfFile" type="file" name="dbfFile" type="file" size="30" /><br />
+                                        </div>                                    
                                     </div>
                                     <div class="buttons">
                                         <input id="shapefileSubmit" class="button" type="button" name="action" value="<?php echo $lang['button-upload']; ?>" />
-                                        <input id="shapefileClear" class="button" type="reset" value="<?php echo $lang['button-clear']; ?>" />
+                                        <input id="shapefileClear" class="button" type="reset" value="<?php echo $lang['button-clear']; ?>" onclick="clearShapefile()"/>
+                                    </div>
+                                    <div id="progressPanel" style="margin-top: 3px;" class="displayNone">
+                                        <span id="loaderCartImages" style="color: #660000;margin-top: 2px;">
+                                            <img alt="<?php echo $lang['loading']; ?>" src="./images/loader.gif" />
+                                            <?php echo $lang['loading']; ?>
+                                        </span>
+                                        <h3 id="status"></h3>
+                                        <p id="loaded_n_total"></p>
                                     </div>
                                 </form>
                             </div>
@@ -285,7 +287,9 @@ include("./languages/langConfig.php");
                             </div>                            
                             <div id="coordEntryTemplate">
                                 <li id="coordinate_!%index%!" class="coordinate control-!%format%! !%oddEven%!">
-                                    <div style="float:left;margin-right:8px;"> <span class="coordinateNum">!%coordinateNum%!</span>. </div>
+                                    <div style="float:left;margin-right:8px;"> 
+                                        <span class="coordinateNum">!%coordinateNum%!</span>. 
+                                    </div>
                                     <div class="format_dms" style="float:left;">
                                         Lat: <span class="latitude">!%dmsLat%!</span>,
                                         Lon: <span class="longitude">!%dmsLng%!</span>
@@ -355,7 +359,7 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="missionLandsat"><?php echo $lang['mission-version']; ?></label></div>
                                     <div class="acright">
                                         <select id="missionLandsat" name="missionLandsat">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <?php loadComboboxMissionLandsat(); ?>
                                         </select> 
                                     </div>                              
@@ -363,7 +367,7 @@ include("./languages/langConfig.php");
                                     </div>
                                     <div class="acright">
                                         <select id="slc" name="slc" style = "width:120px">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <?php loadComboboxSLC(); ?>
                                         </select> 
                                         <a href="http://landsat.usgs.gov/products_slcoffbackground.php" target="_blank" 
@@ -376,7 +380,7 @@ include("./languages/langConfig.php");
                                     </div>                                
                                     <div class="acright">
                                         <select id="orthorectified" name="orthorectified">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <?php loadComboboxOrtho(); ?>
                                         </select>
                                     </div>
@@ -395,14 +399,14 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="missionSRTM"><?php echo $lang['srtm-version-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="missionSRTM" name="missionSRTM">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <?php loadComboboxMissionSRTM(); ?>
                                         </select> 
                                     </div>
                                     <div class="acleft"><label for="resolutionSRTM"><?php echo $lang['spatial-resolution-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="resolutionSRTM" name="resolutionSRTM">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <option value="30">30 <?php echo $lang['meters-text']; ?></option>
                                             <option value="90">90 <?php echo $lang['meters-text']; ?></option>
                                         </select> 
@@ -415,7 +419,7 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="verionSPOT"><?php echo $lang['spot-version-text']; ?></label></div>
                                     <div class="acright">
                                         <select id="verionSPOT" name="verionSPOT">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <?php loadComboboxMissionSPOT(); ?>
                                         </select> 
                                     </div>
@@ -427,7 +431,7 @@ include("./languages/langConfig.php");
                                     <div class="acleft"><label for="cloudCover" ><?php echo $lang['max-cloud-cover']; ?></label></div>
                                     <div class="acright">
                                         <select id="cloudCover" name="cloudCover">
-                                            <option value="all"><?php echo $lang['all'];?></option>
+                                            <option value="all"><?php echo $lang['all']; ?></option>
                                             <?php loadComboboxCloudCover(); ?>
                                         </select> 
                                     </div>

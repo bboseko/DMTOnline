@@ -94,6 +94,7 @@ function loadComboboxYear() {
     }
 
     function loadComboboxOrtho() {
+        include("./languages/langConfig.php");
         $Connex = new db(0);
         $Connex->connect();
         $Connex->query("SELECT distinct ortho FROM dmt_image where ortho <> '' order by ortho desc");
@@ -101,13 +102,14 @@ function loadComboboxYear() {
             while ($Connex->next_record()) {
                 $id = $Connex->f("ortho");
                 $value = $Connex->f("ortho");
-                ?><option value="<?php echo $id; ?>"><?php echo $value; ?></option><?php
+                ?><option value="<?php echo $id; ?>"><?php echo $lang[$value]; ?></option><?php
             }
         }
         $Connex->free();
     }
 
     function loadComboboxStack() {
+        include("./languages/langConfig.php");
         $Connex = new db(0);
         $Connex->connect();
         $Connex->query("SELECT distinct stack FROM dmt_image where stack <> '' order by stack desc");
@@ -115,13 +117,14 @@ function loadComboboxYear() {
             while ($Connex->next_record()) {
                 $id = $Connex->f("stack");
                 $value = $Connex->f("stack");
-                ?><option value="<?php echo $id; ?>"><?php echo $value; ?></option><?php
+                ?><option value="<?php echo $id; ?>"><?php echo $lang[$value]; ?></option><?php
             }
         }
         $Connex->free();
     }
 
     function loadComboboxSLC() {
+        include("./languages/langConfig.php");
         $Connex = new db(0);
         $Connex->connect();
         $Connex->query("SELECT distinct slc FROM dmt_image where slc <> '' order by slc desc");
@@ -129,7 +132,7 @@ function loadComboboxYear() {
             while ($Connex->next_record()) {
                 $id = $Connex->f("slc");
                 $value = $Connex->f("slc");
-                ?><option value="<?php echo $id; ?>"><?php echo $value; ?></option><?php
+                ?><option value="<?php echo $id; ?>"><?php echo $lang[$value]; ?></option><?php
             }
         }
         $Connex->free();

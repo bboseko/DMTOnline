@@ -256,6 +256,9 @@ DMT.load = {
             $('#search-results-container').html('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
                     + lang.loading + '" src="images/loader.gif" /><span> '
                     + lang.searching_images_loading + ' ...</span>');
+            $.sticky('<img style="padding-left:5px;padding-top:5px;" align="bottom" alt="'
+                    + lang.loading + '" src="images/loader.gif" /><span> '
+                    + lang.loading + ' ...</span>');
             $("#tabs").tabs("enable", 2);
             $('#tabs').tabs({active: 2});
             globalCriteria = '&landsat=' + landsat + '&srtm=' + srtm + '&spot=' + spot + '&aster=' + aster + '&asterdem=' + asterdem + '&other=' + other;
@@ -501,17 +504,27 @@ DMT.load = {
             return result;
         }
         $('#shapefileSubmit').click(function () {
-            $.blockUI({
-                theme: true,
-                title: lang.shapefile_submit_title,
-                message: lang.shapefile_submit_message,
-                timeout: 4000
-            });
-            return;
-//            var ctaLayer = new google.maps.KmlLayer({
-//                url: 'http://gmaps-samples.googlecode.com/svn/trunk/ggeoxml/cta.kml'
-//            });
-//            ctaLayer.setMap(DMT.gmaps.map);
+            var shpElement = document.getElementById("shpFile");
+            var dbfElement = document.getElementById("dbfFile");
+            var shpExtension = "", dbfExtension = "";
+            if (shpElement.value.lastIndexOf(".") > 0) {
+                shpExtension = shpElement.value.substring(shpElement.value.lastIndexOf(".") + 1, shpElement.value.length);
+            }
+            if (dbfElement.value.lastIndexOf(".") > 0) {
+                dbfExtension = dbfElement.value.substring(dbfElement.value.lastIndexOf(".") + 1, dbfElement.value.length);
+            }
+            if (shpExtension !== "shp") {
+                $.sticky('<div class="ee-icon ee-icon-delete" style="margin-right: 5px;"></div>'
+                        + lang.shp_file_format_error);
+            } else if (dbfExtension !== "dbf") {
+                $.sticky('<div class="ee-icon ee-icon-delete" style="margin-right: 5px;"></div>'
+                        + lang.dbf_file_format_error);
+            } else if (shpElement.value.substring(0, shpElement.value.length - 4) !== dbfElement.value.substring(0, shpElement.value.length - 4)) {
+                $.sticky('<div class="ee-icon ee-icon-delete" style="margin-right: 5px;"></div>'
+                        + lang.file_name_error);
+            } else {
+                fileUpload();
+            }
         });
     },
     attachTab1Listeners: function () {

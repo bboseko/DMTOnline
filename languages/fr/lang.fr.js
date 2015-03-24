@@ -15,7 +15,7 @@ lang = {
     error_occured: "Une erreur s'est produit",
     error_greater_date: "La premiere date choisie ne peut pas etre plus grande que la seconde date.",
     error_greater_year: "La premiere annee choisie ne peut pas etre plus grande que la seconde annee.",
-    max_point_exceeded_title: "Le nombre maximum de points est depasse.",
+    max_point_exceeded_title: "Le nombre maximum de points est depassé.",
     max_point_exceeded_message1: "<p>Vous ne pouvez ajouter que ",
     max_point_exceeded_message2: " points à la carte.</p>",
     warning: "Avertissement",
@@ -101,7 +101,7 @@ lang = {
     fatal_error: "Erreur fatale",
     error_while_saving_database: "<p>Une erreur s'est produite lors de l'enregistrement dans la base de données.</p>",
     user_not_found: "<p>L'utilisateur n'as pas été trouvé dans la base de données.</p>",
-    request_confirmation: "<p>Votre demande d'images a été enregistrée avec succès à OSFAC.</p>",
+    request_confirmation: "<p>Votre demande d'images a été envoyée avec succès.</p>",
     inclure_exclure: "Inclure / Exclure cette image des résultats",
     no_browse: "Pas d'aperçu",
     download_image: "Télécharger image",
@@ -111,5 +111,10 @@ lang = {
     email_address_required: "L'adresse E-mail est obligatoire",
     not_valid_email: "Cet adresse E-mail n'est pas valide ...",
     your_message_required: "Votre message est obligatoire",
-    error_message_contact: "S'il vous plait, veuillez remplir tous les champs obligatoire avec des informations valides ..."
+    error_message_contact: "S'il vous plait, veuillez remplir tous les champs obligatoire avec des informations valides ...",
+    shp_file_format_error: "Vous devez sélectionner un fichier de format SHP",
+    dbf_file_format_error: "Vous devez sélectionner un fichier de format DBF",
+    file_name_error: "Les fichiers SHP et DBF uploadés ne concernent pas le même shapefile",
+    max_point_exced: "Votre shapefile ne peut pas avoir plus de 20 points",
+    type_of_feature: "Votre shapefile ne doit contenir que un Point, une Ligne ou une Polygone"
 };

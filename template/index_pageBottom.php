@@ -40,7 +40,7 @@ include('./php_includes/profile.php');
                     <label><b><?php echo $lang['sex']; ?></b></label>
                 </td>
                 <td>
-                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $db_sex; ?></label>
+                    <label style="margin-left: 10px; margin-top: 5px; width: 150px;">: <?php echo $lang[$db_sex]; ?></label>
                 </td>
             </tr>
             <tr>

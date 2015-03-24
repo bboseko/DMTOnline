@@ -101,7 +101,7 @@ lang = {
     fatal_error: "Fatal error",
     error_while_saving_database: "<p>An error occured while saving into database.</p>",
     user_not_found: "<p>User has not been found in the database.</p>",
-    request_confirmation: "<p>Your data request has been sent to OSFAC successfully.</p>",
+    request_confirmation: "<p>Your data request has been sent successfully.</p>",
     inclure_exclure: "Include/Exclude this image from results",
     no_browse: "No browse",
     download_image: "Download image",
@@ -111,5 +111,10 @@ lang = {
     email_address_required: "Email address is required",
     not_valid_email: "This email address is not valid ...",
     your_message_required: "Your message is required",
-    error_message_contact: "Please fill all required fields with valid information ..."
+    error_message_contact: "Please fill all required fields with valid information ...",
+    shp_file_format_error: "You must select a SHP file for upload",
+    dbf_file_format_error: "You must select a DBF file for upload",
+    file_name_error: "SHP and DBF files uploaded does not concern the same shapefile",
+    max_point_exced: "Your shapefile can not exceed 20 points",
+    type_of_feature: "Your shapefile must contains only Point, Linestring or Polygon"
 };
