@@ -6,7 +6,7 @@ lang = {
     empty_interest_are_message: "Please select your interest area.",
     filling_years_title: "Filling years",
     filling_years_message: "<p>Still Filling years dropdown list. <br/><b>Click again on the Search button</b></p>",
-    loading: "loading",
+    loading: "Loading",
     searching_images_loading: "Searching available images for your area of interest",
     no_image_found_title: "No images found",
     no_image_found_message: "No images match your criteria",

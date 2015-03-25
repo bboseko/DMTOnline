@@ -16,7 +16,7 @@ if ($categories == '(all)') {
     }
     $categories = substr($cat, 0, -1);
     $sql = 'SELECT distinct year(date) as year FROM dmt_image where id_category in 
-        (select id_category from dmt_category where category_name in (' . $categories . ')) order by year';
+        (select id_category from dmt_category where category_name in ('. $categories .')) order by year';
 }
 $Connex->query($sql);
 if ($Connex->num_rows() >= 1) {

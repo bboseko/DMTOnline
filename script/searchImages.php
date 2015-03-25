@@ -119,7 +119,7 @@ function loadRecord($Connex, $host) {
         ?>
         <tr id="resultRow_<?php echo $id; ?>">
             <td class="resultRowNum <?php echo $evenOdd; ?>">
-                <span class="include"><?php echo ++$GLOBALS['num']; ?><br></span>
+                <span class="include"><?php echo++$GLOBALS['num']; ?><br></span>
             </td>
             <td class="resultRowContent <?php echo $evenOdd; ?>">
                 <?php include('../languages/' . $_SESSION['lang'] . '/lang.' . $_SESSION['lang'] . '.php');?>
@@ -177,35 +177,35 @@ function loadRecord($Connex, $host) {
 }
 ?>
 <script type="text/javascript">
-    $('input.resultCheckBox').change(function () {
-        var idIMG = $(this).attr('id');
-        var resultRow = $('#resultRow_' + idIMG);
-        hash[idIMG] = $(this).is(':checked');
-        if (!$(this).is(':checked')) {
-            resultRow.addClass('excludedResultRow');
-        }
-        else {
-            resultRow.removeClass('excludedResultRow');
-        }
-        var t = 0;
-        for (var id in hash) {
-            if (hash[id] === true) {
-                t++;
-            }
-        }
+                         $('input.resultCheckBox').change(function() {
+                             var idIMG = $(this).attr('id');
+                             var resultRow = $('#resultRow_' + idIMG);
+                             hash[idIMG] = $(this).is(':checked');
+                             if (!$(this).is(':checked')) {
+                                 resultRow.addClass('excludedResultRow');
+                             }
+                             else {
+                                 resultRow.removeClass('excludedResultRow');
+                             }
+                             var t = 0;
+                             for (var id in hash) {
+                                 if (hash[id] === true) {
+                                     t++;
+                                 }
+                             }
 //                             if (nRowResult >= 2) {
 //                                 t = t - 2;
 //                             }
 //                             else {
 //                                 t = t - 1;
 //                             }
-        if (t > 0) {
-            $('#submitButton').removeClass('disabled');
-        }
-        else {
-            $('#submitButton').addClass('disabled');
-        }
-    });
+                             if (t > 0) {
+                                 $('#submitButton').removeClass('disabled');
+                             }
+                             else {
+                                 $('#submitButton').addClass('disabled');
+                             }
+                         });
 </script>
 <?php
 

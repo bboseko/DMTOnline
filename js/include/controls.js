@@ -20,7 +20,7 @@ function in_array(needle, haystack, argStrict) {
     } 
     else {
         for (key in haystack) {
-            if (haystack[key] === needle) {
+            if (haystack[key] == needle) {
                 return true;
             }
         }
@@ -29,7 +29,7 @@ function in_array(needle, haystack, argStrict) {
 }
 function objectKeyExists(needle, haystack) {
     for (var key in haystack) {
-        if (key === needle) {
+        if (key == needle) {
             return true;
         }
     }
@@ -54,7 +54,7 @@ function validateDialogInput(latitude, longitude, type) {
         dmslatRange: lang.dmslatRange,
         dmslngRange: lang.dmslngRange
     };
-    if (type === 'dd') {
+    if (type == 'dd') {
         if (!isNumber(latitude))
         {
             return {valid: false, message: errors.latitude + ' ' + errors.numeric};
@@ -72,7 +72,7 @@ function validateDialogInput(latitude, longitude, type) {
             return {valid: false, message: errors.longitude + ' ' + errors.lngRange};
         }
     }
-    else if (type === 'dms')
+    else if (type == 'dms')
     {
         for (var i = 0; i < 3; i++)
         {
@@ -101,12 +101,12 @@ function validateDialogInput(latitude, longitude, type) {
             return {valid: false, message: errors.longitude + ' ' + errors.dmslngRange};
         }
 // If the degrees are lat -90 or 90, -180 or 180, then min and sec must be zero
-        if ((Math.abs(degrees[0]) === 90) &&
+        if ((Math.abs(degrees[0]) == 90) &&
                 (minutes[0] > 0 || seconds[0] > 0.0))
         {
             return {valid: false, message: errors.latitude};
         }
-        else if ((Math.abs(degrees[1]) === 180) &&
+        else if ((Math.abs(degrees[1]) == 180) &&
                 (minutes[1] > 0 || seconds[1] > 0.0))
         {
             return {valid: false, message: errors.longitude};
@@ -121,9 +121,9 @@ function getBrowserName() {
         return 'Chrome';
     } else if (navigator.userAgent.match(/Safari/)) {
         return 'Safari';
-    } else if (navigator.appName === 'Microsoft Internet Explorer') {
+    } else if (navigator.appName == 'Microsoft Internet Explorer') {
         return 'IE';
-    } else if (navigator.appName === 'Opera') {
+    } else if (navigator.appName == 'Opera') {
         return 'Opera';
     } else {
         return 'Unknown';

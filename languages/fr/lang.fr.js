@@ -6,7 +6,7 @@ lang = {
     empty_interest_are_message: "S'il vous plaît veuillez définir vote zone d'intérêt.",
     filling_years_title: "Remplissage des années",
     filling_years_message: "<p>Liste deroulante toujours en mise a actualite. <br/><b>Cliquez sur le button Recherche</b></p>",
-    loading: "chargement",
+    loading: "Chargement",
     searching_images_loading: "En cours de recherche d'images disponible",
     no_image_found_title: "Aucune image trouvée",
     no_image_found_message: "Aucune image ne correspond à vos critères",

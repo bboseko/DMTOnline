@@ -13,15 +13,15 @@ var DMT = {
     numSelect: 100
 };
 DMT.scroll = {
-    x: function () {
+    x: function() {
         return (typeof document.documentElement.scrollLeft !== "undefined" ? document.documentElement.scrollLeft : document.body.scrollLeft);
     },
-    y: function () {
+    y: function() {
         return (typeof document.documentElement.scrollTop !== "undefined" ? document.documentElement.scrollTop : document.body.scrollTop);
     }
 };
 // Simulates PHP's date function
-Date.prototype.format = function (format) {
+Date.prototype.format = function(format) {
     var returnStr = '';
     var replace = Date.replaceChars;
     for (var i = 0; i < format.length; i++) {
@@ -34,19 +34,19 @@ Date.prototype.format = function (format) {
     }
     return returnStr;
 };
-Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], longMonths: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], longDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], d: function () {
+Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'], longMonths: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'], shortDays: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], longDays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'], d: function() {
         return(this.getDate() < 10 ? '0' : '') + this.getDate();
-    }, D: function () {
+    }, D: function() {
         return Date.replaceChars.shortDays[this.getDay()];
-    }, j: function () {
+    }, j: function() {
         return this.getDate();
-    }, l: function () {
+    }, l: function() {
         return Date.replaceChars.longDays[this.getDay()];
-    }, N: function () {
+    }, N: function() {
         return this.getDay() + 1;
-    }, S: function () {
-        return(this.getDate() % 10 === 1 && this.getDate() !== 11 ? 'st' : (this.getDate() % 10 === 2 && this.getDate() !== 12 ? 'nd' : (this.getDate() % 10 === 3 && this.getDate() !== 13 ? 'rd' : 'th')));
-    }, w: function () {
+    }, S: function() {
+        return(this.getDate() % 10 == 1 && this.getDate() != 11 ? 'st' : (this.getDate() % 10 == 2 && this.getDate() != 12 ? 'nd' : (this.getDate() % 10 == 3 && this.getDate() != 13 ? 'rd' : 'th')));
+    }, w: function() {
         return this.getDay();
     }, z: function () {
         return lang.not_yet_supported;
@@ -54,11 +54,11 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
         return lang.not_yet_supported;
     }, F: function () {
         return Date.replaceChars.longMonths[this.getMonth()];
-    }, m: function () {
+    }, m: function() {
         return(this.getMonth() < 9 ? '0' : '') + (this.getMonth() + 1);
-    }, M: function () {
+    }, M: function() {
         return Date.replaceChars.shortMonths[this.getMonth()];
-    }, n: function () {
+    }, n: function() {
         return this.getMonth() + 1;
     }, t: function () {
         return lang.not_yet_supported;
@@ -68,25 +68,25 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
         return "Not Supported";
     }, Y: function () {
         return this.getFullYear();
-    }, y: function () {
+    }, y: function() {
         return('' + this.getFullYear()).substr(2);
-    }, a: function () {
+    }, a: function() {
         return this.getHours() < 12 ? 'am' : 'pm';
-    }, A: function () {
+    }, A: function() {
         return this.getHours() < 12 ? 'AM' : 'PM';
     }, B: function () {
         return lang.not_yet_supported;
     }, g: function () {
         return this.getHours() % 12 || 12;
-    }, G: function () {
+    }, G: function() {
         return this.getHours();
-    }, h: function () {
+    }, h: function() {
         return((this.getHours() % 12 || 12) < 10 ? '0' : '') + (this.getHours() % 12 || 12);
-    }, H: function () {
+    }, H: function() {
         return(this.getHours() < 10 ? '0' : '') + this.getHours();
-    }, i: function () {
+    }, i: function() {
         return(this.getMinutes() < 10 ? '0' : '') + this.getMinutes();
-    }, s: function () {
+    }, s: function() {
         return(this.getSeconds() < 10 ? '0' : '') + this.getSeconds();
     }, e: function () {
         return lang.not_yet_supported;
@@ -94,25 +94,25 @@ Date.replaceChars = {shortMonths: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Ju
         return "Not Supported";
     }, O: function () {
         return(-this.getTimezoneOffset() < 0 ? '-' : '+') + (Math.abs(this.getTimezoneOffset() / 60) < 10 ? '0' : '') + (Math.abs(this.getTimezoneOffset() / 60)) + '00';
-    }, P: function () {
+    }, P: function() {
         return(-this.getTimezoneOffset() < 0 ? '-' : '+') + (Math.abs(this.getTimezoneOffset() / 60) < 10 ? '0' : '') + (Math.abs(this.getTimezoneOffset() / 60)) + ':' + (Math.abs(this.getTimezoneOffset() % 60) < 10 ? '0' : '') + (Math.abs(this.getTimezoneOffset() % 60));
-    }, T: function () {
+    }, T: function() {
         var m = this.getMonth();
         this.setMonth(0);
         var result = this.toTimeString().replace(/^.+ \(?([^\)]+)\)?$/, '$1');
         this.setMonth(m);
         return result;
-    }, Z: function () {
+    }, Z: function() {
         return-this.getTimezoneOffset() * 60;
-    }, c: function () {
+    }, c: function() {
         return this.format("Y-m-d") + "T" + this.format("H:i:sP");
-    }, r: function () {
+    }, r: function() {
         return this.toString();
-    }, U: function () {
+    }, U: function() {
         return this.getTime() / 1000;
     }};
 // Formatting numbers to work like number_format in PHP
-Number.prototype.format = function (number, precision, decimalSeparator, thousandSeparator) {
+Number.prototype.format = function(number, precision, decimalSeparator, thousandSeparator) {
     number = (parseFloat(number)).toFixed(precision) + '';
     x = number.split('.');
     x1 = x[0];
@@ -124,11 +124,11 @@ Number.prototype.format = function (number, precision, decimalSeparator, thousan
     return x1 + x2;
 };
 var timeDiff = {
-    setStartTime: function () {
+    setStartTime: function() {
         d = new Date();
         time = d.getTime();
     },
-    getDiff: function () {
+    getDiff: function() {
         d = new Date();
         return (d.getTime() - time);
     }

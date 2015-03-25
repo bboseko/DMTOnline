@@ -38,7 +38,7 @@ include("../languages/langConfig.php");
             <div class="content">
                 <div class="pageHeader">
                     <div style="margin-left: 30px;padding-top: 6px;" >
-                        <a href="contact.php?lang=<?php echo $_SESSION['lang']; ?>">Contact</a>  
+                        <a href="contact.php?lang=<?php echo $_SESSION['lang']; ?>"><?php echo $lang['contact-text']; ?></a>  
                     </div>                    
                 </div>
                 <form action="" method="">

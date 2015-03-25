@@ -1,7 +1,7 @@
 function LatLngOverlay() {
-    this.numlatlines = typeof (latlines) === 'number' ? latlines : 4;
-    this.numlnglines = typeof (lnglines) === 'number' ? lnglines : 6;
-    this.minzoom = typeof (minzoom) === 'number' ? minzoom : 0;
+    this.numlatlines = typeof(latlines) == 'number' ? latlines : 4;
+    this.numlnglines = typeof(lnglines) == 'number' ? lnglines : 6;
+    this.minzoom = typeof(minzoom) == 'number' ? minzoom : 0;
     this.dms = $('#overlayTypeDMS').prop('checked');
     this.map = DMT.gmaps.map;
     this.divs = [];
@@ -9,23 +9,23 @@ function LatLngOverlay() {
     this.hidden = true;
 }
 LatLngOverlay.prototype = new google.maps.OverlayView();
-LatLngOverlay.prototype.initialize = function () {
+LatLngOverlay.prototype.initialize = function() {
     this.map = DMT.gmaps.map;
     this.divs = [];
 };
-LatLngOverlay.prototype.remove = function () {
+LatLngOverlay.prototype.remove = function() {
     var overlayShawdowPane = this.getPanes().overlayShadow;
     for (var i = 0; i < this.divs.length; i++) {
         overlayShawdowPane.removeChild(this.divs[i]);
     }
 };
-LatLngOverlay.prototype.copy = function () {
+LatLngOverlay.prototype.copy = function() {
     return new LatLngOverlay();
 };
-LatLngOverlay.prototype.redraw = function (force) {
+LatLngOverlay.prototype.redraw = function(force) {
     this.draw();
 };
-LatLngOverlay.prototype.draw = function (force) {
+LatLngOverlay.prototype.draw = function(force) {
     if (this.hidden) {
         return;
     }
@@ -78,7 +78,7 @@ LatLngOverlay.prototype.draw = function (force) {
         overlayShawdowPane.appendChild(label);
     }
 };
-LatLngOverlay.prototype.createLine = function (left, top, width, height) {
+LatLngOverlay.prototype.createLine = function(left, top, width, height) {
     var div = document.createElement("div");
     div.style.position = "absolute";
     div.style.overflow = "hidden";
@@ -89,7 +89,7 @@ LatLngOverlay.prototype.createLine = function (left, top, width, height) {
     div.style.height = height + "px";
     return div;
 };
-LatLngOverlay.prototype.createLabel = function (x, y, text) {
+LatLngOverlay.prototype.createLabel = function(x, y, text) {
     var div = document.createElement("div");
     div.style.position = "absolute";
     div.style.overflow = "hidden";
@@ -102,7 +102,7 @@ LatLngOverlay.prototype.createLabel = function (x, y, text) {
     div.innerHTML = text;
     return div;
 };
-LatLngOverlay.prototype.show = function (dms) {
+LatLngOverlay.prototype.show = function(dms) {
     for (var i = 0; i < this.divs.length; i++) {
         this.divs[i].style.display = 'block';
     }
@@ -112,13 +112,13 @@ LatLngOverlay.prototype.show = function (dms) {
     this.hidden = false;
     this.redraw();
 };
-LatLngOverlay.prototype.hide = function () {
+LatLngOverlay.prototype.hide = function() {
     for (var i = 0; i < this.divs.length; i++) {
         this.divs[i].style.display = 'none';
     }
     this.hidden = true;
 };
-LatLngOverlay.prototype.setDMS = function (dms) {
+LatLngOverlay.prototype.setDMS = function(dms) {
     this.dms = dms;
     this.redraw();
 }; 
