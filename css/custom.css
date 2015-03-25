@@ -533,13 +533,13 @@ div.areaForm div.row input {
     padding: 4px 2px 4px 6px;
     font-weight: bold;
 }
-#wrsInputs1, #wrsInputs2 {
+#wrsInputs, #wrsInputs1, #wrsInputs2 {
     background-color: transparent;
     border: 1px solid #71b24a;
     padding: 6px 8px;
     border-radius: 5px;
 }
-#wrsInputs1 input, #wrsInputs1 select, #wrsInputs2 select {
+#wrsInputs input, #wrsInputs1 input, #wrsInputs select, #wrsInputs1 select, #wrsInputs2 select {
     margin-right: 4px;
 }
 .tabAccordion {
