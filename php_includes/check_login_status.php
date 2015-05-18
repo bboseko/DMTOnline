@@ -14,7 +14,7 @@ $log_password = "";
 
 // User Verify function
 function evalLoggedUser($Connex, $id, $u, $p) {
-    $sql = "SELECT ip_address FROM dmt_user WHERE id_user='$id' AND username='$u' AND password='$p' AND activated='1' LIMIT 1";
+    $sql = "SELECT * FROM dmt_user WHERE id_user='$id' AND username='$u' AND password='$p' AND activated='1' LIMIT 1";
     $Connex->query($sql);
     $numrows = $Connex->num_rows();
     if ($numrows > 0) {
