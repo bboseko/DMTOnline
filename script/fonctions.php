@@ -9,7 +9,7 @@ function connectdb() {
 //    $password = "Osf@cL@b01";
 //    Local database settings
     $hostname = "localhost";
-    $databasename = "dbosfacdmt";
+    $databasename = "dbosfacdmtonline";
     $username = "root";
     $password = "ustopudie";
 

@@ -8,7 +8,7 @@ class db {
 //    var $password = "Osf@cL@b01";
 //    Local database settings
     var $hostname = "localhost";
-    var $databasename = "dbosfacdmt";
+    var $databasename = "dbosfacdmtonline";
     var $username = "root";
     var $password = "ustopudie";
     //
